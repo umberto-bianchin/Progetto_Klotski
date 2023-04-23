@@ -4,18 +4,22 @@ import java.awt.*;
 
 public class Piece {
     Position position;
-    JLabel appearance;
+    JPanel appearance;
     Border border = BorderFactory.createLineBorder(Color.BLUE);
-
-
 
     Piece(Position intial_position, boolean type){
 
         position = intial_position;
-        appearance = new JLabel();
+
+        appearance = new JPanel() {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(position.getWidth()*100, position.getHeight()*100);
+            }
+        };
+
         appearance.setBorder(border);
         appearance.setOpaque(true);
-
 
         if (type)
             appearance.setBackground(Color.red);
@@ -23,11 +27,9 @@ public class Piece {
             appearance.setBackground(Color.black);
 
         appearance.setVisible(true);
-        appearance.setPreferredSize(new Dimension(position.getWidth()*100, position.getHeight()*100));
-
     }
 
-    public JLabel getAppearance() {
+    public JPanel getAppearance() {
         return appearance;
     }
 

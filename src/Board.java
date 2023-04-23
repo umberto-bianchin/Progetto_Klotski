@@ -10,7 +10,6 @@ public class Board extends JPanel implements MouseListener {
 
     Piece[] pieces = new Piece[10];
 
-
     Board(){
         setLayout(new GridBagLayout());
 
@@ -29,10 +28,6 @@ public class Board extends JPanel implements MouseListener {
         pieces[7] = new Piece(new Position(3,0,1,2), false);
         pieces[8] = new Piece(new Position(3,2,1,2), false);
         pieces[9] = new Piece(new Position(3,4,1,1), false);
-
-
-
-
 
         for(int i=0; i<pieces.length; i++)
             add(pieces[i].getAppearance(), pieces[i].getLayout(gbc));
