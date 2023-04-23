@@ -2,6 +2,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
+//no hardcoded variables!!!
+
 public class Piece {
     Position position;
     JPanel appearance;
@@ -10,29 +12,25 @@ public class Piece {
     Piece(Position intial_position, boolean type){
 
         position = intial_position;
+        appearance = new JPanel();
 
-        appearance = new JPanel() {
-            @Override
-            public Dimension getPreferredSize() {
-                return new Dimension(position.getWidth()*100, position.getHeight()*100);
-            }
-        };
-
+        appearance.setPreferredSize(new Dimension(position.getWidth()*100, position.getHeight()*100));
         appearance.setBorder(border);
         appearance.setOpaque(true);
+        appearance.setVisible(true);
 
+        //si setta il pezzo rosso
         if (type)
             appearance.setBackground(Color.red);
         else
             appearance.setBackground(Color.black);
-
-        appearance.setVisible(true);
     }
 
     public JPanel getAppearance() {
         return appearance;
     }
 
+    //si settano le posizioni dei vari pezzi
     public GridBagConstraints getLayout(GridBagConstraints gbc){
         gbc.gridx = position.getX();
         gbc.gridy = position.getY();

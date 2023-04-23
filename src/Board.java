@@ -1,10 +1,9 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
- //no hardcoded variables!!!
 
 public class Board extends JPanel implements MouseListener {
 
@@ -17,7 +16,7 @@ public class Board extends JPanel implements MouseListener {
 
         //ImageIcon logo = new ImageIcon("logo.png");
 
-
+        //si settano tutti i pezzi nell'ordine dell'immagine delle slide del progetto
         pieces[0] = new Piece(new Position(0,0,1,2), false);
         pieces[1] = new Piece(new Position(0,2,1,2), false);
         pieces[2] = new Piece(new Position(0,4,1,1), false);
@@ -34,13 +33,23 @@ public class Board extends JPanel implements MouseListener {
             pieces[i].getAppearance().addMouseListener(this);
         }
 
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getX()/100);
+                System.out.println(e.getY()/100);
+                System.out.println();
 
+            }
+        });
 
     }
 
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("click");
+    }
     public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
 }

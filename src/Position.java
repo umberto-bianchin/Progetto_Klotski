@@ -6,7 +6,6 @@ public class Position {
         this.y = y;
         this.width = width;
         this.height = height;
-
     }
 
     int getX() {return x;}
@@ -17,9 +16,6 @@ public class Position {
     void setX(int x){this.x = x;}
     void setY(int y){this.y = y;}
     void setWidth(int width){this.width = width;}
-
     void setHeight(int height){this.height = height;}
-
-
 
 }
