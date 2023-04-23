@@ -29,11 +29,12 @@ public class Board extends JPanel implements MouseListener {
         pieces[8] = new Piece(new Position(3,2,1,2), false);
         pieces[9] = new Piece(new Position(3,4,1,1), false);
 
-        for(int i=0; i<pieces.length; i++)
+        for(int i=0; i<pieces.length; i++) {
             add(pieces[i].getAppearance(), pieces[i].getLayout(gbc));
+            pieces[i].getAppearance().addMouseListener(this);
+        }
 
 
-        //label1.addMouseListener(this);
 
     }
 
