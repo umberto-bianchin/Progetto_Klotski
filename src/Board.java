@@ -35,7 +35,7 @@ public class Board extends JPanel implements MouseListener {
 
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 System.out.println(e.getX()/100);
                 System.out.println(e.getY()/100);
                 System.out.println();
@@ -45,10 +45,11 @@ public class Board extends JPanel implements MouseListener {
 
     }
 
-    public void mouseClicked(MouseEvent e) {
+    //ho messo su mousePressed cosi prende l'input piu velocemente rispetto a clicked
+    public void mousePressed(MouseEvent e) {
         System.out.println("click");
     }
-    public void mousePressed(MouseEvent e) {}
+    public void mouseClicked(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
