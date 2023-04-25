@@ -26,19 +26,35 @@ public class Board extends JPanel {
         pieces[8] = new Piece(new Rectangle(300,200,100,200), false);
         pieces[9] = new Piece(new Rectangle(300,400,100,100), false);
 
-        for(int i=0; i<pieces.length; i++) {
-            add(pieces[i].getAppearance());
+        for (Piece piece : pieces) {
+            add(piece.getAppearance());
         }
 
         addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                selectedPiece.move(e.getX()/100, e.getY()/100);
-            }
+            public void mousePressed(MouseEvent e) {move(e);}
         });
     }
 
     public static void selectPiece(Piece selected){
         selectedPiece = selected;
+    }
+
+    private void move(MouseEvent e){
+
+        if(selectedPiece != null){
+            Point click = new Point(e.getX(), e.getY());
+            Rectangle possiblePosition = selectedPiece.checkAvailable(click);
+            Rectangle window = new Rectangle(0,0,400,500);
+
+            if(window.contains(possiblePosition))
+                for (Piece piece:pieces)
+                    if (piece != selectedPiece && piece.intersection(possiblePosition))
+                        return;
+
+            selectedPiece.move(possiblePosition);
+            selectedPiece = null;
+        }
+
     }
 }

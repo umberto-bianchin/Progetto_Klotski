@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 public class Piece {
     Rectangle position;
+    Rectangle[] availableMoves = new Rectangle[4];
     JLabel appearance;
     Border border = BorderFactory.createLineBorder(Color.BLUE);
 
@@ -18,6 +19,7 @@ public class Piece {
         appearance.setBorder(border);
         appearance.setOpaque(true);
         appearance.setVisible(true);
+        updateAvailable();
 
         appearance.addMouseListener(new MouseAdapter() {
             @Override
@@ -40,25 +42,36 @@ public class Piece {
         return appearance;
     }
 
+    private void updateAvailable(){
 
-    public boolean move(int new_x, int new_y){
-        getNewPosition(new_x, new_y);
-        return true;
+        for(int i=0; i<4; i++)
+            availableMoves[i] = new Rectangle(position);
+
+        availableMoves[0].translate(-100,0);
+        availableMoves[1].translate(+100,0);
+        availableMoves[2].translate(0,+100);
+        availableMoves[3].translate(0,-100);
+
     }
 
-
-    private void getNewPosition(int new_x, int new_y){
-
-        int x = new_x*100>position.x ? 100 : -100;
-        int y = new_y*100>position.y ? 100 : -100;
-
-        if(new_x*100 == position.x)
-            x = 0;
-        if(new_y*100 == position.y)
-            y = 0;
-
-        position.translate(x,y);
+    public void move(Rectangle newPos){
+        position = newPos;
         appearance.setBounds(position);
-
+        updateAvailable();
     }
+
+    public boolean intersection(Rectangle newPos){
+        return position.intersects(newPos);
+    }
+
+    public Rectangle checkAvailable(Point p){
+
+        for(Rectangle available : availableMoves){
+            if(available.contains(p))
+                return available;
+        }
+
+        return position;
+    }
+
 }
