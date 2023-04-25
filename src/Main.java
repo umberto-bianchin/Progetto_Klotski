@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -6,7 +7,9 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new Board());
         frame.pack();
-        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.setSize(new Dimension(400,550));
+        frame.setLocationRelativeTo(null);
+
     }
 }

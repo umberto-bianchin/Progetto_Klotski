@@ -1,23 +1,34 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 //no hardcoded variables!!!
 
 public class Piece {
-    Position position;
-    JPanel appearance;
+    Rectangle position;
+    JLabel appearance;
     Border border = BorderFactory.createLineBorder(Color.BLUE);
 
-    Piece(Position intial_position, boolean type){
+    Piece(Rectangle intial_position, boolean type){
 
         position = intial_position;
-        appearance = new JPanel();
-
-        appearance.setPreferredSize(new Dimension(position.getWidth()*100, position.getHeight()*100));
+        appearance = new JLabel();
         appearance.setBorder(border);
         appearance.setOpaque(true);
         appearance.setVisible(true);
+
+        appearance.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+//                System.out.println("Piece");
+                Board.prova(Piece.this);
+
+            }
+        });
+
+        appearance.setBounds(position);
 
         //si setta il pezzo rosso
         if (type)
@@ -26,17 +37,16 @@ public class Piece {
             appearance.setBackground(Color.black);
     }
 
-    public JPanel getAppearance() {
+    public JLabel getAppearance() {
         return appearance;
     }
 
-    //si settano le posizioni dei vari pezzi
-    public GridBagConstraints getLayout(GridBagConstraints gbc){
-        gbc.gridx = position.getX();
-        gbc.gridy = position.getY();
-        gbc.gridheight = position.getHeight();
-        gbc.gridwidth = position.getWidth();
 
-        return gbc;
+    public boolean move(int new_x, int new_y){
+
+        position.setLocation(new_x*100, new_y*100);
+        appearance.setBounds(position);
+
+        return true;
     }
 }

@@ -8,47 +8,45 @@ import java.awt.event.MouseListener;
 public class Board extends JPanel implements MouseListener {
 
     Piece[] pieces = new Piece[10];
+    static Piece selectedPiece;
 
     Board(){
-        setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(null);
 
         //ImageIcon logo = new ImageIcon("logo.png");
 
         //si settano tutti i pezzi nell'ordine dell'immagine delle slide del progetto
-        pieces[0] = new Piece(new Position(0,0,1,2), false);
-        pieces[1] = new Piece(new Position(0,2,1,2), false);
-        pieces[2] = new Piece(new Position(0,4,1,1), false);
-        pieces[3] = new Piece(new Position(1,0,2,2), true);
-        pieces[4] = new Piece(new Position(1,2,2,1), false);
-        pieces[5] = new Piece(new Position(1,3,1,1), false);
-        pieces[6] = new Piece(new Position(2,3,1,1), false);
-        pieces[7] = new Piece(new Position(3,0,1,2), false);
-        pieces[8] = new Piece(new Position(3,2,1,2), false);
-        pieces[9] = new Piece(new Position(3,4,1,1), false);
+        pieces[0] = new Piece(new Rectangle(0,0,100,200), false);
+        pieces[1] = new Piece(new Rectangle(0,200,100,200), false);
+        pieces[2] = new Piece(new Rectangle(0,400,100,100), false);
+        pieces[3] = new Piece(new Rectangle(100,0,200,200), true);
+        pieces[4] = new Piece(new Rectangle(100,200,200,100), false);
+        pieces[5] = new Piece(new Rectangle(100,300,100,100), false);
+        pieces[6] = new Piece(new Rectangle(200,300,100,100), false);
+        pieces[7] = new Piece(new Rectangle(300,0,100,200), false);
+        pieces[8] = new Piece(new Rectangle(300,200,100,200), false);
+        pieces[9] = new Piece(new Rectangle(300,400,100,100), false);
 
         for(int i=0; i<pieces.length; i++) {
-            add(pieces[i].getAppearance(), pieces[i].getLayout(gbc));
+            add(pieces[i].getAppearance());
             pieces[i].getAppearance().addMouseListener(this);
         }
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println(e.getX()/100);
-                System.out.println(e.getY()/100);
-                System.out.println();
-
+                selectedPiece.move(e.getX()/100, e.getY()/100);
             }
         });
-
     }
+
+    public static void prova(Piece selected){
+        selectedPiece = selected;
+    }
+
 
     //ho messo su mousePressed cosi prende l'input piu velocemente rispetto a clicked
-    public void mousePressed(MouseEvent e) {
-        System.out.println("click");
-    }
+    public void mousePressed(MouseEvent e) {}
     public void mouseClicked(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
