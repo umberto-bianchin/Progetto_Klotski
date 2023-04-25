@@ -1,6 +1,5 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,51 +7,30 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-//no hardcoded variables!!!
 
 public class Piece {
     Rectangle position;
     Rectangle[] availableMoves = new Rectangle[4];
     JLabel appearance;
     BufferedImage myPicture;
-//    Border border = BorderFactory.createLineBorder(Color.BLUE);
 
     Piece(Rectangle initial_position, boolean type) throws IOException {
 
-//        try {
-//            BufferedImage myPicture = ImageIO.read(new File("./src/1x1.png"));
-//            appearance = new JLabel(new ImageIcon(myPicture));
-//        } catch(Exception e) {
-//            System.out.println("import delle immagini fallito");
-//            return;
-//        }
         position = initial_position;
         setImage();
         appearance = new JLabel(new ImageIcon(myPicture));
-
-
-//        appearance.setBorder(border);
         appearance.setOpaque(true);
         appearance.setVisible(true);
+        appearance.setBounds(position);
+
         updateAvailable();
 
         appearance.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 Board.selectPiece(Piece.this);
-
             }
         });
-
-        appearance.setBounds(position);
-
-
-        //si setta il pezzo rosso
-        if (type) {
-            appearance.setBackground(Color.red);
-        } else {
-            appearance.setBackground(Color.black);
-        }
     }
 
     public JLabel getAppearance() {
@@ -88,27 +66,20 @@ public class Piece {
                 return available;
             }
         }
-
         return position;
     }
 
     private void setImage() throws IOException {
 
-        if (position.width == 100 && position.height == 100) {
-            myPicture = ImageIO.read(new File("./src/1x1.png"));
-        }
+       myPicture = ImageIO.read(new File("./src/images/"+position.width+"x"+position.height+".png"));
 
-        if (position.width == 100 && position.height == 200) {
-            myPicture = ImageIO.read(new File("./src/1x2.png"));
-        }
+/*        Claudia Prova a commentare quella sopra e scommentare quelle sotto
+        URL file_path = getClass().getResource("/images/"+position.width+"x"+position.height+".png");
 
-        if (position.width == 200 && position.height == 100) {
-            myPicture = ImageIO.read(new File("./src/2x1.png"));
+        try{
+            myPicture = ImageIO.read(new File(file_path.toURI()));
         }
-
-        if (position.width == 200 && position.height == 200) {
-            myPicture = ImageIO.read(new File("./src/2x2.png"));
-        }
+        catch(Exception e){} */
 
     }
 
@@ -117,9 +88,5 @@ public class Piece {
             appearance.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         else
             appearance.setBorder(null);
-
-
-
     }
-
 }
