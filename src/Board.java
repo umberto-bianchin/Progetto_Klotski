@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-
 public class Board extends JPanel {
 
     static Piece selectedPiece;
@@ -12,10 +11,6 @@ public class Board extends JPanel {
 
     Board() throws IOException {
         setLayout(null);
-//        setMaximumSize(new Dimension(400,500));
-
-
-        //ImageIcon logo = new ImageIcon("logo.png");
 
         //si settano tutti i pezzi nell'ordine dell'immagine delle slide del progetto
         pieces[0] = new Piece(new Rectangle(0, 0, 100, 200), false);
@@ -71,6 +66,5 @@ public class Board extends JPanel {
             selectedPiece.setBorder(false);
             selectedPiece = null;
         }
-
     }
 }

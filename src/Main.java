@@ -1,4 +1,4 @@
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
@@ -9,8 +9,9 @@ public class Main {
         frame.add(new Board());
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(new Dimension(415,540));
+        frame.setSize(new Dimension(500,600));
         frame.setLocationRelativeTo(null);
+
 
     }
 }
