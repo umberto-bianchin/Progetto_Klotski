@@ -22,8 +22,7 @@ public class Piece {
         appearance.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-//                System.out.println("Piece");
-                Board.prova(Piece.this);
+                Board.selectPiece(Piece.this);
 
             }
         });
@@ -43,10 +42,23 @@ public class Piece {
 
 
     public boolean move(int new_x, int new_y){
+        getNewPosition(new_x, new_y);
+        return true;
+    }
 
-        position.setLocation(new_x*100, new_y*100);
+
+    private void getNewPosition(int new_x, int new_y){
+
+        int x = new_x*100>position.x ? 100 : -100;
+        int y = new_y*100>position.y ? 100 : -100;
+
+        if(new_x*100 == position.x)
+            x = 0;
+        if(new_y*100 == position.y)
+            y = 0;
+
+        position.translate(x,y);
         appearance.setBounds(position);
 
-        return true;
     }
 }

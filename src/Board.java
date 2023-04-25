@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 
-public class Board extends JPanel implements MouseListener {
+public class Board extends JPanel {
 
     Piece[] pieces = new Piece[10];
     static Piece selectedPiece;
@@ -29,7 +28,6 @@ public class Board extends JPanel implements MouseListener {
 
         for(int i=0; i<pieces.length; i++) {
             add(pieces[i].getAppearance());
-            pieces[i].getAppearance().addMouseListener(this);
         }
 
         addMouseListener(new MouseAdapter() {
@@ -40,15 +38,7 @@ public class Board extends JPanel implements MouseListener {
         });
     }
 
-    public static void prova(Piece selected){
+    public static void selectPiece(Piece selected){
         selectedPiece = selected;
     }
-
-
-    //ho messo su mousePressed cosi prende l'input piu velocemente rispetto a clicked
-    public void mousePressed(MouseEvent e) {}
-    public void mouseClicked(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
 }
