@@ -14,7 +14,7 @@ public class Piece {
     JLabel appearance;
     BufferedImage myPicture;
 
-    Piece(Rectangle initial_position, boolean type) throws IOException {
+    Piece(Rectangle initial_position) throws IOException {
 
         position = initial_position;
         setImage();

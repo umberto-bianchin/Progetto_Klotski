@@ -13,16 +13,16 @@ public class Board extends JPanel {
         setLayout(null);
 
         //si settano tutti i pezzi nell'ordine dell'immagine delle slide del progetto
-        pieces[0] = new Piece(new Rectangle(0, 0, 100, 200), false);
-        pieces[1] = new Piece(new Rectangle(0, 200, 100, 200), false);
-        pieces[2] = new Piece(new Rectangle(0, 400, 100, 100), false);
-        pieces[3] = new Piece(new Rectangle(100, 0, 200, 200), true);
-        pieces[4] = new Piece(new Rectangle(100, 200, 200, 100), false);
-        pieces[5] = new Piece(new Rectangle(100, 300, 100, 100), false);
-        pieces[6] = new Piece(new Rectangle(200, 300, 100, 100), false);
-        pieces[7] = new Piece(new Rectangle(300, 0, 100, 200), false);
-        pieces[8] = new Piece(new Rectangle(300, 200, 100, 200), false);
-        pieces[9] = new Piece(new Rectangle(300, 400, 100, 100), false);
+        pieces[0] = new Piece(new Rectangle(0, 0, 100, 200));
+        pieces[1] = new Piece(new Rectangle(0, 200, 100, 200));
+        pieces[2] = new Piece(new Rectangle(0, 400, 100, 100));
+        pieces[3] = new Piece(new Rectangle(100, 0, 200, 200));
+        pieces[4] = new Piece(new Rectangle(100, 200, 200, 100));
+        pieces[5] = new Piece(new Rectangle(100, 300, 100, 100));
+        pieces[6] = new Piece(new Rectangle(200, 300, 100, 100));
+        pieces[7] = new Piece(new Rectangle(300, 0, 100, 200));
+        pieces[8] = new Piece(new Rectangle(300, 200, 100, 200));
+        pieces[9] = new Piece(new Rectangle(300, 400, 100, 100));
 
         for (Piece piece : pieces) {
             add(piece.getAppearance());
