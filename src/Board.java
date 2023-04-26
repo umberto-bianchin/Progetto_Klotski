@@ -11,6 +11,7 @@ public class Board extends JPanel {
 
     Board() throws IOException {
         setLayout(null);
+        setBackground(Color.white);
 
         //si settano tutti i pezzi nell'ordine dell'immagine delle slide del progetto
         pieces[0] = new Piece(new Rectangle(0, 0, 100, 200));
