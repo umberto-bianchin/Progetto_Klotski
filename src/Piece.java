@@ -9,18 +9,18 @@ import java.io.IOException;
 
 
 public class Piece {
-    Rectangle position;
-    Rectangle[] availableMoves = new Rectangle[4];
-    JLabel appearance;
-    BufferedImage myPicture;
+    private Rectangle position;
+    private final Rectangle[] availableMoves = new Rectangle[4];
+    private final JLabel appearance;
+    private BufferedImage myPicture;
+    private final Rectangle FINISH_POSITION = new Rectangle(100, 300, 200, 200);
+
 
     Piece(Rectangle initial_position) throws IOException {
 
         position = initial_position;
         setImage();
         appearance = new JLabel(new ImageIcon(myPicture));
-        appearance.setOpaque(true);
-        appearance.setVisible(true);
         appearance.setBounds(position);
 
         updateAvailable();
@@ -49,10 +49,12 @@ public class Piece {
 
     }
 
-    public void move(Rectangle newPos) {
+    public boolean move(Rectangle newPos) {
         position = newPos;
         appearance.setBounds(position);
         updateAvailable();
+
+        return position.contains(FINISH_POSITION);
     }
 
     public boolean intersection(Rectangle newPos) {

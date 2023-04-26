@@ -6,8 +6,10 @@ import java.io.IOException;
 
 public class Board extends JPanel {
 
-    static Piece selectedPiece;
-    Piece[] pieces = new Piece[10];
+    private static Piece selectedPiece;
+    private static int counter=0;
+    private final Piece[] pieces = new Piece[10];
+    private final JLabel displayedCounter;
 
     Board() throws IOException {
         setLayout(null);
@@ -25,6 +27,22 @@ public class Board extends JPanel {
         pieces[8] = new Piece(new Rectangle(300, 200, 100, 200));
         pieces[9] = new Piece(new Rectangle(300, 400, 100, 100));
 
+        JLabel line = new JLabel();
+        line.setBackground(Color.red);
+        line.setOpaque(true);
+        line.setBounds(100,505,200,10);
+        line.setSize(200, 10);
+        add(line);
+
+        displayedCounter = new JLabel("Step " + counter);
+        displayedCounter.setHorizontalAlignment(JLabel.CENTER);
+        displayedCounter.setBackground(Color.white);
+        displayedCounter.setFont(new Font("Serif", Font.BOLD, 25));
+        displayedCounter.setBounds(10,525,400,40);
+        displayedCounter.setSize(400, 40);
+        add(displayedCounter);
+
+
         for (Piece piece : pieces) {
             add(piece.getAppearance());
         }
@@ -35,6 +53,7 @@ public class Board extends JPanel {
                 move(e);
             }
         });
+
     }
 
     public static void selectPiece(Piece selected) {
@@ -63,9 +82,15 @@ public class Board extends JPanel {
                 return;
             }
 
-            selectedPiece.move(possiblePosition);
+            if(selectedPiece.move(possiblePosition)){
+                JOptionPane.showMessageDialog(this,"Hai vinto!","VITTORIA", JOptionPane.INFORMATION_MESSAGE);
+            }
             selectedPiece.setBorder(false);
             selectedPiece = null;
+            counter++;
+            displayedCounter.setText("Step "+ counter);
+
+
         }
     }
 }

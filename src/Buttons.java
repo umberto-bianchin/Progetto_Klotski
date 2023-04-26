@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Buttons extends JPanel {
 
-    JButton[] buttons = new JButton[4];
+    private JButton[] buttons = new JButton[4];
     public Buttons(){
 
         setBackground(Color.white);

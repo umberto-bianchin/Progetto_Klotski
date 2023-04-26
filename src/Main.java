@@ -9,13 +9,14 @@ public class Main {
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
 
+        Buttons buttons = new Buttons();
+        buttons.setBounds(10,10,400,60);
+        mainPane.add(buttons);
+
         Board board = new Board();
-        board.setBounds(10,10,400,500);
+        board.setBounds(10,70,400,700);
         mainPane.add(board);
 
-        Buttons buttons = new Buttons();
-        buttons.setBounds(10,525,400,60);
-        mainPane.add(buttons);
 
         JFrame frame = new JFrame("KLOTSKI's PUZZLE");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,7 +24,7 @@ public class Main {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(new Dimension(440,640));
+        frame.setSize(new Dimension(440,700));
 
     }
 }
