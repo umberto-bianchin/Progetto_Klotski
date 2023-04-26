@@ -1,3 +1,5 @@
+package View;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,7 +13,7 @@ public class Board extends JPanel {
     private final Piece[] pieces = new Piece[10];
     private final JLabel displayedCounter;
 
-    Board() throws IOException {
+    public Board() throws IOException {
         setLayout(null);
         setBackground(Color.white);
 
@@ -44,7 +46,7 @@ public class Board extends JPanel {
 
 
         for (Piece piece : pieces) {
-            add(piece.getAppearance());
+            add(piece);
         }
 
         addMouseListener(new MouseAdapter() {
@@ -65,7 +67,11 @@ public class Board extends JPanel {
 
     }
 
-    private void move(MouseEvent e) {
+    public void addListener(MouseAdapter listener){
+        this.addMouseListener(listener);
+    }
+
+    public void move(MouseEvent e) {
 
         if (selectedPiece != null) {
             Point click = new Point(e.getX(), e.getY());
@@ -92,5 +98,9 @@ public class Board extends JPanel {
 
 
         }
+    }
+
+    public Piece[] getPieces() {
+        return pieces;
     }
 }

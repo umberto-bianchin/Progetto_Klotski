@@ -1,3 +1,5 @@
+package Model;
+
 import java.awt.Rectangle;
 
 enum Direction {DX, SX, UP, DOWN }
