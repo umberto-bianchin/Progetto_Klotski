@@ -27,7 +27,7 @@ public class View {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(new Dimension(550,620)); //550, 620
+        frame.setSize(new Dimension(550,620));
 
 
     }
