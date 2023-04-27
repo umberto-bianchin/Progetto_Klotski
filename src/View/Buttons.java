@@ -9,6 +9,7 @@ public class Buttons extends JPanel {
 
         setBackground(Color.white);
         setLayout(new GridLayout(4,1));
+        setSize(100,200);
 
         ImageIcon reset = new ImageIcon("./src/images/restart.png");
         ImageIcon save = new ImageIcon("./src/images/save.png");
@@ -23,7 +24,7 @@ public class Buttons extends JPanel {
 
         for(JButton button : buttons){
             button.setBorder(null);
-            button.setSize(new Dimension(150, 70));
+            button.setBackground(Color.white);
             add(button);
         }
 

@@ -36,4 +36,8 @@ public class View {
         return board;
     }
 
+    public void winMessage(){
+        JOptionPane.showMessageDialog(getBoard(), "Hai vinto!", "VITTORIA", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 }

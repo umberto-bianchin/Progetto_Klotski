@@ -11,55 +11,105 @@ import java.io.IOException;
 
 public class Controller {
 
-    private View view;
-    private Model model;
+    private final View view;
+    private final Model model;
 
-
-    public Controller(View view, Model model) {
+    public Controller(View view, Model model) throws IOException {
 
         this.view = view;
         this.model = model;
+        view.getBoard().setPieces(model.getState().getInitial_config());
 
-        for (Piece piece : view.getBoard().getPieces()) {
+        for (PieceRepresentation piece : view.getBoard().getPieces()) {
             piece.addListener(new PieceListener(piece));
         }
 
-        view.getBoard().addListener(new BoardListener(view.getBoard()));
+        view.getBoard().addListener(new BoardListener());
+        view.getBoard().setDisplayedCounter(model.getState().getCounter());
 
     }
 
-        class BoardListener extends MouseAdapter{
+    public void move(MouseEvent e) {
 
-            private Board controlledBoard;
+        Piece selectedPiece = model.getState().getSelectedPiece();
 
+        if (selectedPiece != null) {
+            Point click = new Point(e.getX(), e.getY());
+            Rectangle possiblePosition = selectedPiece.checkAvailable(click);
 
-            public BoardListener(Board board){
-                controlledBoard = board;
+            if (possiblePosition == null) {
+                return;
             }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                controlledBoard.move(e);
+            Rectangle window = new Rectangle(0, 0, 400, 500);
+
+            if (window.contains(possiblePosition)) {
+                for (Piece piece : model.getState().getCurrent_config()) {
+                    if (piece != selectedPiece && piece.intersection(possiblePosition)) {
+                        return;
+                    }
+                }
+            } else {
+                return;
             }
 
+            boolean win = selectedPiece.move(possiblePosition);
+            view.getBoard().getSelectedPieceRepresentation().setBounds(possiblePosition);
+
+            if (win) {
+                view.winMessage();
+            }
+
+            view.getBoard().getSelectedPieceRepresentation().setBorder(false);
+
+            model.getState().setSelectedPiece(null);
+
+            model.getState().incrementCounter();
+            view.getBoard().setDisplayedCounter(model.getState().getCounter());
         }
+    }
 
-        class PieceListener extends MouseAdapter {
 
-            private Piece pieceControlled;
+    class BoardListener extends MouseAdapter {
 
-            public PieceListener(Piece piece){
-                pieceControlled = piece;
-            }
+//            private final Board controlledBoard;
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Board.selectPiece(pieceControlled);
-            }
+//            public BoardListener(){
+//                controlledBoard = board;
+//            }
 
+        @Override
+        public void mousePressed(MouseEvent e) {
+            move(e);
         }
 
     }
+
+    class PieceListener extends MouseAdapter {
+
+        private final PieceRepresentation pieceRepresentationControlled;
+        private Piece pieceControlled;
+
+        public PieceListener(PieceRepresentation pieceRepresentation) {
+            pieceRepresentationControlled = pieceRepresentation;
+
+            for (Piece piece : model.getState().getCurrent_config()) {
+                if (piece.getPosition().contains(pieceRepresentationControlled.getBounds())) {
+                    this.pieceControlled = piece;
+                    return;
+                }
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            model.getState().setSelectedPiece(pieceControlled);
+            view.getBoard().selectPiece(pieceRepresentationControlled);
+        }
+
+    }
+
+}
 
 
 

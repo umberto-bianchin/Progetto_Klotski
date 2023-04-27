@@ -1,15 +1,17 @@
-import View.Board;
-import View.Buttons;
-import View.View;
+import Controller.Controller;
+import Model.Model;
 
-import javax.swing.*;
-import java.awt.*;
+import View.View;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        View Gioco = new View();
+        View view = new View();
+        Model model = new Model();
+
+
+        Controller game = new Controller(view, model);
 
     }
 }

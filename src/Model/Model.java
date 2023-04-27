@@ -1,18 +1,14 @@
 package Model;
 
-import View.*;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class Model {
 
-private State state;
-private final Piece[] pieces = new Piece[10];
+private final State state;
 
-
-
-    public Model()  throws IOException {
+    public Model() {
 
         Rectangle[] initial = {new Rectangle(0, 0, 100, 200), new Rectangle(0, 200, 100, 200),
                 new Rectangle(0, 400, 100, 100), new Rectangle(100, 0, 200, 200), new Rectangle(100, 200, 200, 100),
@@ -21,13 +17,10 @@ private final Piece[] pieces = new Piece[10];
 
         state = new State(initial);
 
-        for(int i=0; i<10; i++) {
-            pieces[i] = new Piece(initial[i]);
-        }
-
-
     }
 
-
+    public State getState(){
+        return state;
+    }
 
 }
