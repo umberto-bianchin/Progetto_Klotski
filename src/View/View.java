@@ -15,7 +15,7 @@ public class View {
         mainPane.setBackground(Color.white);
 
         Buttons buttons = new Buttons();
-        buttons.setBounds(410,0,150,550);
+        buttons.setBounds(420,10,100,500);
         mainPane.add(buttons);
 
         board.setBounds(10,10,400,700);
@@ -27,7 +27,7 @@ public class View {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(new Dimension(550,620));
+        frame.setSize(new Dimension(550,620)); //550, 620
 
 
     }
