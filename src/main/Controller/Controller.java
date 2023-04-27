@@ -72,12 +72,6 @@ public class Controller {
 
     class BoardListener extends MouseAdapter {
 
-//            private final Board controlledBoard;
-
-//            public BoardListener(){
-//                controlledBoard = board;
-//            }
-
         @Override
         public void mousePressed(MouseEvent e) {
             move(e);
