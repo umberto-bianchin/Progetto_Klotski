@@ -38,19 +38,14 @@ public class State {
     public Rectangle[] getInitial_config(){
         return initial_config;
     }
-
     public Piece[] getCurrent_config(){
         return current_config;
     }
 
-    public void setSelectedPiece(Piece selectedPiece) {
-        this.selectedPiece = selectedPiece;
-    }
 
     public void incrementCounter(){
         counter++;
     }
-
     public int getCounter(){
         return counter;
     }
@@ -58,5 +53,9 @@ public class State {
     public Piece getSelectedPiece(){
         return selectedPiece;
     }
+    public void setSelectedPiece(Piece selectedPiece) {
+        this.selectedPiece = selectedPiece;
+    }
+
 
 }

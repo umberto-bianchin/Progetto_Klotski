@@ -1,13 +1,12 @@
 package Model;
-
 import java.awt.Rectangle;
 
 enum Direction {DX, SX, UP, DOWN }
 
 public class Move {
 
-    private Rectangle block;
-    private Direction direction;
+    private final Rectangle block;
+    private final Direction direction;
 
     public Move(Rectangle b, Direction d){
         block = b;

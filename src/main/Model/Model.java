@@ -1,8 +1,6 @@
 package Model;
 
-
 import java.awt.*;
-import java.io.IOException;
 
 public class Model {
 

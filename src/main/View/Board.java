@@ -1,6 +1,5 @@
 package View;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -31,7 +30,6 @@ public class Board extends JPanel {
         displayedCounter.setSize(400, 40);
         add(displayedCounter);
 
-
     }
 
     public void setDisplayedCounter(int step){
@@ -54,14 +52,14 @@ public class Board extends JPanel {
         this.addMouseListener(listener);
     }
 
-    public void setPieces(Rectangle[] initialPosition) throws IOException {
+    public void setPiecesRepresentation(Rectangle[] initialPosition) throws IOException {
         for(int i=0; i<10; i++) {
             piecesRepresentations[i] = new PieceRepresentation(initialPosition[i]);
             add(piecesRepresentations[i]);
         }
         repaint();
     }
-    public PieceRepresentation[] getPieces() {
+    public PieceRepresentation[] getPiecesRepresentation() {
         return piecesRepresentations;
     }
 }

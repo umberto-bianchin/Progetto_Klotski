@@ -10,7 +10,6 @@ public class Main {
         View view = new View();
         Model model = new Model();
 
-
         Controller game = new Controller(view, model);
 
     }
