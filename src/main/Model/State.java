@@ -35,6 +35,12 @@ public class State {
         }
     }
 
+    public void setCurrent_config(Rectangle[] saved_config){
+        for(int i=0; i<10; i++){
+            current_config[i].setPosition(saved_config[i]);
+        }
+    }
+
     public Rectangle[] getInitial_config(){
         return initial_config;
     }

@@ -53,9 +53,19 @@ public class Board extends JPanel {
     }
 
     public void setPiecesRepresentation(Rectangle[] initialPosition) throws IOException {
+
+
+
         for(int i=0; i<10; i++) {
             piecesRepresentations[i] = new PieceRepresentation(initialPosition[i]);
             add(piecesRepresentations[i]);
+        }
+        repaint();
+    }
+
+    public void removePiecesRepresentation(Rectangle[] initialPosition){
+        for(int i=0; i<10; i++) {
+            piecesRepresentations[i].setBounds(initialPosition[i]);
         }
         repaint();
     }

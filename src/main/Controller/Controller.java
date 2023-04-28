@@ -4,6 +4,8 @@ import View.*;
 import Model.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -11,8 +13,8 @@ import java.io.IOException;
 
 public class Controller {
 
-    private final View view;
-    private final Model model;
+    private View view;
+    private Model model;
 
     public Controller(View view, Model model) throws IOException {
 
@@ -26,6 +28,10 @@ public class Controller {
 
         view.getBoard().addListener(new BoardListener());
         view.getBoard().setDisplayedCounter(model.getState().getCounter());
+
+        ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand()};
+
+        view.getButtons().addCommand(actionListeners);
 
     }
 
@@ -97,6 +103,48 @@ public class Controller {
 
     }
 
+    class NextCommand implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        }
+    }
+
+    class RestartCommand implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            model = new Model();
+
+                //view.destroy();
+                //view = new View();
+            view.getBoard().removePiecesRepresentation(model.getState().getInitial_config());
+            model.getState().setCurrent_config(model.getState().getInitial_config());
+
+                    for(Piece piece : model.getState().getCurrent_config())
+                        piece.updateAvailable();
+
+            model.getState().setSelectedPiece(null);
+
+
+        }
+    }
+
+    class SaveCommand implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class UndoCommand implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
 }
 
 

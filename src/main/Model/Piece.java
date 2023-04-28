@@ -18,7 +18,7 @@ public class Piece {
     }
 
 
-    private void updateAvailable() {
+    public void updateAvailable() {
 
         for (int i = 0; i < 4; i++)
             availableMoves[i] = new Rectangle(position);
@@ -51,4 +51,7 @@ public class Piece {
         return null;
     }
 
+    public void setPosition(Rectangle position) {
+        this.position = position;
+    }
 }
