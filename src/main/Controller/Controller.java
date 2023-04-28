@@ -1,7 +1,9 @@
 package Controller;
 
-import View.*;
-import Model.*;
+import Model.Model;
+import Model.Piece;
+import View.Block;
+import View.View;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,21 +15,22 @@ import java.io.IOException;
 
 public class Controller {
 
-    private View view;
-    private Model model;
+    private final View view;
+    private final Model model;
 
     public Controller(View view, Model model) throws IOException {
 
         this.view = view;
         this.model = model;
-        view.getBoard().setPiecesRepresentation(model.getState().getInitial_config());
 
-        for (PieceRepresentation piece : view.getBoard().getPiecesRepresentation()) {
-            piece.addListener(new PieceListener(piece));
+        view.setPositionBlocks(model.getState().getInitial_config());
+
+        for (Block piece : view.getBlocksRepresentation()) {
+            piece.addListener(new BlockListener(piece));
         }
 
-        view.getBoard().addListener(new BoardListener());
-        view.getBoard().setDisplayedCounter(model.getState().getCounter());
+        view.addBoardListener(new BoardListener());
+        view.setDisplayedCounter(model.getState().getCounter());
 
         ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand()};
 
@@ -40,6 +43,7 @@ public class Controller {
         Piece selectedPiece = model.getState().getSelectedPiece();
 
         if (selectedPiece != null) {
+
             Point click = new Point(e.getX(), e.getY());
             Rectangle possiblePosition = selectedPiece.checkAvailable(click);
             Rectangle window = new Rectangle(0, 0, 400, 500);
@@ -49,23 +53,23 @@ public class Controller {
             }
 
             for (Piece piece : model.getState().getCurrent_config()) {
-                if (piece!=selectedPiece && piece.intersection(possiblePosition)) {
+                if (piece != selectedPiece && piece.intersection(possiblePosition)) {
                     return;
                 }
             }
 
             boolean win = selectedPiece.move(possiblePosition);
-            view.getBoard().getSelectedPieceRepresentation().setBounds(possiblePosition);
+            view.moveSelectedBlock(possiblePosition);
 
             if (win) {
                 view.winMessage();
             }
 
-            view.getBoard().getSelectedPieceRepresentation().setBorder(false);
+            view.selectBlock(null);
             model.getState().setSelectedPiece(null);
 
             model.getState().incrementCounter();
-            view.getBoard().setDisplayedCounter(model.getState().getCounter());
+            view.setDisplayedCounter(model.getState().getCounter());
         }
     }
 
@@ -79,16 +83,16 @@ public class Controller {
 
     }
 
-    class PieceListener extends MouseAdapter {
+    class BlockListener extends MouseAdapter {
 
-        private final PieceRepresentation pieceRepresentationControlled;
+        private final Block blockControlled;
         private Piece pieceControlled;
 
-        public PieceListener(PieceRepresentation pieceRepresentation) {
-            pieceRepresentationControlled = pieceRepresentation;
+        public BlockListener(Block block) {
+            blockControlled = block;
 
             for (Piece piece : model.getState().getCurrent_config()) {
-                if (piece.getPosition().contains(pieceRepresentationControlled.getBounds())) {
+                if (piece.getPosition().contains(blockControlled.getBounds())) {
                     this.pieceControlled = piece;
                     return;
                 }
@@ -98,7 +102,7 @@ public class Controller {
         @Override
         public void mousePressed(MouseEvent e) {
             model.getState().setSelectedPiece(pieceControlled);
-            view.getBoard().selectPiece(pieceRepresentationControlled);
+            view.selectBlock(blockControlled);
         }
 
     }
@@ -114,18 +118,20 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            model = new Model();
 
-                //view.destroy();
-                //view = new View();
-            view.getBoard().removePiecesRepresentation(model.getState().getInitial_config());
+            try {
+                view.setPositionBlocks(model.getState().getInitial_config());
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+
             model.getState().setCurrent_config(model.getState().getInitial_config());
 
-                    for(Piece piece : model.getState().getCurrent_config())
-                        piece.updateAvailable();
-
             model.getState().setSelectedPiece(null);
+            view.selectBlock(null);
 
+            model.getState().resetCounter();
+            view.setDisplayedCounter(model.getState().getCounter());
 
         }
     }

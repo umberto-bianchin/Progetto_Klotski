@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.io.IOException;
 
 public class View {
@@ -12,65 +13,81 @@ public class View {
     Buttons buttons;
     JPanel mainPane;
 
-
-
-    public View() throws IOException {
-
-
+    public View() {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.add(mainPane);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setSize(new Dimension(550,620));
+        frame.setSize(new Dimension(550, 620));
 
         initUI();
-
         frame.add(mainPane);
-
-
     }
 
-    public void initUI(){
+    public void initUI() {
         mainPane = new JPanel();
         buttons = new Buttons();
         board = new Board();
 
-        buttons.setBounds(420,10,100,500);
+        buttons.setBounds(420, 10, 100, 500);
         mainPane.add(buttons);
 
-        board.setBounds(10,10,400,700);
+        board.setBounds(10, 10, 400, 700);
         mainPane.add(board);
 
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
-
     }
 
-    public Board getBoard(){
+    public Board getBoard() {
         return board;
     }
 
-    public void winMessage(){
+    public void winMessage() {
         JOptionPane.showMessageDialog(getBoard(), "Hai vinto!", "VITTORIA", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public Buttons getButtons(){
+    public Buttons getButtons() {
         return buttons;
     }
 
-    public void destroy(){
-        //mainPane.setVisible(false);
+//    public void destroy(){
+//        //mainPane.setVisible(false);
+//
+//        //frame.removeAll();
+//        frame.remove(mainPane);
+//        initUI();
+//        frame.add(mainPane);
+//        frame.revalidate();
+//        //frame.invalidate();
+//        //frame.validate();
+//        frame.repaint();
+//    }
 
-        //frame.removeAll();
-        frame.remove(mainPane);
-        initUI();
-        frame.add(mainPane);
-        frame.revalidate();
-        //frame.invalidate();
-        //frame.validate();
-        frame.repaint();
 
+    public void selectBlock(Block selected) {
+        board.highlightSelected(selected);
     }
+
+    public void moveSelectedBlock(Rectangle newPos){
+        board.moveSelectedBlock(newPos);
+    }
+
+    public void setDisplayedCounter(int step) {
+        board.setDisplayedCounter(step);
+    }
+
+    public void addBoardListener(MouseAdapter listener) {
+        board.addListener(listener);
+    }
+
+    public void setPositionBlocks(Rectangle[] position) throws IOException {
+        board.setPositions(position);
+    }
+
+    public Block[] getBlocksRepresentation() {
+        return board.getBlocksRepresentation();
+    }
+
 }

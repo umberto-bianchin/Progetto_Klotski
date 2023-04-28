@@ -52,6 +52,11 @@ public class State {
     public void incrementCounter(){
         counter++;
     }
+
+    public void resetCounter(){
+        counter=0;
+    }
+
     public int getCounter(){
         return counter;
     }

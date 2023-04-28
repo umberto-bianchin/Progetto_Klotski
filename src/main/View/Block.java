@@ -9,22 +9,17 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class PieceRepresentation extends JLabel{
+public class Block extends JLabel{
 
-
-    public PieceRepresentation(Rectangle initial_position) throws IOException {
-
-        setImage(initial_position);
-        setBounds(initial_position);
-
+    public void setBlockAppearance(Rectangle position) throws IOException{
+        setImage(position);
+        setBounds(position);
     }
-
 
     public void addListener(MouseAdapter listener){
         this.addMouseListener(listener);
+
     }
-
-
 
     private void setImage(Rectangle initial_position) throws IOException {
 
@@ -39,6 +34,4 @@ public class PieceRepresentation extends JLabel{
         else
             setBorder(null);
     }
-
-
 }

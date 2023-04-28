@@ -10,7 +10,9 @@ public class Piece {
 
     public Piece(Rectangle position){
         this.position = position;
-        updateAvailable();
+        for (int i = 0; i < 4; i++)
+            availableMoves[i] = new Rectangle();
+
     }
 
     public Rectangle getPosition(){
@@ -18,10 +20,10 @@ public class Piece {
     }
 
 
-    public void updateAvailable() {
+    private void updateAvailable() {
 
         for (int i = 0; i < 4; i++)
-            availableMoves[i] = new Rectangle(position);
+            availableMoves[i].setBounds(position);
 
         availableMoves[0].translate(-100, 0);
         availableMoves[1].translate(+100, 0);
@@ -32,8 +34,6 @@ public class Piece {
 
     public boolean move(Rectangle newPos) {
         position = newPos;
-        updateAvailable();
-
         return position.contains(FINISH_POSITION);
     }
 
@@ -42,6 +42,8 @@ public class Piece {
     }
 
     public Rectangle checkAvailable(Point p) {
+
+        updateAvailable();
 
         for (Rectangle available : availableMoves) {
             if (available.contains(p)) {
