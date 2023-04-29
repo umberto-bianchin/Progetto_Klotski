@@ -52,20 +52,6 @@ public class View {
         return buttons;
     }
 
-//    public void destroy(){
-//        //mainPane.setVisible(false);
-//
-//        //frame.removeAll();
-//        frame.remove(mainPane);
-//        initUI();
-//        frame.add(mainPane);
-//        frame.revalidate();
-//        //frame.invalidate();
-//        //frame.validate();
-//        frame.repaint();
-//    }
-
-
     public void selectBlock(Block selected) {
         board.highlightSelected(selected);
     }

@@ -22,9 +22,8 @@ public class Block extends JLabel{
     }
 
     private void setImage(Rectangle initial_position) throws IOException {
-
         BufferedImage myPicture = ImageIO.read(new File("./src/images/" + initial_position.width + "x" + initial_position.height + ".png"));
-       setIcon(new ImageIcon(myPicture));
+        setIcon(new ImageIcon(myPicture));
 
     }
 

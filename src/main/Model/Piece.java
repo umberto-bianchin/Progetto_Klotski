@@ -22,18 +22,21 @@ public class Piece {
 
     private void updateAvailable() {
 
-        for (int i = 0; i < 4; i++)
+
+        for (int i = 0; i < 4; i++) {
             availableMoves[i].setBounds(position);
+        }
 
         availableMoves[0].translate(-100, 0);
         availableMoves[1].translate(+100, 0);
         availableMoves[2].translate(0, +100);
         availableMoves[3].translate(0, -100);
 
+
     }
 
     public boolean move(Rectangle newPos) {
-        position = newPos;
+        position = new Rectangle(newPos);
         return position.contains(FINISH_POSITION);
     }
 
@@ -61,12 +64,14 @@ public class Piece {
         if(position.getX() - newPos.getX() == 0){
             if(position.getY() - newPos.getY() < 0)
                 return Direction.DOWN;
-            else
+            if(position.getY() - newPos.getY() > 0)
                 return Direction.UP;
         }
         if(position.getX() - newPos.getX() < 0)
             return Direction.DX;
 
+
         return Direction.SX;
+
     }
 }

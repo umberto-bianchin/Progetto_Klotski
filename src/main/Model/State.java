@@ -69,13 +69,10 @@ public class State {
     }
 
 
-    public void addMove(Move move){
-        moves.add(move);
+    public void addMove(Rectangle r, Direction d){
+        moves.add(new Move(r,d));
     }
 
-    public Move getMove(Rectangle r, Direction d){
-        return new Move(r,d);
-    }
     public Move getLastMove(){
         return moves.getLast();
     }
@@ -83,13 +80,5 @@ public class State {
     public void removeMove(){
         moves.removeLast();
     }
-
-    /*
-    public void print(){
-        System.out.println(moves.getLast().getBlock());
-        System.out.println(":");
-        System.out.println(moves.getLast().getDirection());
-    }
-    */
 
 }

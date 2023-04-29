@@ -5,15 +5,15 @@ enum Direction {DX, SX, UP, DOWN }
 
 public class Move {
 
-    private final Rectangle block;
+    private final Rectangle rectangle;
     private final Direction direction;
 
-    public Move(Rectangle b, Direction d){
-        block = b;
+    public Move(Rectangle r, Direction d){
+        rectangle = r;
         direction = d;
     }
 
-    public Rectangle getBlock(){return block;}
+    public Rectangle getRectangle(){return rectangle;}
     public Direction getDirection(){return direction;}
 
 }
