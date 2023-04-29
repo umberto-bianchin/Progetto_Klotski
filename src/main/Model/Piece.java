@@ -56,4 +56,17 @@ public class Piece {
     public void setPosition(Rectangle position) {
         this.position = position;
     }
+
+    public Direction getDirection(Rectangle newPos){
+        if(position.getX() - newPos.getX() == 0){
+            if(position.getY() - newPos.getY() < 0)
+                return Direction.DOWN;
+            else
+                return Direction.UP;
+        }
+        if(position.getX() - newPos.getX() < 0)
+            return Direction.DX;
+
+        return Direction.SX;
+    }
 }

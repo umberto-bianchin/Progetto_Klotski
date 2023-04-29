@@ -58,6 +58,11 @@ public class Controller {
                 }
             }
 
+            System.out.println(selectedPiece.getPosition());
+            System.out.println(":");
+            System.out.println(possiblePosition);
+            model.getState().addMove(model.getState().getMove(selectedPiece.getPosition(), selectedPiece.getDirection(possiblePosition)));
+
             boolean win = selectedPiece.move(possiblePosition);
             view.moveSelectedBlock(possiblePosition);
 
@@ -70,6 +75,9 @@ public class Controller {
 
             model.getState().incrementCounter();
             view.setDisplayedCounter(model.getState().getCounter());
+
+
+
         }
     }
 
