@@ -2,7 +2,7 @@ package Model;
 
 import java.awt.*;
 
-public class Piece {
+class Piece {
 
     private Rectangle position;
     private final Rectangle[] availableMoves = new Rectangle[4];

@@ -1,36 +1,61 @@
 package View;
 
-import Model.Piece;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.io.IOException;
 
 public class View {
 
-    JFrame frame = new JFrame("KLOTSKI's PUZZLE");
-
     Board board;
     Buttons buttons;
-    JPanel mainPane;
+    JFrame frame = new JFrame("KLOTSKI's PUZZLE");
+    JLabel mainPane = new JLabel();
+    Start start = new Start();
 
-    public View() {
+    public View(){
 
+        mainPane.setLayout(null);
+        mainPane.setBackground(Color.white);
+
+        initStart();
+
+        frame.add(mainPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setSize(new Dimension(550, 620));
+        frame.setResizable(false);
 
-        initUI();
-        frame.add(mainPane);
     }
 
-    public void initUI() {
-        mainPane = new JPanel();
+    public void initStart(){
+        mainPane.removeAll();
+
+        ImageIcon background = new ImageIcon("./src/images/background.png");
+        mainPane.setIcon(background);
+        mainPane.setOpaque(true);
+
+        JLabel title_text = new JLabel("Select a Configuration");
+        title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
+        title_text.setForeground(Color.white);
+        title_text.setBounds(50, 10, 500, 60);
+
+        mainPane.add(title_text);
+        mainPane.add(start);
+
+    }
+
+    public void initGame(Rectangle[] position) {
+
+        mainPane.removeAll();
+        mainPane.setIcon(null);
+
         buttons = new Buttons();
         board = new Board();
+
+        board.setPositions(position);
 
         buttons.setBounds(420, 10, 100, 500);
         mainPane.add(buttons);
@@ -38,28 +63,25 @@ public class View {
         board.setBounds(10, 10, 400, 700);
         mainPane.add(board);
 
-        mainPane.setLayout(null);
-        mainPane.setBackground(Color.white);
     }
 
-    public Board getBoard() {
-        return board;
+
+    public void restart(Rectangle[] initialPositions){
+        board.setPositions(initialPositions);
+        selectBlock(null);
+        setDisplayedCounter(0);
     }
 
     public void winMessage() {
-        JOptionPane.showMessageDialog(getBoard(), "Hai vinto!", "VITTORIA", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(board, "You won!", "WIN", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public Buttons getButtons() {
-        return buttons;
+    public void selectBlock(Component selected) {
+        board.highlightSelected((Block) selected);
     }
 
-    public void selectBlock(Block selected) {
-        board.highlightSelected(selected);
-    }
-
-    public void selectBlock(Point p){
-        board.selectBlock(p);
+    public void selectBlock(int x, int y){
+        board.selectBlock(new Point(x,y));
     }
 
     public void moveSelectedBlock(Rectangle newPos){
@@ -70,10 +92,6 @@ public class View {
         board.setDisplayedCounter(step);
     }
 
-    public void setPositionBlocks(Rectangle[] position) throws IOException {
-        board.setPositions(position);
-    }
-
     public void addBoardListener(MouseAdapter listener) {
         board.addListener(listener);
     }
@@ -82,8 +100,13 @@ public class View {
         board.addBlockListener(listener);
     }
 
+    public void addConfigurationListener(ActionListener listener){
+        start.addConfigurationListener(listener);
+    }
 
-
+    public void addButtonsListener(ActionListener[] listener){
+        buttons.addButtonListener(listener);
+    }
 
 
 }

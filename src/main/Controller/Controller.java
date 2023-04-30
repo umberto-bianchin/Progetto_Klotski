@@ -1,15 +1,14 @@
 package Controller;
 
 import Model.Model;
-import View.Block;
 import View.View;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 
 public class Controller {
@@ -17,21 +16,27 @@ public class Controller {
     private final View view;
     private final Model model;
 
-    public Controller(View view, Model model) throws IOException {
+    public Controller(View view, Model model) {
 
         this.view = view;
         this.model = model;
 
-        view.setPositionBlocks(model.getInitialPositions());
+        view.addConfigurationListener(new ConfigurationListener());
+
+    }
+
+    private void start(int num_config) {
+
+        model.initState(num_config);
+        view.initGame(model.getInitialPositions(num_config));
 
         view.addBlockListener(new BlockListener());
 
         view.addBoardListener(new BoardListener());
         view.setDisplayedCounter(model.getCounter());
 
-        ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand()};
-
-        view.getButtons().addCommand(actionListeners);
+        ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand(), new HomeCommand()};
+        view.addButtonsListener(actionListeners);
 
     }
 
@@ -46,7 +51,7 @@ public class Controller {
         }
 
         view.moveSelectedBlock(possiblePosition);
-        view.selectBlock((Block) null);
+        view.selectBlock(null);
         view.setDisplayedCounter(model.getCounter());
 
     }
@@ -65,7 +70,7 @@ public class Controller {
         @Override
         public void mousePressed(MouseEvent e) {
             model.setSelectedPiece(e.getComponent().getLocation());
-            view.selectBlock((Block) e.getSource());
+            view.selectBlock(e.getComponent());
         }
 
     }
@@ -82,19 +87,8 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            try {
-                view.setPositionBlocks(model.getInitialPositions());
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-
-            model.setCurrentConfig(model.getInitialPositions());
-
-            model.setSelectedPiece(null);
-            view.selectBlock((Block) null);
-
-            model.resetCounter();
-            view.setDisplayedCounter(model.getCounter());
+            model.restartState();
+            view.restart(model.getInitialPositions());
 
         }
     }
@@ -120,12 +114,28 @@ public class Controller {
 
             model.undo(initial_position, final_location);
 
-            view.selectBlock(final_location);
+            view.selectBlock(final_location.x, final_location.y);
             view.moveSelectedBlock(initial_position);
 
             view.setDisplayedCounter(model.getCounter());
-            view.selectBlock((Block) null);
+            view.selectBlock(null);
 
+        }
+    }
+
+    class HomeCommand implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            model.restartState();
+            view.initStart();
+        }
+    }
+
+    class ConfigurationListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int num_config = Integer.parseInt(((JButton)e.getSource()).getName());
+            start(num_config);
         }
     }
 }

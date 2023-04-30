@@ -1,11 +1,8 @@
 package View;
 
-import Model.Piece;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.io.IOException;
 
 class Board extends JPanel {
 
@@ -69,10 +66,10 @@ class Board extends JPanel {
     }
 
     public void addListener(MouseAdapter listener) {
-        this.addMouseListener(listener);
+        addMouseListener(listener);
     }
 
-    public void setPositions(Rectangle[] position) throws IOException {
+    public void setPositions(Rectangle[] position) {
 
         for (int i = 0; i < 10; i++) {
             blocks[i].setBlockAppearance(position[i]);

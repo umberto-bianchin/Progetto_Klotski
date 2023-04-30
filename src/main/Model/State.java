@@ -3,7 +3,7 @@ package Model;
 import java.awt.*;
 import java.util.LinkedList;
 
-public class State {
+class State {
 
     LinkedList<Move> moves;
     Rectangle[] initial_config;
@@ -11,12 +11,14 @@ public class State {
     private Piece selectedPiece;
     private int counter = 0;
     private boolean win=false;
+    private int initial_conf;
 
 
 
     // nuova partita => configurazione iniziale
-    public State(Rectangle[] config){
+    public State(Rectangle[] config, int conf){
         initial_config = config;
+        initial_conf = conf;
         moves = new LinkedList<>();
 
         current_config = new Piece[10];
@@ -27,8 +29,9 @@ public class State {
     }
 
     //partita iniziata => mosse, configurazione iniziale (per il reset) e finale
-    public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config){
+    public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config, int conf){
         moves = saved_moves;
+        initial_conf = conf;
         initial_config = starting_config;
 
         current_config = new Piece[10];
@@ -46,11 +49,6 @@ public class State {
     public Rectangle[] getInitialPositions(){
         return initial_config;
     }
-
-    public Piece[] getCurrent_config(){
-        return current_config;
-    }
-
 
     public void setCounter(int i){
         counter = i;

@@ -4,13 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-import Controller.*;
-
 public class Buttons extends JPanel {
 
-    private final JButton[] buttons = new JButton[4];
+    private final JButton[] buttons = new JButton[5];
 
-    public Buttons(){
+     Buttons(){
 
         setBackground(Color.white);
         setLayout(null);
@@ -19,12 +17,13 @@ public class Buttons extends JPanel {
         buttons[1] = new JButton(new ImageIcon("./src/images/save.png"));
         buttons[2] = new JButton(new ImageIcon("./src/images/next.png"));
         buttons[3] = new JButton(new ImageIcon("./src/images/undo.png"));
+        buttons[4] = new JButton(new ImageIcon("./src/images/home.png"));
 
         buttons[0].setBounds(0, 0, 100, 100);
-        buttons[1].setBounds(0, 120, 100, 100);
-        buttons[2].setBounds(0, 240, 100, 100);
-        buttons[3].setBounds(0, 360, 100, 100);
-
+        buttons[1].setBounds(0, 100, 100, 100);
+        buttons[2].setBounds(0, 200, 100, 100);
+        buttons[3].setBounds(0, 300, 100, 100);
+        buttons[4].setBounds(0, 400, 100, 100);
 
         for(JButton button : buttons){
             button.setBorder(null);
@@ -33,9 +32,9 @@ public class Buttons extends JPanel {
         }
     }
 
-    public void addCommand(ActionListener[] command){
+    public void addButtonListener(ActionListener[] command){
 
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<5; i++) {
             buttons[i].addActionListener(command[i]);
         }
 

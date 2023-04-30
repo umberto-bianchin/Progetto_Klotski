@@ -1,17 +1,13 @@
 package View;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 
-public class Block extends JLabel{
+class Block extends JLabel{
 
-    public void setBlockAppearance(Rectangle position) throws IOException{
+    public void setBlockAppearance(Rectangle position){
         setImage(position);
         setBounds(position);
     }
@@ -21,10 +17,9 @@ public class Block extends JLabel{
 
     }
 
-    private void setImage(Rectangle initial_position) throws IOException {
-        BufferedImage myPicture = ImageIO.read(new File("./src/images/" + initial_position.width + "x" + initial_position.height + ".png"));
-        setIcon(new ImageIcon(myPicture));
-
+    private void setImage(Rectangle initial_position) {
+        ImageIcon myPicture = new ImageIcon("./src/images/" + initial_position.width + "x" + initial_position.height + ".png");
+        setIcon(myPicture);
     }
 
     public void setBorder(boolean on){

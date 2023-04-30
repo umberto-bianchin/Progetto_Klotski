@@ -6,7 +6,6 @@ public class Move {
     private final Rectangle initial_pos;
     private final Rectangle final_pos;
 
-
     public Move(Rectangle i, Rectangle f){
         initial_pos = i;
         final_pos = f;
