@@ -1,19 +1,18 @@
 package Model;
 import java.awt.Rectangle;
 
-enum Direction {DX, SX, UP, DOWN }
-
 public class Move {
 
-    private final Rectangle rectangle;
-    private final Direction direction;
+    private final Rectangle initial_pos;
+    private final Rectangle final_pos;
 
-    public Move(Rectangle r, Direction d){
-        rectangle = r;
-        direction = d;
+
+    public Move(Rectangle i, Rectangle f){
+        initial_pos = i;
+        final_pos = f;
     }
 
-    public Rectangle getRectangle(){return rectangle;}
-    public Direction getDirection(){return direction;}
+    public Rectangle getInitialPosition(){return initial_pos;}
+    public Rectangle getFinalPosition(){return final_pos;}
 
 }

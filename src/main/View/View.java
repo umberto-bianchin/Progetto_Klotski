@@ -1,5 +1,7 @@
 package View;
 
+import Model.Piece;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -56,6 +58,10 @@ public class View {
         board.highlightSelected(selected);
     }
 
+    public void selectBlock(Point p){
+        board.selectBlock(p);
+    }
+
     public void moveSelectedBlock(Rectangle newPos){
         board.moveSelectedBlock(newPos);
     }
@@ -64,16 +70,20 @@ public class View {
         board.setDisplayedCounter(step);
     }
 
-    public void addBoardListener(MouseAdapter listener) {
-        board.addListener(listener);
-    }
-
     public void setPositionBlocks(Rectangle[] position) throws IOException {
         board.setPositions(position);
     }
 
-    public Block[] getBlocksRepresentation() {
-        return board.getBlocksRepresentation();
+    public void addBoardListener(MouseAdapter listener) {
+        board.addListener(listener);
     }
+
+    public void addBlockListener(MouseAdapter listener){
+        board.addBlockListener(listener);
+    }
+
+
+
+
 
 }

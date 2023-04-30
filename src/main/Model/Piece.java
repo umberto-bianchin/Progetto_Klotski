@@ -8,6 +8,7 @@ public class Piece {
     private final Rectangle[] availableMoves = new Rectangle[4];
     private static final Rectangle FINISH_POSITION = new Rectangle(100, 300, 200, 200);
 
+
     public Piece(Rectangle position){
         this.position = position;
         for (int i = 0; i < 4; i++)
@@ -56,22 +57,13 @@ public class Piece {
         return null;
     }
 
+    public boolean contains(Point p){
+        return position.contains(p);
+    }
+
+
     public void setPosition(Rectangle position) {
         this.position = position;
     }
 
-    public Direction getDirection(Rectangle newPos){
-        if(position.getX() - newPos.getX() == 0){
-            if(position.getY() - newPos.getY() < 0)
-                return Direction.DOWN;
-            if(position.getY() - newPos.getY() > 0)
-                return Direction.UP;
-        }
-        if(position.getX() - newPos.getX() < 0)
-            return Direction.DX;
-
-
-        return Direction.SX;
-
-    }
 }

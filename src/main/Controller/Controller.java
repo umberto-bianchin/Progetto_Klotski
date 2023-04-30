@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Model;
-import Model.Piece;
 import View.Block;
 import View.View;
 
@@ -23,14 +22,12 @@ public class Controller {
         this.view = view;
         this.model = model;
 
-        view.setPositionBlocks(model.getState().getInitial_config());
+        view.setPositionBlocks(model.getInitialPositions());
 
-        for (Block piece : view.getBlocksRepresentation()) {
-            piece.addListener(new BlockListener(piece));
-        }
+        view.addBlockListener(new BlockListener());
 
         view.addBoardListener(new BoardListener());
-        view.setDisplayedCounter(model.getState().getCounter());
+        view.setDisplayedCounter(model.getCounter());
 
         ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand()};
 
@@ -38,44 +35,20 @@ public class Controller {
 
     }
 
-    private void move(MouseEvent e) {
+    private void move(Point p) {
 
-        Piece selectedPiece = model.getState().getSelectedPiece();
+        Rectangle possiblePosition = model.moveSelectedPiece(p);
+        if(possiblePosition == null)
+            return;
 
-        if (selectedPiece != null) {
-
-            Point click = new Point(e.getX(), e.getY());
-            Rectangle possiblePosition = selectedPiece.checkAvailable(click);
-            Rectangle window = new Rectangle(0, 0, 400, 500);
-
-            if (possiblePosition == null || !window.contains(possiblePosition)) {
-                return;
-            }
-
-            for (Piece piece : model.getState().getCurrent_config()) {
-                if (piece != selectedPiece && piece.intersection(possiblePosition)) {
-                    return;
-                }
-            }
-
-            model.getState().addMove(selectedPiece.getPosition(), selectedPiece.getDirection(possiblePosition));
-
-            boolean win = selectedPiece.move(possiblePosition);
-            view.moveSelectedBlock(possiblePosition);
-
-            if (win) {
-                view.winMessage();
-            }
-
-            view.selectBlock(null);
-            model.getState().setSelectedPiece(null);
-
-            model.getState().incrementCounter();
-            view.setDisplayedCounter(model.getState().getCounter());
-
-
-
+        if (model.hasWin()) {
+            view.winMessage();
         }
+
+        view.moveSelectedBlock(possiblePosition);
+        view.selectBlock((Block) null);
+        view.setDisplayedCounter(model.getCounter());
+
     }
 
 
@@ -83,31 +56,16 @@ public class Controller {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            move(e);
+            move(e.getPoint());
         }
-
     }
 
-    class BlockListener extends MouseAdapter {
-
-        private final Block blockControlled;
-        private Piece pieceControlled;
-
-        public BlockListener(Block block) {
-            blockControlled = block;
-
-            for (Piece piece : model.getState().getCurrent_config()) {
-                if (piece.getPosition().contains(blockControlled.getBounds())) {
-                    this.pieceControlled = piece;
-                    return;
-                }
-            }
-        }
+    class BlockListener extends MouseAdapter{
 
         @Override
         public void mousePressed(MouseEvent e) {
-            model.getState().setSelectedPiece(pieceControlled);
-            view.selectBlock(blockControlled);
+            model.setSelectedPiece(e.getComponent().getLocation());
+            view.selectBlock((Block) e.getSource());
         }
 
     }
@@ -125,18 +83,18 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
 
             try {
-                view.setPositionBlocks(model.getState().getInitial_config());
+                view.setPositionBlocks(model.getInitialPositions());
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
 
-            model.getState().setCurrent_config(model.getState().getInitial_config());
+            model.setCurrentConfig(model.getInitialPositions());
 
-            model.getState().setSelectedPiece(null);
-            view.selectBlock(null);
+            model.setSelectedPiece(null);
+            view.selectBlock((Block) null);
 
-            model.getState().resetCounter();
-            view.setDisplayedCounter(model.getState().getCounter());
+            model.resetCounter();
+            view.setDisplayedCounter(model.getCounter());
 
         }
     }
@@ -153,6 +111,21 @@ public class Controller {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            if(model.getCounter() == 0)
+                return;
+
+            Rectangle initial_position = model.getLastMove().getInitialPosition();
+            Point final_location = model.getLastMove().getFinalPosition().getLocation();
+
+            model.undo(initial_position, final_location);
+
+            view.selectBlock(final_location);
+            view.moveSelectedBlock(initial_position);
+
+            view.setDisplayedCounter(model.getCounter());
+            view.selectBlock((Block) null);
+
         }
     }
 }

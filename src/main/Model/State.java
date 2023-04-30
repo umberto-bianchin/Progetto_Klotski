@@ -10,6 +10,8 @@ public class State {
     Piece[] current_config;
     private Piece selectedPiece;
     private int counter = 0;
+    private boolean win=false;
+
 
 
     // nuova partita => configurazione iniziale
@@ -35,50 +37,93 @@ public class State {
         }
     }
 
-    public void setCurrent_config(Rectangle[] saved_config){
+    public void setCurrentConfig(Rectangle[] saved_config){
         for(int i=0; i<10; i++){
             current_config[i].setPosition(saved_config[i]);
         }
     }
 
-    public Rectangle[] getInitial_config(){
+    public Rectangle[] getInitialPositions(){
         return initial_config;
     }
+
     public Piece[] getCurrent_config(){
         return current_config;
     }
 
 
-    public void incrementCounter(){
-        counter++;
-    }
-
-    public void resetCounter(){
-        counter=0;
+    public void setCounter(int i){
+        counter = i;
     }
 
     public int getCounter(){
         return counter;
     }
 
-    public Piece getSelectedPiece(){
-        return selectedPiece;
-    }
-    public void setSelectedPiece(Piece selectedPiece) {
-        this.selectedPiece = selectedPiece;
+    public void setSelectedPiece(Point p) {
+
+        if(p==null){
+            selectedPiece = null;
+            return;
+        }
+
+        for(Piece piece : current_config) {
+            if(piece.contains(p))
+                selectedPiece = piece;
+        }
     }
 
+    public boolean checkIntersection(Rectangle possiblePosition){
 
-    public void addMove(Rectangle r, Direction d){
-        moves.add(new Move(r,d));
+        for (Piece piece : current_config) {
+            if (piece != selectedPiece && piece.intersection(possiblePosition)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Rectangle moveSelectedPiece(Point p){
+
+        if(selectedPiece == null)
+            return null;
+
+        Rectangle possiblePosition = selectedPiece.checkAvailable(p);
+        Rectangle window = new Rectangle(0, 0, 400, 500);
+
+        if (possiblePosition == null || !window.contains(possiblePosition)) {
+            return null;
+        }
+
+        if(checkIntersection(possiblePosition))
+            return null;
+
+        addMove(selectedPiece.getPosition(), possiblePosition);
+        win = selectedPiece.move(possiblePosition);
+        setSelectedPiece(null);
+        counter++;
+
+        return possiblePosition;
+
+    }
+
+    public void addMove(Rectangle i, Rectangle f){
+        moves.add(new Move(i,f));
     }
 
     public Move getLastMove(){
         return moves.getLast();
     }
 
-    public void removeMove(){
+    public boolean getWin(){return win;}
+
+    public void undo(Rectangle initialPosition, Point finalLocation){
+        setSelectedPiece(finalLocation);
+        moveSelectedPiece(initialPosition.getLocation());
         moves.removeLast();
+        moves.removeLast();
+        counter -=2;
     }
 
 }

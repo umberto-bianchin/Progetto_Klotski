@@ -17,8 +17,40 @@ private final State state;
 
     }
 
-    public State getState(){
-        return state;
+    public Rectangle[] getInitialPositions(){
+        return state.getInitialPositions();
+    }
+
+    public void setCurrentConfig(Rectangle[] positions){
+        state.setCurrentConfig(positions);
+    }
+
+    public void setSelectedPiece(Point p){
+        state.setSelectedPiece(p);
+    }
+
+    public Rectangle moveSelectedPiece(Point p){
+        return state.moveSelectedPiece(p);
+    }
+
+    public boolean hasWin(){
+        return state.getWin();
+    }
+
+    public int getCounter(){
+        return state.getCounter();
+    }
+
+    public void resetCounter(){
+        state.setCounter(0);
+    }
+
+    public Move getLastMove(){
+        return state.getLastMove();
+    }
+
+    public void undo(Rectangle initialPosition, Point finalLocation){
+        state.undo(initialPosition, finalLocation);
     }
 
 

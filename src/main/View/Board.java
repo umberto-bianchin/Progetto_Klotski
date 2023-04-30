@@ -1,5 +1,7 @@
 package View;
 
+import Model.Piece;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -53,6 +55,19 @@ class Board extends JPanel {
             selectedBlock.setBorder(true);
     }
 
+    public void selectBlock(Point p){
+        if(p==null){
+            selectedBlock = null;
+            return;
+        }
+
+        for(Block block : blocks) {
+            if(block.getBounds().contains(p))
+                selectedBlock = block;
+        }
+
+    }
+
     public void addListener(MouseAdapter listener) {
         this.addMouseListener(listener);
     }
@@ -64,8 +79,10 @@ class Board extends JPanel {
         }
     }
 
-    public Block[] getBlocksRepresentation() {
-        return blocks;
+    public void addBlockListener(MouseAdapter listener){
+        for(Block block : blocks){
+            block.addListener(listener);
+        }
     }
 }
 
