@@ -87,7 +87,6 @@ public class View {
 
     public void moveSelectedBlock(Rectangle newPos, int count){
         board.moveSelectedBlock(newPos, count);
-
     }
 
     public void addBoardListener(MouseAdapter listener) {

@@ -45,7 +45,7 @@ Vector<Rectangle[]> initial_conf = new Vector<>();
     }
 
     public void restartState(){
-        resetCounter();
+        state.setCounter(0);
         state.setCurrentConfig(getInitialPositions());
         setSelectedPiece(null);
     }
@@ -72,10 +72,6 @@ Vector<Rectangle[]> initial_conf = new Vector<>();
 
     public int getCounter(){
         return state.getCounter();
-    }
-
-    public void resetCounter(){
-        state.setCounter(0);
     }
 
     public Move getLastMove(){

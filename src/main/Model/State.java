@@ -67,17 +67,6 @@ class State {
         }
     }
 
-    public boolean checkIntersection(Rectangle possiblePosition){
-
-        for (Piece piece : current_config) {
-            if (piece != selectedPiece && piece.intersection(possiblePosition)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public Rectangle moveSelectedPiece(Point p){
 
         if(selectedPiece == null)
@@ -90,8 +79,11 @@ class State {
             return null;
         }
 
-        if(checkIntersection(possiblePosition))
-            return null;
+        for (Piece piece : current_config) {
+            if (piece != selectedPiece && piece.intersection(possiblePosition)) {
+                return null;
+            }
+        }
 
         moves.add(new Move(selectedPiece.getPosition(),possiblePosition));
         win = selectedPiece.move(possiblePosition);

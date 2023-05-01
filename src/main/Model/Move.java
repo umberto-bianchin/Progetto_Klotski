@@ -12,8 +12,6 @@ public class Move {
 
     }
 
-
-
     public Rectangle getInitialPosition(){return initial_pos;}
     public Rectangle getFinalPosition(){return final_pos;}
 

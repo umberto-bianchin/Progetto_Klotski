@@ -14,7 +14,6 @@ class Block extends JLabel{
 
     public void addListener(MouseAdapter listener){
         this.addMouseListener(listener);
-
     }
 
     private void setImage(Rectangle initial_position) {
