@@ -97,17 +97,13 @@ class State {
         if(checkIntersection(possiblePosition))
             return null;
 
-        addMove(selectedPiece.getPosition(), possiblePosition);
+        moves.add(new Move(selectedPiece.getPosition(),possiblePosition));
         win = selectedPiece.move(possiblePosition);
         setSelectedPiece(null);
         counter++;
 
         return possiblePosition;
 
-    }
-
-    public void addMove(Rectangle i, Rectangle f){
-        moves.add(new Move(i,f));
     }
 
     public Move getLastMove(){

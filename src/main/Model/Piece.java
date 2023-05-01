@@ -13,17 +13,13 @@ class Piece {
         this.position = position;
         for (int i = 0; i < 4; i++)
             availableMoves[i] = new Rectangle();
-
     }
 
     public Rectangle getPosition(){
         return position;
     }
 
-
     private void updateAvailable() {
-
-
         for (int i = 0; i < 4; i++) {
             availableMoves[i].setBounds(position);
         }
@@ -32,7 +28,6 @@ class Piece {
         availableMoves[1].translate(+100, 0);
         availableMoves[2].translate(0, +100);
         availableMoves[3].translate(0, -100);
-
 
     }
 

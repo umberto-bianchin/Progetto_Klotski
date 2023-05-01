@@ -86,4 +86,5 @@ Vector<Rectangle[]> initial_conf = new Vector<>();
         state.undo(initialPosition, finalLocation);
     }
 
+
 }
