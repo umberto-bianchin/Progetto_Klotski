@@ -112,9 +112,12 @@ class State {
 
     public boolean getWin(){return win;}
 
-    public void undo(Rectangle initialPosition, Point finalLocation){
-        setSelectedPiece(finalLocation);
-        moveSelectedPiece(initialPosition.getLocation());
+    public void undo(){
+
+        Move lastMove = moves.getLast();
+
+        setSelectedPiece(lastMove.getFinalPosition().getLocation());
+        moveSelectedPiece(lastMove.getInitialPosition().getLocation());
         moves.removeLast();
         moves.removeLast();
         counter -=2;

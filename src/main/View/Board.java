@@ -21,7 +21,7 @@ class Board extends JPanel {
         line.setSize(200, 10);
         add(line);
 
-        displayedCounter = new JLabel();
+        displayedCounter = new JLabel("Step 0");
         displayedCounter.setHorizontalAlignment(JLabel.CENTER);
         displayedCounter.setBackground(Color.white);
         displayedCounter.setFont(new Font("Serif", Font.BOLD, 25));
@@ -39,8 +39,10 @@ class Board extends JPanel {
         displayedCounter.setText("Step " + step);
     }
 
-    public void moveSelectedBlock(Rectangle newPos) {
+    public void moveSelectedBlock(Rectangle newPos, int count) {
         selectedBlock.setBounds(newPos);
+        highlightSelected(null);
+        setDisplayedCounter(count);
     }
 
     public void highlightSelected(Block selected) {

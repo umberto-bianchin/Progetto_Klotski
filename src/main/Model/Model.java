@@ -82,8 +82,8 @@ Vector<Rectangle[]> initial_conf = new Vector<>();
         return state.getLastMove();
     }
 
-    public void undo(Rectangle initialPosition, Point finalLocation){
-        state.undo(initialPosition, finalLocation);
+    public void undo(){
+        state.undo();
     }
 
 

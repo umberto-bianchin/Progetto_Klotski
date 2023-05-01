@@ -31,9 +31,7 @@ public class Controller {
         view.initGame(model.getInitialPositions(num_config));
 
         view.addBlockListener(new BlockListener());
-
         view.addBoardListener(new BoardListener());
-        view.setDisplayedCounter(model.getCounter());
 
         ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand(), new HomeCommand()};
         view.addButtonsListener(actionListeners);
@@ -43,6 +41,7 @@ public class Controller {
     private void move(Point p) {
 
         Rectangle possiblePosition = model.moveSelectedPiece(p);
+
         if(possiblePosition == null)
             return;
 
@@ -50,10 +49,7 @@ public class Controller {
             view.winMessage();
         }
 
-        view.moveSelectedBlock(possiblePosition);
-        view.selectBlock(null);
-        view.setDisplayedCounter(model.getCounter());
-
+        view.moveSelectedBlock(possiblePosition, model.getCounter());
     }
 
 
@@ -112,13 +108,8 @@ public class Controller {
             Rectangle initial_position = model.getLastMove().getInitialPosition();
             Point final_location = model.getLastMove().getFinalPosition().getLocation();
 
-            model.undo(initial_position, final_location);
-
-            view.selectBlock(final_location.x, final_location.y);
-            view.moveSelectedBlock(initial_position);
-
-            view.setDisplayedCounter(model.getCounter());
-            view.selectBlock(null);
+            model.undo();
+            view.undo(initial_position, final_location, model.getCounter());
 
         }
     }

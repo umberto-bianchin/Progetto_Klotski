@@ -65,11 +65,16 @@ public class View {
 
     }
 
-
     public void restart(Rectangle[] initialPositions){
         board.setPositions(initialPositions);
-        selectBlock(null);
-        setDisplayedCounter(0);
+        board.highlightSelected(null);
+        board.setDisplayedCounter(0);
+    }
+
+    public void undo(Rectangle initial_position, Point final_location, int step){
+        board.highlightSelected(null);
+        board.selectBlock(new Point(final_location));
+        board.moveSelectedBlock(initial_position, step);
     }
 
     public void winMessage() {
@@ -80,16 +85,9 @@ public class View {
         board.highlightSelected((Block) selected);
     }
 
-    public void selectBlock(int x, int y){
-        board.selectBlock(new Point(x,y));
-    }
+    public void moveSelectedBlock(Rectangle newPos, int count){
+        board.moveSelectedBlock(newPos, count);
 
-    public void moveSelectedBlock(Rectangle newPos){
-        board.moveSelectedBlock(newPos);
-    }
-
-    public void setDisplayedCounter(int step) {
-        board.setDisplayedCounter(step);
     }
 
     public void addBoardListener(MouseAdapter listener) {
