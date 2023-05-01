@@ -11,11 +11,8 @@ class State {
     private Piece selectedPiece;
     private int counter = 0;
     private boolean win=false;
-    private int initial_conf;
+    private final int initial_conf;
 
-
-
-    // nuova partita => configurazione iniziale
     public State(Rectangle[] config, int conf){
         initial_config = config;
         initial_conf = conf;
@@ -28,7 +25,6 @@ class State {
 
     }
 
-    //partita iniziata => mosse, configurazione iniziale (per il reset) e finale
     public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config, int conf){
         moves = saved_moves;
         initial_conf = conf;
@@ -99,7 +95,7 @@ class State {
 
         moves.add(new Move(selectedPiece.getPosition(),possiblePosition));
         win = selectedPiece.move(possiblePosition);
-        setSelectedPiece(null);
+        selectedPiece = null;
         counter++;
 
         return possiblePosition;
@@ -115,12 +111,11 @@ class State {
     public void undo(){
 
         Move lastMove = moves.getLast();
-
         setSelectedPiece(lastMove.getFinalPosition().getLocation());
-        moveSelectedPiece(lastMove.getInitialPosition().getLocation());
+        selectedPiece.move(lastMove.getInitialPosition());
+        selectedPiece = null;
         moves.removeLast();
-        moves.removeLast();
-        counter -=2;
+        counter--;
     }
 
 }

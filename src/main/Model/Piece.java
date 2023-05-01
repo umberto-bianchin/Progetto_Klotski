@@ -7,8 +7,7 @@ class Piece {
     private Rectangle position;
     private final Rectangle[] availableMoves = new Rectangle[4];
     private static final Rectangle FINISH_POSITION = new Rectangle(100, 300, 200, 200);
-
-
+    
     public Piece(Rectangle position){
         this.position = position;
         for (int i = 0; i < 4; i++)
