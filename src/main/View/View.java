@@ -57,7 +57,7 @@ public class View {
 
         board.setPositions(position);
 
-        buttons.setBounds(420, 10, 100, 500);
+        buttons.setBounds(420, 10, 100, 700);
         mainPane.add(buttons);
 
         board.setBounds(10, 10, 400, 700);

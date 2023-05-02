@@ -19,11 +19,11 @@ public class Buttons extends JPanel {
         buttons[3] = new JButton(new ImageIcon("./src/images/undo.png"));
         buttons[4] = new JButton(new ImageIcon("./src/images/home.png"));
 
-        buttons[0].setBounds(0, 0, 100, 100);
-        buttons[1].setBounds(0, 100, 100, 100);
-        buttons[2].setBounds(0, 200, 100, 100);
-        buttons[3].setBounds(0, 300, 100, 100);
-        buttons[4].setBounds(0, 400, 100, 100);
+         buttons[0].setBounds(0, 0, 100, 100);
+         buttons[1].setBounds(0, 110, 100, 100);
+         buttons[2].setBounds(0, 220, 100, 100);
+         buttons[3].setBounds(0, 330, 100, 100);
+         buttons[4].setBounds(0, 440, 100, 100);
 
         for(JButton button : buttons){
             button.setBorder(null);

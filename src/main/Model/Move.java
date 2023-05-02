@@ -12,7 +12,7 @@ public class Move {
 
     }
 
-    public Rectangle getInitialPosition(){return initial_pos;}
-    public Rectangle getFinalPosition(){return final_pos;}
+    public Rectangle getInitialPosition(){return new Rectangle(initial_pos);}
+    public Rectangle getFinalPosition(){return new Rectangle(final_pos);}
 
 }
