@@ -86,6 +86,7 @@ class State {
         }
 
         moves.add(new Move(selectedPiece.getPosition(),possiblePosition));
+
         win = selectedPiece.move(possiblePosition);
         selectedPiece = null;
         counter++;
