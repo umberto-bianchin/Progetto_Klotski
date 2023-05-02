@@ -23,7 +23,7 @@ private Database db = new Database();
 
 
     public void initState(int config){
-        //state = new State(initial_conf.get(config), config);
+        state = new State(initial_conf.get(config), config);
 
     }
 
@@ -63,6 +63,10 @@ private Database db = new Database();
 
     public void undo(){
         state.undo();
+    }
+
+    public Database getDatabase(){
+        return db;
     }
 
 

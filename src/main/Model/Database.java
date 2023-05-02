@@ -36,6 +36,8 @@ public class Database {
             rs = stmt.executeQuery(query);
         }
 
+        rs.close();
+        stmt.close();
         return true;
     }
 
@@ -56,6 +58,8 @@ public class Database {
             ret.addLast(temp);
         }
 
+        rs.close();
+        stmt.close();
         return ret;
     }
 
@@ -64,7 +68,14 @@ public class Database {
         String query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME="+id_game+" ORDER BY ID_MOSSA LIMIT 1;";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
-        return rs.getInt("ID_CONF");
+
+        int id_conf = rs.getInt("ID_CONF");
+
+        rs.close();
+        stmt.close();
+
+        return id_conf;
+
     }
 
 
@@ -82,6 +93,9 @@ public class Database {
             temp[count]= new Rectangle(x, y, width, height);
             count++;
         }
+
+        rs.close();
+        stmt.close();
         return temp;
     }
 
@@ -100,11 +114,19 @@ public class Database {
             temp[count]= new Rectangle(x, y, width, height);
             count++;
         }
+
+        rs.close();
+        stmt.close();
         return temp;
     }
 
     public boolean deleteGame(int id_game) {
+
         return false;
+    }
+
+    public void databaseClose() throws SQLException {
+        conn.close();
     }
 
 }
