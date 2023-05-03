@@ -131,9 +131,34 @@ public class Database {
         return false;
     }
 
+    public int login(String username, int password) throws SQLException{
+        Statement stmt = conn.createStatement();
+        String query = "SELECT ID_USER FROM users WHERE username="+username+" AND password="+password+";";
+        ResultSet rs = stmt.executeQuery(query);
+        rs.next();
+        int id_user = rs.getInt("ID_USER");
+        rs.close();
+        stmt.close();
+        return id_user;
+    }
+
+    public boolean registration(String username, String password) throws SQLException{
+        int user = username.hashCode();
+        int pass = password.hashCode();
+        int id = user+pass;
+        Statement stmt = conn.createStatement();
+        String query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
+        ResultSet rs = stmt.executeQuery(query);
+        rs.close();
+        stmt.close();
+        return true;
+    }
+
+
     public void databaseClose() throws SQLException {
         conn.close();
     }
+
 
 }
 
