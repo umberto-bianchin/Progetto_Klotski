@@ -12,6 +12,7 @@ public class View {
     JFrame frame = new JFrame("KLOTSKI's PUZZLE");
     JLabel mainPane = new JLabel();
     Start start = new Start();
+    Authentication authentication = new Authentication();
 
     public View(){
 
@@ -37,13 +38,14 @@ public class View {
         mainPane.setIcon(background);
         mainPane.setOpaque(true);
 
-        JLabel title_text = new JLabel("Select a Configuration");
+        JLabel title_text = new JLabel("Select a Configuration", SwingConstants.CENTER);
         title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
         title_text.setForeground(Color.white);
-        title_text.setBounds(50, 10, 500, 60);
+        title_text.setBounds(0, 20, 550, 50);
 
         mainPane.add(title_text);
         mainPane.add(start);
+        mainPane.add(authentication);
 
     }
 
@@ -105,5 +107,16 @@ public class View {
         buttons.addButtonListener(listener);
     }
 
+    public void addAuthListener(ActionListener listener){
+        authentication.addAuthListener(listener);
+    }
+
+    public String[] getCredentials(){
+        return authentication.getCredentials();
+    }
+
+    public void showAuthResult(boolean authenticated){
+        authentication.showAuthResult(authenticated);
+    }
 
 }

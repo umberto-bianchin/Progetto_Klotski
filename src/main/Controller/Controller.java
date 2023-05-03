@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Model;
 import View.View;
+import View.AuthenticationDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,8 @@ public class Controller {
         this.model = model;
 
         view.addConfigurationListener(new ConfigurationListener());
+        view.addAuthListener(new AuthListener());
+
 
     }
 
@@ -129,6 +132,31 @@ public class Controller {
             start(num_config);
         }
     }
+
+    class AuthListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            String user = view.getCredentials()[0];
+            String password = view.getCredentials()[1];
+
+            String type = ((JButton)e.getSource()).getText();
+
+            if(type.equals("Log in")) {
+                //boolean authenticated = db.login(user, password);
+                view.showAuthResult(false);
+
+            }
+            else if (type.equals("Sign up")){
+                //boolean sign_up = db.registration(user, password);
+                view.showAuthResult(true);
+            }
+
+        }
+    }
+
+
+
 }
 
 
