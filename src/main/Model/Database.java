@@ -126,9 +126,9 @@ public class Database {
         return temp;
     }
 
-    public boolean deleteGame(int id_game1) throws SQLException{
+    public boolean deleteGame(int id_game) throws SQLException{
         Statement stmt = conn.createStatement();
-        String query = "DELETE FROM games WHERE ID_GAME =" +id_game1+";";
+        String query = "DELETE FROM saved_moves WHERE ID_GAME =" +id_game+";";
         stmt.executeQuery(query);
         stmt.close();
 
