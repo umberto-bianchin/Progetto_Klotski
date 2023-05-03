@@ -7,23 +7,14 @@ import java.util.Vector;
 public class Model {
 
 private State state;
-
-Vector<Rectangle[]> initial_conf = new Vector<>();
 private Database db = new Database();
 
-    public Model() throws Exception {
-
-        initial_conf.add(db.getInitialConfig(0));
-        initial_conf.add(db.getInitialConfig(1));
-        initial_conf.add(db.getInitialConfig(2));
-        initial_conf.add(db.getInitialConfig(3));
-
-
-    }
-
-
     public void initState(int config){
-        state = new State(initial_conf.get(config), config);
+        try {
+            state = new State(db.getInitialConfig(config), config);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -31,10 +22,6 @@ private Database db = new Database();
         state.setCounter(0);
         state.setCurrentConfig(getInitialPositions());
         setSelectedPiece(null);
-    }
-
-    public Rectangle[] getInitialPositions(int i){
-        return initial_conf.get(i);
     }
 
     public Rectangle[] getInitialPositions(){
@@ -64,10 +51,5 @@ private Database db = new Database();
     public void undo(){
         state.undo();
     }
-
-    public Database getDatabase(){
-        return db;
-    }
-
 
 }

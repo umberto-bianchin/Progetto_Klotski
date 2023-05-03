@@ -11,10 +11,16 @@ public class Database {
     private final String username = "admin";
     private final String password = "mypassword";
 
-    public Database() throws Exception{
+    public Database() {
         //datbase connection
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        conn = DriverManager.getConnection(dbURL, username, password);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(dbURL, username, password);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("Connected to database");
 
     }

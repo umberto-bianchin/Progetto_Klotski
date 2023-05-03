@@ -28,7 +28,7 @@ public class Controller {
     private void start(int num_config) {
 
         model.initState(num_config);
-        view.initGame(model.getInitialPositions(num_config));
+        view.initGame(model.getInitialPositions());
 
         view.addBlockListener(new BlockListener());
         view.addBoardListener(new BoardListener());
