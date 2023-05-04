@@ -32,9 +32,9 @@ public class Database {
         ResultSet rs = null;
         for(int i=0; i<moves.size(); i++){
             Move move = moves.get(i);
-            query = "INSERT INTO saved_move(ID_GAME,width,height,x_ini,y_ini,x_fin,y_fin,ID_CONF) " +
-                    "VALUES("+id_game+","+move.getInitialPosition().width+","+move.getInitialPosition().height+","
-                    +move.getInitialPosition().x+","+move.getInitialPosition().y+","+move.getFinalPosition().x+","+move.getFinalPosition().y+","+initial_config+");";
+            query = "INSERT INTO saved_move(ID_GAME,ID_CONF,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
+                    "VALUES("+id_game+","+initial_config+","+id_player+","+move.getInitialPosition().width+","+move.getInitialPosition().height+","
+                    +move.getInitialPosition().x+","+move.getInitialPosition().y+","+move.getFinalPosition().x+","+move.getFinalPosition().y+");";
             rs = stmt.executeQuery(query);
         }
 
@@ -50,7 +50,7 @@ public class Database {
 
     public LinkedList<Move> getSavedMoves(int id_game) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM saved_move WHERE ID_GAME="+id_game+";";
+        String query = "SELECT * FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
         ResultSet rs = stmt.executeQuery(query);
         LinkedList<Move> ret = new LinkedList<Move>();
 
@@ -72,7 +72,7 @@ public class Database {
 
     public int getIdConf(int id_game) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME="+id_game+" ORDER BY ID_MOSSA LIMIT 1;";
+        String query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+" ORDER BY ID_MOSSA LIMIT 1;";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
 
@@ -109,7 +109,7 @@ public class Database {
 
     public Rectangle[] getFinalConfig(int id_game) throws SQLException{
         Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM saved_state WHERE ID_GAME=" + id_game+";";
+        String query = "SELECT * FROM saved_state WHERE ID_GAME=" + id_game+" AND ID_USER="+id_player+";";
         ResultSet rs = stmt.executeQuery(query);
         Rectangle[]temp = new Rectangle[10];
         int count = 0;
