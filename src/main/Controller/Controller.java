@@ -24,7 +24,7 @@ public class Controller {
 
         view.addConfigurationListener(new ConfigurationListener());
         view.addAuthListener(new AuthListener());
-
+        view.addLogOutListener(new LogOutListener());
 
     }
 
@@ -143,17 +143,27 @@ public class Controller {
             String type = ((JButton)e.getSource()).getText();
 
             if(type.equals("Log in")) {
-                //boolean authenticated = db.login(user, password);
-                view.showAuthResult(false);
+                boolean authenticated = model.login(user, password);
+                view.showAuthResult(true);
 
             }
             else if (type.equals("Sign up")){
-                //boolean sign_up = db.registration(user, password);
-                view.showAuthResult(true);
+                boolean sign_up = model.registration(user, password);
+                view.showAuthResult(sign_up);
             }
 
         }
     }
+
+    class LogOutListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            model.logout();
+            view.logout();
+        }
+    }
+
 
 
 

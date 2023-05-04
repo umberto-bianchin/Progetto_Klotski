@@ -11,12 +11,9 @@ public class AuthenticationDialog extends JDialog {
     private final JTextField usernameField;
     private final JPasswordField passwordField;
     private final JButton confirmButton = new JButton();
-    private final EventListener observer;
 
     public AuthenticationDialog(Frame parent, String title, ActionListener listener) {
         super(parent, title, true);
-
-        observer = listener;
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints cs = new GridBagConstraints();
@@ -72,10 +69,6 @@ public class AuthenticationDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(parent);
     }
-
-//    public void addAuthDialogListener(ActionListener listener){
-//        confirmButton.addActionListener(listener);
-//    }
 
     public String getUsername() {
         return usernameField.getText().trim();

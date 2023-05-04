@@ -111,12 +111,21 @@ public class View {
         authentication.addAuthListener(listener);
     }
 
+    public void addLogOutListener(ActionListener listener){
+        authentication.addLogOutListener(listener);
+    }
+
+
     public String[] getCredentials(){
         return authentication.getCredentials();
     }
 
     public void showAuthResult(boolean authenticated){
         authentication.showAuthResult(authenticated);
+    }
+
+    public void logout(){
+        authentication.initAuthentication();
     }
 
 }

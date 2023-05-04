@@ -10,6 +10,7 @@ public class Database {
     private final String dbURL = "jdbc:mysql://progettoklotski.c6i3tfhv1iee.eu-north-1.rds.amazonaws.com:3306/progettoklotski";
     private final String username = "admin";
     private final String password = "mypassword";
+    private int id_player = -1;
 
     public Database() {
         //datbase connection
@@ -131,27 +132,48 @@ public class Database {
         return false;
     }
 
-    public int login(String username, int password) throws SQLException{
-        Statement stmt = conn.createStatement();
-        String query = "SELECT ID_USER FROM users WHERE username="+username+" AND password="+password+";";
-        ResultSet rs = stmt.executeQuery(query);
-        rs.next();
-        int id_user = rs.getInt("ID_USER");
-        rs.close();
-        stmt.close();
-        return id_user;
+    public boolean login(String username, String password){
+        int pass = password.hashCode();
+
+        try {
+            Statement stmt = conn.createStatement();
+            String query = "SELECT ID_USER FROM users WHERE username="+username+" AND password="+pass+";";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            int id_user = rs.getInt("ID_USER");
+            rs.close();
+            stmt.close();
+            id_player = id_user;
+            return true;
+
+        } catch (SQLException e) {
+            return false;
+        }
+
     }
 
-    public boolean registration(String username, String password) throws SQLException{
+    public boolean registration(String username, String password) {
         int user = username.hashCode();
         int pass = password.hashCode();
         int id = user+pass;
-        Statement stmt = conn.createStatement();
-        String query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
-        ResultSet rs = stmt.executeQuery(query);
-        rs.close();
-        stmt.close();
-        return true;
+
+        try {
+            Statement stmt = conn.createStatement();
+            String query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
+            ResultSet rs = stmt.executeQuery(query);
+            rs.close();
+            stmt.close();
+            id_player = id;
+            return true;
+        } catch (SQLException e) {
+            return false;
+        }
+
+    }
+
+    public void setIdPlayer(){
+        //logout
+        id_player = -1;
     }
 
 

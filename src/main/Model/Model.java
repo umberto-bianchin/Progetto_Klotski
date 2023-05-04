@@ -52,4 +52,17 @@ private Database db = new Database();
         state.undo();
     }
 
+    public boolean login(String username, String password){
+        return db.login(username, password);
+    }
+
+    public boolean registration(String username, String password){
+        return db.registration(username, password);
+    }
+
+    public void logout(){
+        db.setIdPlayer();
+    }
+
+
 }
