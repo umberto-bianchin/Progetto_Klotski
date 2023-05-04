@@ -107,7 +107,7 @@ public class Controller {
 
             if(model.getCounter() == 0)
                 return;
-
+            
             Rectangle initial_position = model.getLastMove().getInitialPosition();
             Point final_location = model.getLastMove().getFinalPosition().getLocation();
 

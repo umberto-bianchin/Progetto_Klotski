@@ -2,12 +2,11 @@ package Model;
 
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.Vector;
 
 public class Model {
 
 private State state;
-private Database db = new Database();
+private final Database db = new Database();
 
     public void initState(int config){
         try {
@@ -61,7 +60,7 @@ private Database db = new Database();
     }
 
     public void logout(){
-        db.setIdPlayer();
+        db.resetIdPlayer();
     }
 
 

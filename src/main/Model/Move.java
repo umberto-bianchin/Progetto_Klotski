@@ -1,5 +1,6 @@
 package Model;
-import java.awt.Rectangle;
+
+import java.awt.*;
 
 public class Move {
 
