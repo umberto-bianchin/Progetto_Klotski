@@ -130,6 +130,8 @@ public class Database {
         Statement stmt = conn.createStatement();
         String query = "DELETE FROM saved_moves WHERE ID_GAME =" +id_game+";";
         stmt.executeQuery(query);
+        query = "DELETE FROM games WHERE ID_GAME =" +id_game+";";
+        stmt.executeQuery(query);
         stmt.close();
 
         return true;
@@ -151,11 +153,19 @@ public class Database {
         int pass = password.hashCode();
         int id = user+pass;
         Statement stmt = conn.createStatement();
-        String query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
+        String query = "SELECT ID_USER FROM users (username) values ("+username+");";
         ResultSet rs = stmt.executeQuery(query);
+        rs.next();
+        if (rs.getInt("ID_USER") == 0){
+            rs.close();
+            stmt.close();
+            return  false; //if username already has been used
+        }else{
+        query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
         rs.close();
         stmt.close();
         return true;
+        }
     }
 
 
