@@ -142,12 +142,13 @@ public class Controller {
             String type = ((JButton)e.getSource()).getText();
 
             if(type.equals("Log in")) {
+                boolean authenticated;
                 try {
-                    boolean authenticated = model.login(user, password);
+                    authenticated = model.login(user, password);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                view.showAuthResult(true);
+                view.showAuthResult(authenticated);
 
             }
             else if (type.equals("Sign up")){

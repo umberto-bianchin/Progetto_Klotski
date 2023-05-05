@@ -123,15 +123,19 @@ public class Database {
     }
 
     public boolean login(String username, String password) throws SQLException{
-        int pass = password.hashCode();
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_USER FROM users WHERE username="+username+" AND password="+pass+";";
+        String query = "SELECT ID_USER FROM users WHERE username='"+username+"' AND password='"+password+"';";
         ResultSet rs = stmt.executeQuery(query);
-        rs.next();
-        playerId = rs.getInt("ID_USER");
-        rs.close();
-        stmt.close();
-        return true;
+        if (rs.next()){
+            rs.close();
+            stmt.close();
+            return true;
+        }
+        else {
+            rs.close();
+            stmt.close();
+            return false;
+        }
     }
 
     public boolean registration(String username, String password) throws SQLException{
@@ -139,18 +143,15 @@ public class Database {
         int pass = password.hashCode();
         int id = user+pass;
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_USER FROM users (username) values ("+username+");";
+        String query = "SELECT ID_USER FROM users WHERE username =  '"+username+"';";
         ResultSet rs = stmt.executeQuery(query);
-        rs.next();
-        if (rs.getInt("ID_USER") == 0){
+        if (rs.next()){
             rs.close();
             stmt.close();
             return  false; //if username already has been used
         }else{
-        query = "INSERT INTO users (ID_USER,username,password) values ("+id+","+username+","+pass+");";
-        rs = stmt.executeQuery(query);
-
-        playerId = id;
+        query = "INSERT INTO users (ID_USER,username,password) values ('"+id+"','"+username+"','"+password+"');";
+        stmt.execute(query);
         rs.close();
         stmt.close();
         return true;
