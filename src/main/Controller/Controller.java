@@ -2,14 +2,13 @@ package Controller;
 
 import Model.Model;
 import View.View;
-import View.AuthenticationDialog;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 
 
 public class Controller {
@@ -143,12 +142,21 @@ public class Controller {
             String type = ((JButton)e.getSource()).getText();
 
             if(type.equals("Log in")) {
-                boolean authenticated = model.login(user, password);
+                try {
+                    boolean authenticated = model.login(user, password);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.showAuthResult(true);
 
             }
             else if (type.equals("Sign up")){
-                boolean sign_up = model.registration(user, password);
+                boolean sign_up = false;
+                try {
+                    sign_up = model.registration(user, password);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
                 view.showAuthResult(sign_up);
             }
 

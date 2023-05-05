@@ -51,11 +51,11 @@ private final Database db = new Database();
         state.undo();
     }
 
-    public boolean login(String username, String password){
+    public boolean login(String username, String password) throws SQLException {
         return db.login(username, password);
     }
 
-    public boolean registration(String username, String password){
+    public boolean registration(String username, String password) throws SQLException {
         return db.registration(username, password);
     }
 
