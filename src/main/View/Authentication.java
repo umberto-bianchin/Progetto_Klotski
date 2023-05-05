@@ -60,7 +60,7 @@ class Authentication extends JPanel{
         return new String[]{auth.getUsername(), auth.getPassword()};
     }
 
-    public void showAuthResult(boolean authenticated){
+    public void showAuthResult(boolean authenticated, JLabel mainPane){
         if (authenticated){
             JOptionPane.showMessageDialog(auth,
                     "Hi " + auth.getUsername() + "! You have successfully logged in.",

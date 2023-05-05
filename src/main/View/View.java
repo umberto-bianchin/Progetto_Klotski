@@ -12,9 +12,9 @@ public class View {
     JFrame frame = new JFrame("KLOTSKI's PUZZLE");
     JLabel mainPane = new JLabel();
     Start start = new Start();
-    Authentication authentication = new Authentication();
+    Authentication authentication = new Authentication(frame);
 
-    public View(){
+    public View() {
 
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
@@ -31,7 +31,7 @@ public class View {
 
     }
 
-    public void initStart(){
+    public void initStart() {
         mainPane.removeAll();
 
         ImageIcon background = new ImageIcon("./src/images/background.png");
@@ -67,13 +67,13 @@ public class View {
 
     }
 
-    public void restart(Rectangle[] initialPositions){
+    public void restart(Rectangle[] initialPositions) {
         board.setPositions(initialPositions);
         board.highlightSelected(null);
         board.setDisplayedCounter(0);
     }
 
-    public void undo(Rectangle initial_position, Point final_location, int step){
+    public void undo(Rectangle initial_position, Point final_location, int step) {
         board.highlightSelected(null);
         board.selectBlock(new Point(final_location));
         board.moveSelectedBlock(initial_position, step);
@@ -87,7 +87,7 @@ public class View {
         board.highlightSelected((Block) selected);
     }
 
-    public void moveSelectedBlock(Rectangle newPos, int count){
+    public void moveSelectedBlock(Rectangle newPos, int count) {
         board.moveSelectedBlock(newPos, count);
     }
 
@@ -95,28 +95,28 @@ public class View {
         board.addListener(listener);
     }
 
-    public void addBlockListener(MouseAdapter listener){
+    public void addBlockListener(MouseAdapter listener) {
         board.addBlockListener(listener);
     }
 
-    public void addConfigurationListener(ActionListener listener){
+    public void addConfigurationListener(ActionListener listener) {
         start.addConfigurationListener(listener);
     }
 
-    public void addButtonsListener(ActionListener[] listener){
+    public void addButtonsListener(ActionListener[] listener) {
         buttons.addButtonListener(listener);
     }
 
-    public void addAuthListener(ActionListener listener){
+    public void addAuthListener(ActionListener listener) {
         authentication.addAuthListener(listener);
     }
 
-    public void addLogOutListener(ActionListener listener){
+    public void addLogOutListener(ActionListener listener) {
         authentication.addLogOutListener(listener);
     }
 
 
-    public String[] getCredentials(){
+    public String[] getCredentials() {
         return authentication.getCredentials();
     }
 
@@ -124,7 +124,7 @@ public class View {
         authentication.showAuthResult(authenticated);
     }
 
-    public void logout(){
+    public void logout() {
         authentication.initAuthentication();
     }
 

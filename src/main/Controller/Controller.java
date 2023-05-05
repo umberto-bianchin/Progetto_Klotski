@@ -92,10 +92,14 @@ public class Controller {
     }
 
     class SaveCommand implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            try {
+                boolean saved = model.saveGame();
+                view.showSavedPopup(saved);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
@@ -170,6 +174,25 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             model.logout();
             view.logout();
+        }
+    }
+
+    class SavedListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.showSavedGames(15, new SelectSavedGamesListener());
+        }
+    }
+
+    class SelectSavedGamesListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(((JButton)e.getSource()).getName().equals("game")){
+
+            }
+            else if(((JButton)e.getSource()).getName().equals("delete")){
+                System.out.println("delete");
+            }
         }
     }
 

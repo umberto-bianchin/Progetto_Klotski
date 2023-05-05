@@ -21,8 +21,6 @@ public class Database {
         }
         System.out.println("Connected to database");
 
-        System.out.println("Connected to database");
-
     }
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, int id_game) throws SQLException{
@@ -119,24 +117,6 @@ public class Database {
             temp[count]= new Rectangle(x, y, width, height);
             count++;
         }
-        rs.close();
-        stmt.close();
-        return temp;
-    }
-    private Rectangle[] getRectangles(String query) throws SQLException {
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        Rectangle[]temp = new Rectangle[10];
-        int count = 0;
-        while(rs.next()){
-            int x = rs.getInt("x");
-            int y = rs.getInt("y");
-            int width = rs.getInt("width");
-            int height = rs.getInt("height");
-            temp[count]= new Rectangle(x, y, width, height);
-            count++;
-        }
-
         rs.close();
         stmt.close();
         return temp;

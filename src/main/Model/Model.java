@@ -2,6 +2,7 @@ package Model;
 
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class Model {
 
@@ -63,5 +64,8 @@ private final Database db = new Database();
         db.resetIdPlayer();
     }
 
+    public boolean saveGame() throws SQLException {
+        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentConfig());
+    }
 
 }
