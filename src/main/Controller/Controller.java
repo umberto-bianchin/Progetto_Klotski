@@ -99,7 +99,7 @@ public class Controller {
                 String name = view.askName();
                 try {
                     boolean saved = model.saveGame(name);
-                    view.showSavedPopup(true);
+                    view.showSavedPopup(saved);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

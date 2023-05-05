@@ -70,7 +70,7 @@ private final Database db = new Database();
     }
 
     public boolean saveGame(String name) throws SQLException {
-        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions());
+        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name);
         // TODO: 05/05/2023 add game name
     }
 
