@@ -15,7 +15,10 @@ private final Database db = new Database();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void resumeState(int idGame) throws SQLException {
+        state = new State(db.getSavedMoves(idGame), db.getInitialConfig(idGame), db.getFinalConfig(idGame), db.getIdConf(idGame));
     }
 
     public void restartState(){
