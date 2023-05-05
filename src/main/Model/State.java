@@ -27,6 +27,7 @@ class State {
 
     public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config, int conf){
         moves = saved_moves;
+        counter = saved_moves.size();
         initial_conf = conf;
         initial_config = starting_config;
 

@@ -78,7 +78,6 @@ public class Database {
             Move temp = new Move(new Rectangle(x_ini, y_ini, width, height), new Rectangle(x_fin, y_fin, width, height));
             ret.addLast(temp);
         }
-
         rs.close();
         stmt.close();
         return ret;
@@ -142,7 +141,7 @@ public class Database {
         rs.next();
         int id_game = rs.getInt("ID_GAME");
         query = "SELECT * FROM saved_state WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
-        stmt.execute(query);
+        rs = stmt.executeQuery(query);
         Rectangle[] temp = new Rectangle[10];
         int count = 0;
         while (rs.next()) {
