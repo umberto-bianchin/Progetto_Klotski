@@ -124,7 +124,8 @@ public class Database {
 
     public boolean login(String username, String password) throws SQLException{
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_USER FROM users WHERE username='"+username+"' AND password='"+password+"';";
+        int pass = password.hashCode();
+        String query = "SELECT ID_USER FROM users WHERE username='"+username+"' AND password="+pass+";";
         ResultSet rs = stmt.executeQuery(query);
         if (rs.next()){
             rs.close();
@@ -150,7 +151,7 @@ public class Database {
             stmt.close();
             return  false; //if username already has been used
         }else{
-        query = "INSERT INTO users (ID_USER,username,password) values ('"+id+"','"+username+"','"+password+"');";
+        query = "INSERT INTO users (ID_USER,username,password) values ("+id+",'"+username+"',"+pass+");";
         stmt.execute(query);
         rs.close();
         stmt.close();
