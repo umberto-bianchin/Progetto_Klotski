@@ -31,6 +31,8 @@ private final Database db = new Database();
         return state.getInitialPositions();
     }
 
+    public Rectangle[] getCurrentPositions(){return state.getCurrentPositions();}
+
     public void setSelectedPiece(Point p){
         state.setSelectedPiece(p);
     }
@@ -72,4 +74,12 @@ private final Database db = new Database();
         // TODO: 05/05/2023 add game name
     }
 
+    public boolean isLogged(){
+        return true;
+        // TODO: 05/05/2023 implements from database
+    }
+
+    public Vector<String> getGameList() throws SQLException {
+        return db.getGameList();
+    }
 }

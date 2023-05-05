@@ -30,12 +30,9 @@ public class SavedGamesDialog extends JDialog {
         game.setName("game"+number);
         game.setBorder(null);
         game.setBackground(Color.white);
-        game.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                listener.actionPerformed(e);
-            }
+        game.addActionListener(e -> {
+            dispose();
+            listener.actionPerformed(e);
         });
         cs.gridx = 0;
         cs.gridy = number;
@@ -43,7 +40,7 @@ public class SavedGamesDialog extends JDialog {
         panel.add(game, cs);
 
         JButton delete = new JButton();
-        delete.setName("delete");
+        delete.setName("delete"+number);
         delete.setIcon(new ImageIcon("./src/images/close.png"));
         delete.setBorder(null);
         delete.setBackground(Color.white);

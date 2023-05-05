@@ -2,10 +2,8 @@ import Controller.Controller;
 import Model.Model;
 import View.View;
 
-import java.sql.SQLException;
-
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         View view = new View();
         Model model = new Model();

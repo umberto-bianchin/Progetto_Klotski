@@ -210,8 +210,8 @@ public class Controller {
                     throw new RuntimeException(ex);
                 }
             }
-            else if(((JButton)e.getSource()).getName().equals("delete")){
-                System.out.println("delete");
+            else if(((JButton)e.getSource()).getName().contains("delete")){
+                // TODO: 05/05/2023 delete button
             }
         }
     }
