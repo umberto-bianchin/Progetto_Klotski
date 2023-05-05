@@ -2,7 +2,7 @@ package Model;
 
 import java.awt.*;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.Vector;
 
 public class Model {
 
@@ -67,8 +67,9 @@ private final Database db = new Database();
         db.resetIdPlayer();
     }
 
-    public boolean saveGame() throws SQLException {
-        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentConfig());
+    public boolean saveGame(String name) throws SQLException {
+        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions());
+        // TODO: 05/05/2023 add game name
     }
 
 }

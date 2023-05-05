@@ -42,7 +42,7 @@ class State {
         }
     }
 
-    public Rectangle[] getCurrentConfig(){
+    public Rectangle[] getCurrentPositions(){
 
         Rectangle[] currentPos = new Rectangle[10];
         for(int i=0; i<10; i++)

@@ -28,10 +28,10 @@ public class Controller {
 
     }
 
-    private void start(int num_config) {
+    private void initBoardListener() {
 
-        model.initState(num_config);
-        view.initGame(model.getInitialPositions());
+//        model.initState(num_config);
+//        view.initGame(model.getInitialPositions());
 
         view.addBlockListener(new BlockListener());
         view.addBoardListener(new BoardListener());
@@ -95,11 +95,16 @@ public class Controller {
     class SaveCommand implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            try {
-                boolean saved = model.saveGame();
-                view.showSavedPopup(saved);
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            if(model.isLogged()) {
+                String name = view.askName();
+                try {
+                    boolean saved = model.saveGame(name);
+                    view.showSavedPopup(true);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }else {
+                view.showErrorSaved();
             }
         }
     }
@@ -133,7 +138,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             int num_config = Integer.parseInt(((JButton)e.getSource()).getName());
-            start(num_config);
+
+            model.initState(num_config);
+            view.initGame(model.getInitialPositions());
+
+            initBoardListener();
         }
     }
 
@@ -157,7 +166,7 @@ public class Controller {
 
             }
             else if (type.equals("Sign up")){
-                boolean sign_up = false;
+                boolean sign_up;
                 try {
                     sign_up = model.registration(user, password);
                 } catch (SQLException ex) {
@@ -181,19 +190,25 @@ public class Controller {
     class SavedListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.showSavedGames(15, new SelectSavedGamesListener());
+            try {
+                view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
     class SelectSavedGamesListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(((JButton)e.getSource()).getName().equals("game")){
-//                try {
-//                    model.resumeState(((JButton)e.getSource()).getHeight());
-//                } catch (SQLException ex) {
-//                    throw new RuntimeException(ex);
-//                }
+            if(((JButton)e.getSource()).getName().contains("game")){
+                try {
+                    model.resumeState(Integer.parseInt(((JButton)e.getSource()).getName().substring(4)));
+                    view.initGame(model.getCurrentPositions());
+                    initBoardListener();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
             else if(((JButton)e.getSource()).getName().equals("delete")){
                 System.out.println("delete");

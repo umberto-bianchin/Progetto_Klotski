@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.Vector;
 
 public class View {
 
@@ -132,20 +133,27 @@ public class View {
         authentication.addSavedListener(listener);
     }
 
-    public void showSavedGames(int numberSavedGames, ActionListener listener) {
+    public void showSavedGames(Vector<String> numberSavedGames, ActionListener listener) {
 
         SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, numberSavedGames);
         savedGames.setVisible(true);
 
     }
 
-    public void showSavedPopup(boolean save) {
+    public String askName() {
+        return JOptionPane.showInputDialog(frame, "Choose the game name: ", "Save", JOptionPane.PLAIN_MESSAGE);
+    }
 
+    public void showSavedPopup(boolean save) {
         if (save) {
             JOptionPane.showMessageDialog(mainPane, "Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(mainPane, "Cannot save the game", "Save", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public void showErrorSaved(){
+        JOptionPane.showMessageDialog(mainPane, "You must login to save games", "Not logged in", JOptionPane.ERROR_MESSAGE);
     }
 
 }

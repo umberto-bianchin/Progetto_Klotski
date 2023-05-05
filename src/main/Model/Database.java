@@ -111,7 +111,7 @@ public class Database {
     public Vector<String> getGameList() throws SQLException {
         Vector<String> gameList = new Vector<>();
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_GAME FROM saved_state WHERE ID_USER=" + id_player + ";";
+        String query = "SELECT ID_GAME FROM games WHERE ID_USER=" + id_player + ";";
         ResultSet rs = stmt.executeQuery(query);
         while(rs.next()){
             gameList.add(rs.getInt("ID_GAME")+"");
