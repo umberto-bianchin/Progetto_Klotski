@@ -17,8 +17,8 @@ private final Database db = new Database();
         }
     }
 
-    public void resumeState(int idGame) throws SQLException {
-        state = new State(db.getSavedMoves(idGame), db.getInitialConfig(idGame), db.getFinalConfig(idGame), db.getIdConf(idGame));
+    public void resumeState(String name_game) throws SQLException {
+        state = new State(db.getSavedMoves(name_game), db.getInitialConfig(db.getIdConf(name_game)), db.getFinalConfig(name_game), db.getIdConf(name_game));
     }
 
     public void restartState(){
@@ -75,8 +75,7 @@ private final Database db = new Database();
     }
 
     public boolean isLogged(){
-        return true;
-        // TODO: 05/05/2023 implements from database
+        return db.isLogged();
     }
 
     public Vector<String> getGameList() throws SQLException {

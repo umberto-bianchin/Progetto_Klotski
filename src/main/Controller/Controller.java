@@ -203,7 +203,7 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             if(((JButton)e.getSource()).getName().contains("game")){
                 try {
-                    model.resumeState(Integer.parseInt(((JButton)e.getSource()).getName().substring(4)));
+                    model.resumeState(((JButton)e.getSource()).getName().substring(4));
                     view.initGame(model.getCurrentPositions());
                     initBoardListener();
                 } catch (SQLException ex) {

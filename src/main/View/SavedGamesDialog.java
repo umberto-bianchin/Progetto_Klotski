@@ -27,7 +27,7 @@ public class SavedGamesDialog extends JDialog {
 
     private void addEntry(int number, ActionListener listener, String name){
         JButton game = new JButton("Match Name: "+name);
-        game.setName("game"+number);
+        game.setName("game"+name);
         game.setBorder(null);
         game.setBackground(Color.white);
         game.addActionListener(e -> {
@@ -40,7 +40,7 @@ public class SavedGamesDialog extends JDialog {
         panel.add(game, cs);
 
         JButton delete = new JButton();
-        delete.setName("delete"+number);
+        delete.setName("delete"+name);
         delete.setIcon(new ImageIcon("./src/images/close.png"));
         delete.setBorder(null);
         delete.setBackground(Color.white);

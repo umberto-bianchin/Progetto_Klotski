@@ -52,9 +52,9 @@ public class Database {
         return true;
     }
 
-    public LinkedList<Move> getSavedMoves(int id_game) throws SQLException {
+    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM saved_move WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
+        String query = "SELECT * FROM saved_move WHERE ID_GAME=" + game_name + " AND ID_USER=" + id_player + ";";
         ResultSet rs = stmt.executeQuery(query);
         LinkedList<Move> ret = new LinkedList<>();
 
@@ -74,9 +74,9 @@ public class Database {
         return ret;
     }
 
-    public int getIdConf(int id_game) throws SQLException {
+    public int getIdConf(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + " ORDER BY ID_MOSSA LIMIT 1;";
+        String query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME=" + game_name + " AND ID_USER=" + id_player + " ORDER BY ID_MOSSA LIMIT 1;";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
 
@@ -90,9 +90,9 @@ public class Database {
     }
 
 
-    public Rectangle[] getInitialConfig(int id_conf) throws SQLException {
+    public Rectangle[] getInitialConfig(int game_id) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM initial_state WHERE ID_CONF=" + id_conf + ";";
+        String query = "SELECT * FROM initial_state WHERE ID_CONF=" + game_id + ";";
         ResultSet rs = stmt.executeQuery(query);
         Rectangle[] temp = new Rectangle[10];
         int count = 0;
@@ -121,9 +121,9 @@ public class Database {
         return gameList;
     }
 
-    public Rectangle[] getFinalConfig(int id_game) throws SQLException {
+    public Rectangle[] getFinalConfig(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT * FROM saved_state WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
+        String query = "SELECT * FROM saved_state WHERE ID_GAME=" + game_name + " AND ID_USER=" + id_player + ";";
         ResultSet rs = stmt.executeQuery(query);
         Rectangle[] temp = new Rectangle[10];
         int count = 0;
@@ -140,11 +140,11 @@ public class Database {
         return temp;
     }
 
-    public boolean deleteGame(int id_game) throws SQLException {
+    public boolean deleteGame(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "DELETE FROM saved_moves WHERE ID_GAME =" + id_game + ";";
+        String query = "DELETE FROM saved_moves WHERE ID_GAME =" + game_name + ";";
         stmt.executeQuery(query);
-        query = "DELETE FROM games WHERE ID_GAME =" + id_game + ";";
+        query = "DELETE FROM games WHERE ID_GAME =" + game_name + ";";
         stmt.executeQuery(query);
         stmt.close();
 
@@ -199,6 +199,10 @@ public class Database {
     public void resetIdPlayer() {
         //logout
         id_player = -1;
+    }
+
+    public boolean isLogged(){
+        return id_player != -1;
     }
 
 
