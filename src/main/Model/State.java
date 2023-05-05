@@ -42,6 +42,22 @@ class State {
         }
     }
 
+    public Rectangle[] getCurrentConfig(){
+
+        Rectangle[] currentPos = new Rectangle[10];
+        for(int i=0; i<10; i++)
+            currentPos[i] = current_config[i].getPosition();
+        return currentPos;
+    }
+
+    public int getInitialConfig(){
+        return  initial_conf;
+    }
+
+    public LinkedList<Move> getMoves(){
+        return moves;
+    }
+
     public Rectangle[] getInitialPositions(){
         return initial_config;
     }

@@ -14,13 +14,13 @@ class Authentication extends JPanel{
     private static ActionListener authListener;
     private AuthenticationDialog auth;
 
-    public Authentication(){
+    public Authentication(JFrame frame){
         setOpaque(false);
         initAuthentication();
 
         ActionListener listener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                auth = new AuthenticationDialog(null, ((JButton)e.getSource()).getText(), authListener);
+                auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getText(), authListener);
                 auth.setVisible(true);
             }
         };
@@ -62,13 +62,13 @@ class Authentication extends JPanel{
 
     public void showAuthResult(boolean authenticated, JLabel mainPane){
         if (authenticated){
-            JOptionPane.showMessageDialog(auth,
+            JOptionPane.showMessageDialog(mainPane,
                     "Hi " + auth.getUsername() + "! You have successfully logged in.",
                     auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
             auth.dispose();
             initUser(auth.getUsername());
         } else {
-            JOptionPane.showMessageDialog(auth,
+            JOptionPane.showMessageDialog(mainPane,
                     "Invalid username or password",
                     auth.getTitle(),
                     JOptionPane.ERROR_MESSAGE);
@@ -81,5 +81,6 @@ class Authentication extends JPanel{
         log_out.addActionListener(listener);
     }
 
+    public void addSavedListener(ActionListener listener){saved_games.addActionListener(listener);}
 }
 

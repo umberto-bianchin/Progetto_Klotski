@@ -24,6 +24,7 @@ public class Controller {
         view.addConfigurationListener(new ConfigurationListener());
         view.addAuthListener(new AuthListener());
         view.addLogOutListener(new LogOutListener());
+        view.addSavedListener(new SavedListener());
 
     }
 
@@ -188,7 +189,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(((JButton)e.getSource()).getName().equals("game")){
-
+//                try {
+//                    model.resumeState(((JButton)e.getSource()).getHeight());
+//                } catch (SQLException ex) {
+//                    throw new RuntimeException(ex);
+//                }
             }
             else if(((JButton)e.getSource()).getName().equals("delete")){
                 System.out.println("delete");

@@ -23,20 +23,20 @@ public class Database {
 
     }
 
-    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, int id_game) throws SQLException{
+    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config) throws SQLException{
         Statement stmt = conn.createStatement();
         String query = "";
         ResultSet rs = null;
         for(int i=0; i<moves.size(); i++){
             Move move = moves.get(i);
-            query = "INSERT INTO saved_move(ID_GAME,ID_CONF,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
-                    "VALUES("+id_game+","+initial_config+","+id_player+","+move.getInitialPosition().width+","+move.getInitialPosition().height+","
+            query = "INSERT INTO saved_move(ID_CONF,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
+                    "VALUES("+initial_config+","+id_player+","+move.getInitialPosition().width+","+move.getInitialPosition().height+","
                     +move.getInitialPosition().x+","+move.getInitialPosition().y+","+move.getFinalPosition().x+","+move.getFinalPosition().y+");";
             rs = stmt.executeQuery(query);
         }
 
         for(int i=0; i<final_config.length; i++){
-            query = "INSERT INTO saved_state(ID_GAME, x,y,width,height) VALUES("+id_game+","+final_config[i].x+","+final_config[i].y+","+final_config[i].width+","+final_config[i].height+");";
+            query = "INSERT INTO saved_state(x,y,width,height) VALUES("+final_config[i].x+","+final_config[i].y+","+final_config[i].width+","+final_config[i].height+");";
             rs = stmt.executeQuery(query);
         }
 

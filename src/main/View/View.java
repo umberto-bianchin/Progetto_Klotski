@@ -120,12 +120,32 @@ public class View {
         return authentication.getCredentials();
     }
 
-    public void showAuthResult(boolean authenticated){
-        authentication.showAuthResult(authenticated);
+    public void showAuthResult(boolean authenticated) {
+        authentication.showAuthResult(authenticated, mainPane);
     }
 
     public void logout() {
         authentication.initAuthentication();
+    }
+
+    public void addSavedListener(ActionListener listener) {
+        authentication.addSavedListener(listener);
+    }
+
+    public void showSavedGames(int numberSavedGames, ActionListener listener) {
+
+        SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, numberSavedGames);
+        savedGames.setVisible(true);
+
+    }
+
+    public void showSavedPopup(boolean save) {
+
+        if (save) {
+            JOptionPane.showMessageDialog(mainPane, "Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(mainPane, "Cannot save the game", "Save", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 }
