@@ -21,13 +21,13 @@ public class Controller {
         this.view = view;
         this.model = model;
 
+        model.initDatabase();
+        view.initStart();
+
         view.addConfigurationListener(new ConfigurationListener());
         view.addAuthListener(new AuthListener());
         view.addLogOutListener(new LogOutListener());
         view.addSavedListener(new SavedListener());
-
-        model.initDatabase();
-        view.initStart();
 
     }
 
@@ -158,7 +158,7 @@ public class Controller {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                view.showAuthResult(authenticated);
+                view.showAuthResult(authenticated, "l");
 
             }
             else if (type.equals("Sign up")){
@@ -168,7 +168,7 @@ public class Controller {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                view.showAuthResult(sign_up);
+                view.showAuthResult(sign_up, "s");
             }
 
         }

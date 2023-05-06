@@ -60,13 +60,22 @@ class Authentication extends JPanel{
         return new String[]{auth.getUsername(), auth.getPassword()};
     }
 
-    public void showAuthResult(boolean authenticated, JLabel mainPane){
+    public void showAuthResult(boolean authenticated, JLabel mainPane, String s){
         if (authenticated){
-            JOptionPane.showMessageDialog(mainPane,
-                    "Hi " + auth.getUsername() + "! You have successfully logged in.",
-                    auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
-            auth.dispose();
-            initUser(auth.getUsername());
+            if(s.equals("l")) {
+                JOptionPane.showMessageDialog(mainPane,
+                        "Hi " + auth.getUsername() + "! You have successfully logged in!",
+                        auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                auth.dispose();
+                initUser(auth.getUsername());
+            }
+            else if(s.equals("s")){
+                JOptionPane.showMessageDialog(mainPane,
+                        "Hi " + auth.getUsername() + "! You have successfully signed up!",
+                        auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                auth.dispose();
+                initUser(auth.getUsername());
+            }
         } else {
             JOptionPane.showMessageDialog(mainPane,
                     "Invalid username or password",

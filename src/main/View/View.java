@@ -121,8 +121,8 @@ public class View {
         return authentication.getCredentials();
     }
 
-    public void showAuthResult(boolean authenticated) {
-        authentication.showAuthResult(authenticated, mainPane);
+    public void showAuthResult(boolean authenticated, String type) {
+        authentication.showAuthResult(authenticated, mainPane, type);
     }
 
     public void logout() {

@@ -7,8 +7,7 @@ import java.util.Vector;
 public class Model {
 
 private State state;
-//private final Database db = new Database();
-    private Database db;
+private Database db;
 
     public void initState(int config){
         try {
