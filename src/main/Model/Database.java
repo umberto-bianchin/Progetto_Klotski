@@ -35,7 +35,7 @@ public class Database {
             rs.close();
             return false;
         }else {
-            query = "INSERT INTO games (ID_USER, name) VALUES (" + id_player + ", '" + game_name + "');"; //inserisce il game (autoincrementa)
+            query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + ","+initial_config+",'" + game_name + "');"; //inserisce il game (autoincrementa)
             stmt.execute(query);
             query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
             rs = stmt.executeQuery(query);
@@ -43,8 +43,8 @@ public class Database {
             int id_game = rs.getInt("ID_GAME");
             for (int i = 0; i < moves.size(); i++) {
                 Move move = moves.get(i);
-                query = "INSERT INTO saved_move(ID_GAME, ID_CONF,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
-                        "VALUES(" + id_game + "," + initial_config + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
+                query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
+                        "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
                         + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
                 stmt.execute(query);
             }
@@ -91,7 +91,7 @@ public class Database {
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         int id_game = rs.getInt("ID_GAME");
-        query = "SELECT ID_CONF FROM saved_move WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + " ORDER BY ID_MOSSA LIMIT 1;";
+        query = "SELECT ID_CONF FROM games WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
         rs = stmt.executeQuery(query);
         rs.next();
 
@@ -165,10 +165,14 @@ public class Database {
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         int id_game = rs.getInt("ID_GAME");
-        query = "DELETE FROM saved_moves WHERE ID_GAME =" + id_game + ";";
-        stmt.executeQuery(query);
-        query = "DELETE FROM games WHERE ID_GAME =" + game_name + ";";
-        stmt.executeQuery(query);
+        query="DELETE FROM saved_state WHERE ID_GAME="+id_game+";";
+        stmt.execute(query);
+
+        query = "DELETE FROM saved_move WHERE ID_GAME =" + id_game + ";";
+        stmt.execute(query);
+
+        query = "DELETE FROM games WHERE ID_GAME =" + id_game + ";";
+        stmt.execute(query);
         stmt.close();
 
         return true;
