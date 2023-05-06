@@ -50,13 +50,13 @@ public class View {
 
     }
 
-    public void initGame(Rectangle[] position) {
+    public void initGame(Rectangle[] position, int counter) {
 
         mainPane.removeAll();
         mainPane.setIcon(null);
 
         buttons = new Buttons();
-        board = new Board();
+        board = new Board(counter);
 
         board.setPositions(position);
 

@@ -10,7 +10,7 @@ class Board extends JPanel {
     private final JLabel displayedCounter;
     private Block selectedBlock;
 
-    public Board() {
+    public Board(int counter) {
         setLayout(null);
         setBackground(Color.white);
 
@@ -21,7 +21,7 @@ class Board extends JPanel {
         line.setSize(200, 10);
         add(line);
 
-        displayedCounter = new JLabel("Moves: 0");
+        displayedCounter = new JLabel("Moves: " + counter);
         displayedCounter.setHorizontalAlignment(JLabel.CENTER);
         displayedCounter.setBackground(Color.white);
         displayedCounter.setFont(new Font("Serif", Font.BOLD, 25));

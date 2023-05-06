@@ -42,7 +42,8 @@ class Authentication extends JPanel{
     public void initUser(String user){
         removeAll();
         JLabel name = new JLabel(user);
-        //SETTARE STILE SCRITTA
+
+        // TODO: 06/05/23 SETTARE STILE SCRITTA
         name.setForeground(Color.WHITE);
 
         setBounds(220,550,350,50);

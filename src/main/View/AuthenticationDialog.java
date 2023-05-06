@@ -62,7 +62,6 @@ public class AuthenticationDialog extends JDialog {
         cs.gridwidth = 1;
         panel.add(cancelButton, cs);
 
-
         add(panel);
 
         pack();

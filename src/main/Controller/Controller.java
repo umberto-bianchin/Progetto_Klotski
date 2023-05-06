@@ -106,7 +106,6 @@ public class Controller {
     }
 
     class UndoCommand implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -136,13 +135,14 @@ public class Controller {
             int num_config = Integer.parseInt(((JButton)e.getSource()).getName());
 
             model.initState(num_config);
-            view.initGame(model.getInitialPositions());
+            view.initGame(model.getInitialPositions(), 0);
 
             initBoardListener();
         }
     }
 
     class AuthListener implements ActionListener {
+        // TODO: 06/05/23 Controllo su username e password vuoti
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -200,7 +200,8 @@ public class Controller {
             if(((JButton)e.getSource()).getName().contains("game")){
                 try {
                     model.resumeState(((JButton)e.getSource()).getName().substring(4));
-                    view.initGame(model.getCurrentPositions());
+                    view.initGame(model.getCurrentPositions(), model.getCounter());
+
                     initBoardListener();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
