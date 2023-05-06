@@ -208,7 +208,6 @@ public class Controller {
                 }
             }
             else if(((JButton)e.getSource()).getName().contains("delete")){
-                System.out.println(((JButton)e.getSource()).getName().substring(6));
                 try{
                     if(model.delete(((JButton)e.getSource()).getName().substring(6)))
                         view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());

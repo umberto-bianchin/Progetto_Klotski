@@ -15,6 +15,14 @@ public class SavedGamesDialog extends JDialog {
         cs.insets = new Insets(3,10,3,10);
         panel.setBackground(Color.white);
 
+        if(numberSavedGames.size() == 0)
+        {
+            JLabel message = new JLabel("No saved match to show");
+            message.setBackground(Color.white);
+            cs.gridx = 0;
+            cs.gridy = 0;
+            panel.add(message, cs);
+        }
 
         for(int i = 0; i<numberSavedGames.size(); i++)
             addEntry(i, listener, numberSavedGames.get(i));
@@ -44,7 +52,10 @@ public class SavedGamesDialog extends JDialog {
         delete.setIcon(new ImageIcon("./src/images/close.png"));
         delete.setBorder(null);
         delete.setBackground(Color.white);
-        delete.addActionListener(listener);
+        delete.addActionListener(e -> {
+            dispose();
+            listener.actionPerformed(e);
+        });
         cs.gridx = 2;
         cs.gridy = number;
         cs.gridwidth = 1;
