@@ -20,8 +20,6 @@ public class Database {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        System.out.println("Connected to database");
-
     }
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException {

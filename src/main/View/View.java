@@ -19,8 +19,7 @@ public class View {
 
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
-
-        initStart();
+        mainPane.setIcon(new ImageIcon("./src/images/loading.png"));
 
         frame.add(mainPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,6 +46,7 @@ public class View {
         mainPane.add(title_text);
         mainPane.add(start);
         mainPane.add(authentication);
+        mainPane.revalidate();
 
     }
 

@@ -7,7 +7,8 @@ import java.util.Vector;
 public class Model {
 
 private State state;
-private final Database db = new Database();
+//private final Database db = new Database();
+    private Database db;
 
     public void initState(int config){
         try {
@@ -26,6 +27,11 @@ private final Database db = new Database();
         state.setCurrentConfig(getInitialPositions());
         setSelectedPiece(null);
     }
+
+    public void initDatabase(){
+        db = new Database();
+    }
+
 
     public Rectangle[] getInitialPositions(){
         return state.getInitialPositions();
@@ -71,7 +77,6 @@ private final Database db = new Database();
 
     public boolean saveGame(String name) throws SQLException {
         return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name);
-        // TODO: 05/05/2023 add game name
     }
 
     public boolean isLogged(){
@@ -85,4 +90,5 @@ private final Database db = new Database();
     public boolean delete(String name) throws SQLException {
         return db.deleteGame(name);
     }
+
 }

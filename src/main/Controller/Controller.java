@@ -26,13 +26,12 @@ public class Controller {
         view.addLogOutListener(new LogOutListener());
         view.addSavedListener(new SavedListener());
 
+        model.initDatabase();
+        view.initStart();
+
     }
 
     private void initBoardListener() {
-
-//        model.initState(num_config);
-//        view.initGame(model.getInitialPositions());
-
         view.addBlockListener(new BlockListener());
         view.addBoardListener(new BoardListener());
 
@@ -82,13 +81,10 @@ public class Controller {
     }
 
     class RestartCommand implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
-
             model.restartState();
             view.restart(model.getInitialPositions());
-
         }
     }
 
