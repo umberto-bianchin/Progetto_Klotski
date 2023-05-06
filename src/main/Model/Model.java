@@ -81,4 +81,8 @@ private final Database db = new Database();
     public Vector<String> getGameList() throws SQLException {
         return db.getGameList();
     }
+
+    public boolean delete(String name) throws SQLException {
+        return db.deleteGame(name);
+    }
 }

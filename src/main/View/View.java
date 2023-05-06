@@ -156,4 +156,8 @@ public class View {
         JOptionPane.showMessageDialog(mainPane, "You must login to save games", "Not logged in", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void showErrorDelete(){
+        JOptionPane.showMessageDialog(mainPane, "Error deleting the game", "Database error", JOptionPane.ERROR_MESSAGE);
+    }
+
 }

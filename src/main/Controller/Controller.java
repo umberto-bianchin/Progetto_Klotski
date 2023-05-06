@@ -211,7 +211,17 @@ public class Controller {
                 }
             }
             else if(((JButton)e.getSource()).getName().contains("delete")){
-                // TODO: 05/05/2023 delete button
+                System.out.println(((JButton)e.getSource()).getName().substring(6));
+                try{
+                    if(model.delete(((JButton)e.getSource()).getName().substring(6)))
+                        view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
+                    else
+                        view.showErrorDelete();
+
+                }catch (SQLException ex){
+                    //view.showErrorDelete();
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
