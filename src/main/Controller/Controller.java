@@ -98,8 +98,9 @@ public class Controller {
 
             try {
                 model.saveGame(name);
-                view.showMessage("Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
-            } catch (NullPointerException ignored) {
+                view.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
+            } catch (SQLException ex) {
+                view.showMessage("Database error, retry later", "Save", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 view.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             }

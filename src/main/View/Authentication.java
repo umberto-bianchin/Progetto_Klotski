@@ -38,7 +38,6 @@ class Authentication extends JPanel{
 
     public void initUser(String user){
         removeAll();
-        auth.dispose();
         JLabel name = new JLabel(user);
 
         // TODO: 06/05/23 SETTARE STILE SCRITTA

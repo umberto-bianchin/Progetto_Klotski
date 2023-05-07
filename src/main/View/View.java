@@ -127,18 +127,16 @@ public class View {
     }
 
     public String askGameName() {
-        return JOptionPane.showInputDialog(frame, "Choose the game name: ", "Save", JOptionPane.PLAIN_MESSAGE);
+        return JOptionPane.showInputDialog(frame, "Choose the game name: ", "Save", JOptionPane.QUESTION_MESSAGE);
     }
 
     public void initUser(String user){
         authentication.initUser(user);
     }
 
-//    public void showAuthResult(boolean authenticated, String type, String user) {
-//        authentication.showAuthResult(authenticated, mainPane, type, user);
-//    }
-
     public void showMessage(String message, String title, int type){
+        if(message.isBlank())
+            return;
         JOptionPane.showMessageDialog(mainPane, message, title, type);
     }
 

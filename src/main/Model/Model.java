@@ -64,25 +64,19 @@ public class Model {
     }
 
     public void login(String username, String password) throws Exception {
-        try {
-            if (!db.login(username, password))
-                throw new RuntimeException("Invalid username or password");
-        } catch (SQLException e) {
-            throw new SQLException("Database error, retry later");
-        }
+
+        if (!db.login(username, password))
+            throw new RuntimeException("Invalid username or password");
+
     }
 
     public void registration(String username, String password) throws Exception {
 
         if (username.isEmpty() || password.isEmpty())
-            throw new IllegalArgumentException("Can't register players with black username or password ");
+            throw new IllegalArgumentException("Can't register players with black username or password");
 
-        try {
-            if (!db.registration(username, password))
-                throw new RuntimeException("Can't register another player with the same username");
-        } catch (SQLException e) {
-            throw new SQLException("Database error, retry later");
-        }
+        if (!db.registration(username, password))
+            throw new RuntimeException("Can't register another player with the same username");
 
     }
 
@@ -92,21 +86,17 @@ public class Model {
 
     public void saveGame(String name) throws Exception {
 
+        if (name == null)
+            throw new NullPointerException("");
+
         if (!db.isLogged())
             throw new IllegalAccessException("You must login to save games");
-
-        if (name == null)
-            throw new NullPointerException();
 
         if (name.isBlank())
             throw new IllegalArgumentException("You can't save match with blank names");
 
-        try {
-            if (!db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name))
-                throw new IllegalArgumentException("You can't save more than one match with the same name");
-        } catch (SQLException e) {
-            throw new SQLException("Database error, retry later");
-        }
+        if (!db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name))
+            throw new IllegalArgumentException("You can't save more than one match with the same name");
 
     }
 

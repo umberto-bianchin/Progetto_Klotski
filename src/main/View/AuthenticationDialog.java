@@ -49,6 +49,7 @@ public class AuthenticationDialog extends JDialog {
                 e-> {
                     confirmButton.putClientProperty( "username", usernameField.getText().trim() );
                     confirmButton.putClientProperty( "password", new String(passwordField.getPassword()));
+                    dispose();
                     listener.actionPerformed(e);
                 });
 
@@ -72,8 +73,4 @@ public class AuthenticationDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
-    public void resetText(){
-        usernameField.setText("");
-        passwordField.setText("");
-    }
 }
