@@ -93,11 +93,15 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
             if(model.isLogged()) {
                 String name = view.askName();
+
+                if(name==null)
+                    return;
+
                 try {
                     boolean saved = model.saveGame(name);
                     view.showMessage(saved, "save");
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                } catch (Exception ex) {
+                    view.showMessage(false, "save");
                 }
             }else {
                 view.showMessage(false, "not logged in");

@@ -1,6 +1,3 @@
-// TODO: 06/05/23 Aggiungere possibilita di salvare partite con stesso nome in utenti differenti
-
-
 package Model;
 
 import java.awt.*;

@@ -74,7 +74,10 @@ private Database db;
         db.resetIdPlayer();
     }
 
-    public boolean saveGame(String name) throws SQLException {
+    public boolean saveGame(String name) throws Exception {
+        if(name.isEmpty())
+            throw new Exception();
+
         return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name);
     }
 
