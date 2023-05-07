@@ -58,12 +58,16 @@ public class Database {
 
     public LinkedList<Move> getSavedMoves(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
+        /*
         String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"';";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         int id_game = rs.getInt("ID_GAME");
         query = "SELECT * FROM saved_move WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
         rs = stmt.executeQuery(query);
+        */
+        String query = "SELECT * FROM saved_move WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
+        ResultSet rs = stmt.executeQuery(query);
         LinkedList<Move> ret = new LinkedList<>();
 
         while (rs.next()) {
@@ -83,6 +87,7 @@ public class Database {
 
     public int getIdConf(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
+        /*
         String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"';";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
@@ -90,11 +95,14 @@ public class Database {
         query = "SELECT ID_CONF FROM games WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
         rs = stmt.executeQuery(query);
         rs.next();
-
+        */
+        String query = "SELECT ID_CONF FROM games WHERE ID_GAME = (SELECT ID_GAME FROM games WHERE name = '"+game_name+"') AND ID_USER = "+id_player+";";
+        ResultSet rs = stmt.executeQuery(query);
+        rs.next();
         int id_conf = rs.getInt("ID_CONF");
-
         rs.close();
         stmt.close();
+
 
         return id_conf;
 
@@ -134,12 +142,16 @@ public class Database {
 
     public Rectangle[] getFinalConfig(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
+        /*
         String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"';";
         ResultSet rs = stmt.executeQuery(query);
         rs.next();
         int id_game = rs.getInt("ID_GAME");
         query = "SELECT * FROM saved_state WHERE ID_GAME=" + id_game + " AND ID_USER=" + id_player + ";";
         rs = stmt.executeQuery(query);
+        */
+        String query = "SELECT * FROM saved_state WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
+        ResultSet rs = stmt.executeQuery(query);
         Rectangle[] temp = new Rectangle[10];
         int count = 0;
         while (rs.next()) {
