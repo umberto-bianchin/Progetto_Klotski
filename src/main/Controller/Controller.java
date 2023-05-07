@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Model;
 import View.View;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.Locale;
 
 
 public class Controller {
@@ -44,11 +46,11 @@ public class Controller {
 
         Rectangle possiblePosition = model.moveSelectedPiece(p);
 
-        if(possiblePosition == null)
+        if (possiblePosition == null)
             return;
 
         if (model.hasWin()) {
-            view.showMessage(true, "win");
+            view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
         }
 
         view.moveSelectedBlock(possiblePosition, model.getCounter());
@@ -63,7 +65,7 @@ public class Controller {
         }
     }
 
-    class BlockListener extends MouseAdapter{
+    class BlockListener extends MouseAdapter {
 
         @Override
         public void mousePressed(MouseEvent e) {
@@ -91,21 +93,17 @@ public class Controller {
     class SaveCommand implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(model.isLogged()) {
-                String name = view.askName();
 
-                if(name==null)
-                    return;
+            String name = view.askGameName();
 
-                try {
-                    boolean saved = model.saveGame(name);
-                    view.showMessage(saved, "save");
-                } catch (Exception ex) {
-                    view.showMessage(false, "save");
-                }
-            }else {
-                view.showMessage(false, "not logged in");
+            try {
+                model.saveGame(name);
+                view.showMessage("Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
+            } catch (NullPointerException ignored) {
+            } catch (Exception ex) {
+                view.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             }
+
         }
     }
 
@@ -113,9 +111,9 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if(model.getCounter() == 0)
+            if (model.getCounter() == 0)
                 return;
-            
+
             Rectangle initial_position = model.getLastMove().getInitialPosition();
             Point final_location = model.getLastMove().getFinalPosition().getLocation();
 
@@ -136,7 +134,7 @@ public class Controller {
     class ConfigurationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int num_config = Integer.parseInt(((JButton)e.getSource()).getName());
+            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
 
             model.initState(num_config);
             view.initGame(model.getInitialPositions(), 0);
@@ -149,39 +147,34 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String user = ((JButton)e.getSource()).getClientProperty( "username" ).toString();
-            String password = ((JButton)e.getSource()).getClientProperty( "password" ).toString();
+            String username = ((JButton) e.getSource()).getClientProperty("username").toString();
+            String password = ((JButton) e.getSource()).getClientProperty("password").toString();
 
-            String type = ((JButton)e.getSource()).getText();
+            String type = ((JButton) e.getSource()).getText();
 
-            if(type.equals("Log in")) {
-                boolean authenticated;
-                try {
-                    authenticated = model.login(user, password);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+            try {
+
+                if (type.equals("Log in")) {
+                    model.login(username, password);
+                } else if (type.equals("Sign in")) {
+                    model.registration(username, password);
                 }
-                view.showAuthResult(authenticated, "l", user);
 
+                view.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), "type", JOptionPane.INFORMATION_MESSAGE);
+                view.initUser(username);
+
+
+            } catch (SQLException ex) {
+                view.showMessage("Database error, retry later", type, JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                view.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
             }
-            else if (type.equals("Sign up")){
-                boolean sign_up;
-                if(user.isEmpty() || password.isEmpty()) {
-                    view.showAuthResult(false, "s", null);
-                    return;
-                }
-                try {
-                    sign_up = model.registration(user, password);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-                view.showAuthResult(sign_up, "s", user);
-            }
+
 
         }
     }
 
-    class LogOutListener implements ActionListener{
+    class LogOutListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -190,45 +183,40 @@ public class Controller {
         }
     }
 
-    class SavedListener implements ActionListener{
+    class SavedListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
             } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                view.showMessage("Database error, retry later", "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
-    class SelectSavedGamesListener implements ActionListener{
+    class SelectSavedGamesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(((JButton)e.getSource()).getName().startsWith("game")){
-                try {
-                    model.resumeState(((JButton)e.getSource()).getName().substring(4));
+
+            try {
+
+                if (((JButton) e.getSource()).getName().startsWith("game")) {
+
+                    model.resumeState(((JButton) e.getSource()).getName().substring(4));
                     view.initGame(model.getCurrentPositions(), model.getCounter());
-
                     initBoardListener();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            else if(((JButton)e.getSource()).getName().startsWith("delete")){
-                try{
-                    if(model.delete(((JButton)e.getSource()).getName().substring(6)))
-                        view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
-                    else
-                        view.showMessage(false, "delete");
 
-                }catch (SQLException ex){
-                    throw new RuntimeException(ex);
+                } else if (((JButton) e.getSource()).getName().startsWith("delete")) {
+                    model.delete(((JButton) e.getSource()).getName().substring(6));
+                    view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
                 }
+
+            } catch (SQLException ex) {
+                view.showMessage("Database error, retry later", "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
+
         }
     }
-
-
 
 
 }

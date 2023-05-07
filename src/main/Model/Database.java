@@ -22,7 +22,7 @@ public class Database {
         }
     }
 
-    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException {
+    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException{
         Statement stmt = conn.createStatement();
         String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"' AND ID_USER ="+id_player+";";
         ResultSet rs = stmt.executeQuery(query);
@@ -167,7 +167,7 @@ public class Database {
         return temp;
     }
 
-    public boolean deleteGame(String game_name) throws SQLException {
+    public void deleteGame(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
         String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"';";
         ResultSet rs = stmt.executeQuery(query);
@@ -182,8 +182,6 @@ public class Database {
         query = "DELETE FROM games WHERE ID_GAME =" + id_game + ";";
         stmt.execute(query);
         stmt.close();
-
-        return true;
     }
 
     public boolean login(String username, String password) throws SQLException {

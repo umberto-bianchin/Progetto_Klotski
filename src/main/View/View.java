@@ -126,35 +126,21 @@ public class View {
         savedGames.setVisible(true);
     }
 
-    public String askName() {
+    public String askGameName() {
         return JOptionPane.showInputDialog(frame, "Choose the game name: ", "Save", JOptionPane.PLAIN_MESSAGE);
     }
 
-    public void showAuthResult(boolean authenticated, String type, String user) {
-        authentication.showAuthResult(authenticated, mainPane, type, user);
+    public void initUser(String user){
+        authentication.initUser(user);
     }
 
-    public void showMessage(boolean save, String messageType) {
-        switch(messageType) {
-            case "save":
-                if (save) {
-                    JOptionPane.showMessageDialog(mainPane, "Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(mainPane, "Cannot save the game", "Save", JOptionPane.ERROR_MESSAGE);
-                }
-                break;
-            case "not logged in":
-                JOptionPane.showMessageDialog(mainPane, "You must login to save games", "Not logged in", JOptionPane.ERROR_MESSAGE);
-                break;
-            case "delete":
-                JOptionPane.showMessageDialog(mainPane, "Error deleting the game", "Database error", JOptionPane.ERROR_MESSAGE);
-                break;
-            case "win":
-                JOptionPane.showMessageDialog(mainPane, "You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
-                break;
-            default:
-                break;
-        }
+//    public void showAuthResult(boolean authenticated, String type, String user) {
+//        authentication.showAuthResult(authenticated, mainPane, type, user);
+//    }
+
+    public void showMessage(String message, String title, int type){
+        JOptionPane.showMessageDialog(mainPane, message, title, type);
     }
+
 
 }

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 class Authentication extends JPanel{
 
-    private final JButton sign_up = new JButton("Sign up");
+    private final JButton sign_up = new JButton("Sign in");
     private final JButton log_in = new JButton("Log in");
     private final JButton log_out = new JButton("Log out");
     private final JButton saved_games = new JButton("Saved games");
@@ -38,6 +38,7 @@ class Authentication extends JPanel{
 
     public void initUser(String user){
         removeAll();
+        auth.dispose();
         JLabel name = new JLabel(user);
 
         // TODO: 06/05/23 SETTARE STILE SCRITTA
@@ -53,32 +54,6 @@ class Authentication extends JPanel{
 
     public void addAuthListener(ActionListener listener){
         authListener = listener;
-    }
-
-    public void showAuthResult(boolean authenticated, JLabel mainPane, String s, String user){
-        if (authenticated){
-            if(s.equals("l")) {
-                JOptionPane.showMessageDialog(mainPane,
-                        "Hi " + user + "! You have successfully logged in!",
-                        "Log in", JOptionPane.INFORMATION_MESSAGE);
-                auth.dispose();
-                initUser(user);
-            }
-            else if(s.equals("s")){
-                JOptionPane.showMessageDialog(mainPane,
-                        "Hi " + user + "! You have successfully signed up!",
-                        "Signed in", JOptionPane.INFORMATION_MESSAGE);
-                auth.dispose();
-                initUser(user);
-            }
-        } else {
-            JOptionPane.showMessageDialog(mainPane,
-                    "Invalid username or password",
-                    auth.getTitle(),
-                    JOptionPane.ERROR_MESSAGE);
-            // reset username and password
-            auth.resetText();
-        }
     }
 
     public void addLogOutListener(ActionListener listener){

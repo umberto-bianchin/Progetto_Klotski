@@ -6,10 +6,10 @@ import java.util.Vector;
 
 public class Model {
 
-private State state;
-private Database db;
+    private State state;
+    private Database db;
 
-    public void initState(int config){
+    public void initState(int config) {
         try {
             state = new State(db.getInitialConfig(config), config);
         } catch (SQLException e) {
@@ -21,76 +21,101 @@ private Database db;
         state = new State(db.getSavedMoves(name_game), db.getInitialConfig(db.getIdConf(name_game)), db.getFinalConfig(name_game), db.getIdConf(name_game));
     }
 
-    public void restartState(){
+    public void restartState() {
         state.setCounter(0);
         state.setCurrentConfig(getInitialPositions());
         setSelectedPiece(null);
     }
 
-    public void initDatabase(){
+    public void initDatabase() {
         db = new Database();
     }
 
-
-    public Rectangle[] getInitialPositions(){
+    public Rectangle[] getInitialPositions() {
         return state.getInitialPositions();
     }
 
-    public Rectangle[] getCurrentPositions(){return state.getCurrentPositions();}
+    public Rectangle[] getCurrentPositions() {
+        return state.getCurrentPositions();
+    }
 
-    public void setSelectedPiece(Point p){
+    public void setSelectedPiece(Point p) {
         state.setSelectedPiece(p);
     }
 
-    public Rectangle moveSelectedPiece(Point p){
+    public Rectangle moveSelectedPiece(Point p) {
         return state.moveSelectedPiece(p);
     }
 
-    public boolean hasWin(){
+    public boolean hasWin() {
         return state.getWin();
     }
 
-    public int getCounter(){
+    public int getCounter() {
         return state.getCounter();
     }
 
-    public Move getLastMove(){
+    public Move getLastMove() {
         return state.getLastMove();
     }
 
-    public void undo(){
+    public void undo() {
         state.undo();
     }
 
-    public boolean login(String username, String password) throws SQLException {
-        return db.login(username, password);
+    public void login(String username, String password) throws Exception {
+        try {
+            if (!db.login(username, password))
+                throw new RuntimeException("Invalid username or password");
+        } catch (SQLException e) {
+            throw new SQLException("Database error, retry later");
+        }
     }
 
-    public boolean registration(String username, String password) throws SQLException {
-        return db.registration(username, password);
+    public void registration(String username, String password) throws Exception {
+
+        if (username.isEmpty() || password.isEmpty())
+            throw new IllegalArgumentException("Can't register players with black username or password ");
+
+        try {
+            if (!db.registration(username, password))
+                throw new RuntimeException("Can't register another player with the same username");
+        } catch (SQLException e) {
+            throw new SQLException("Database error, retry later");
+        }
+
     }
 
-    public void logout(){
+    public void logout() {
         db.resetIdPlayer();
     }
 
-    public boolean saveGame(String name) throws Exception {
-        if(name.isEmpty())
-            throw new Exception();
+    public void saveGame(String name) throws Exception {
 
-        return db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name);
-    }
+        if (!db.isLogged())
+            throw new IllegalAccessException("You must login to save games");
 
-    public boolean isLogged(){
-        return db.isLogged();
+        if (name == null)
+            throw new NullPointerException();
+
+        if (name.isBlank())
+            throw new IllegalArgumentException("You can't save match with blank names");
+
+        try {
+            if (!db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name))
+                throw new IllegalArgumentException("You can't save more than one match with the same name");
+        } catch (SQLException e) {
+            throw new SQLException("Database error, retry later");
+        }
+
     }
 
     public Vector<String> getGameList() throws SQLException {
         return db.getGameList();
     }
 
-    public boolean delete(String name) throws SQLException {
-        return db.deleteGame(name);
+    public void delete(String name) throws SQLException {
+        db.deleteGame(name);
     }
 
 }
