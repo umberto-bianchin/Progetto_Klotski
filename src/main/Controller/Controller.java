@@ -200,7 +200,7 @@ public class Controller {
     class SelectSavedGamesListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(((JButton)e.getSource()).getName().contains("game")){
+            if(((JButton)e.getSource()).getName().startsWith("game")){
                 try {
                     model.resumeState(((JButton)e.getSource()).getName().substring(4));
                     view.initGame(model.getCurrentPositions(), model.getCounter());
@@ -210,7 +210,7 @@ public class Controller {
                     throw new RuntimeException(ex);
                 }
             }
-            else if(((JButton)e.getSource()).getName().contains("delete")){
+            else if(((JButton)e.getSource()).getName().startsWith("delete")){
                 try{
                     if(model.delete(((JButton)e.getSource()).getName().substring(6)))
                         view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
