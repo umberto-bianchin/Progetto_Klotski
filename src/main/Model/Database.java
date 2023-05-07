@@ -27,7 +27,7 @@ public class Database {
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
-        String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"';";
+        String query = "SELECT ID_GAME FROM games WHERE name = '"+game_name+"' AND ID_USER ="+id_player+";";
         ResultSet rs = stmt.executeQuery(query);
         if(rs.next()) {
             stmt.close();
