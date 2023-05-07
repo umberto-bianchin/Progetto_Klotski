@@ -116,13 +116,8 @@ public class View {
         authentication.addLogOutListener(listener);
     }
 
-
-    public String[] getCredentials() {
-        return authentication.getCredentials();
-    }
-
-    public void showAuthResult(boolean authenticated, String type) {
-        authentication.showAuthResult(authenticated, mainPane, type);
+    public void showAuthResult(boolean authenticated, String type, String user) {
+        authentication.showAuthResult(authenticated, mainPane, type, user);
     }
 
     public void logout() {

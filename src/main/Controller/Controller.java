@@ -146,8 +146,8 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String user = view.getCredentials()[0];
-            String password = view.getCredentials()[1];
+            String user = ((JButton)e.getSource()).getClientProperty( "username" ).toString();
+            String password = ((JButton)e.getSource()).getClientProperty( "password" ).toString();
 
             String type = ((JButton)e.getSource()).getText();
 
@@ -158,7 +158,7 @@ public class Controller {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                view.showAuthResult(authenticated, "l");
+                view.showAuthResult(authenticated, "l", user);
 
             }
             else if (type.equals("Sign up")){
@@ -168,7 +168,7 @@ public class Controller {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                view.showAuthResult(sign_up, "s");
+                view.showAuthResult(sign_up, "s", user);
             }
 
         }

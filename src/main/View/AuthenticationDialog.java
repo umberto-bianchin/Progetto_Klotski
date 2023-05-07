@@ -2,9 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.EventListener;
 
 public class AuthenticationDialog extends JDialog {
 
@@ -47,7 +45,12 @@ public class AuthenticationDialog extends JDialog {
         confirmButton.setText(title);
         confirmButton.setForeground(Color.BLUE);
 
-        confirmButton.addActionListener(listener);
+        confirmButton.addActionListener(
+                e-> {
+                    confirmButton.putClientProperty( "username", usernameField.getText().trim() );
+                    confirmButton.putClientProperty( "password", new String(passwordField.getPassword()));
+                    listener.actionPerformed(e);
+                });
 
         cs.gridx = 2;
         cs.gridy = 2;
@@ -67,14 +70,6 @@ public class AuthenticationDialog extends JDialog {
         pack();
         setResizable(false);
         setLocationRelativeTo(parent);
-    }
-
-    public String getUsername() {
-        return usernameField.getText().trim();
-    }
-
-    public String getPassword() {
-        return new String(passwordField.getPassword());
     }
 
     public void resetText(){

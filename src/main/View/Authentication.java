@@ -2,7 +2,6 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class Authentication extends JPanel{
@@ -18,11 +17,9 @@ class Authentication extends JPanel{
         setOpaque(false);
         initAuthentication();
 
-        ActionListener listener = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getText(), authListener);
-                auth.setVisible(true);
-            }
+        ActionListener listener = e -> {
+            auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getText(), authListener);
+            auth.setVisible(true);
         };
 
         log_in.addActionListener(listener);
@@ -57,25 +54,22 @@ class Authentication extends JPanel{
     public void addAuthListener(ActionListener listener){
         authListener = listener;
     }
-    public String[] getCredentials(){
-        return new String[]{auth.getUsername(), auth.getPassword()};
-    }
 
-    public void showAuthResult(boolean authenticated, JLabel mainPane, String s){
+    public void showAuthResult(boolean authenticated, JLabel mainPane, String s, String user){
         if (authenticated){
             if(s.equals("l")) {
                 JOptionPane.showMessageDialog(mainPane,
-                        "Hi " + auth.getUsername() + "! You have successfully logged in!",
-                        auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                        "Hi " + user + "! You have successfully logged in!",
+                        "Log in", JOptionPane.INFORMATION_MESSAGE);
                 auth.dispose();
-                initUser(auth.getUsername());
+                initUser(user);
             }
             else if(s.equals("s")){
                 JOptionPane.showMessageDialog(mainPane,
-                        "Hi " + auth.getUsername() + "! You have successfully signed up!",
-                        auth.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+                        "Hi " + user + "! You have successfully signed up!",
+                        "Signed in", JOptionPane.INFORMATION_MESSAGE);
                 auth.dispose();
-                initUser(auth.getUsername());
+                initUser(user);
             }
         } else {
             JOptionPane.showMessageDialog(mainPane,
