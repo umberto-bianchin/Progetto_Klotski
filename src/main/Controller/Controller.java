@@ -48,7 +48,7 @@ public class Controller {
             return;
 
         if (model.hasWin()) {
-            view.winMessage();
+            view.showMessage(true, "win");
         }
 
         view.moveSelectedBlock(possiblePosition, model.getCounter());
@@ -95,12 +95,12 @@ public class Controller {
                 String name = view.askName();
                 try {
                     boolean saved = model.saveGame(name);
-                    view.showSavedPopup(saved);
+                    view.showMessage(saved, "save");
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }else {
-                view.showErrorSaved();
+                view.showMessage(false, "not logged in");
             }
         }
     }
@@ -142,7 +142,6 @@ public class Controller {
     }
 
     class AuthListener implements ActionListener {
-        // TODO: 06/05/23 Controllo su username e password vuoti
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -163,6 +162,10 @@ public class Controller {
             }
             else if (type.equals("Sign up")){
                 boolean sign_up;
+                if(user.isEmpty() || password.isEmpty()) {
+                    view.showAuthResult(false, "s", null);
+                    return;
+                }
                 try {
                     sign_up = model.registration(user, password);
                 } catch (SQLException ex) {
@@ -212,10 +215,9 @@ public class Controller {
                     if(model.delete(((JButton)e.getSource()).getName().substring(6)))
                         view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
                     else
-                        view.showErrorDelete();
+                        view.showMessage(false, "delete");
 
                 }catch (SQLException ex){
-                    //view.showErrorDelete();
                     throw new RuntimeException(ex);
                 }
             }

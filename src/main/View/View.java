@@ -80,10 +80,6 @@ public class View {
         board.moveSelectedBlock(initial_position, step);
     }
 
-    public void winMessage() {
-        JOptionPane.showMessageDialog(board, "You won!", "WIN", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public void selectBlock(Component selected) {
         board.highlightSelected((Block) selected);
     }
@@ -116,9 +112,6 @@ public class View {
         authentication.addLogOutListener(listener);
     }
 
-    public void showAuthResult(boolean authenticated, String type, String user) {
-        authentication.showAuthResult(authenticated, mainPane, type, user);
-    }
 
     public void logout() {
         authentication.initAuthentication();
@@ -129,30 +122,39 @@ public class View {
     }
 
     public void showSavedGames(Vector<String> numberSavedGames, ActionListener listener) {
-
         SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, numberSavedGames);
         savedGames.setVisible(true);
-
     }
 
     public String askName() {
         return JOptionPane.showInputDialog(frame, "Choose the game name: ", "Save", JOptionPane.PLAIN_MESSAGE);
     }
 
-    public void showSavedPopup(boolean save) {
-        if (save) {
-            JOptionPane.showMessageDialog(mainPane, "Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(mainPane, "Cannot save the game", "Save", JOptionPane.ERROR_MESSAGE);
+    public void showAuthResult(boolean authenticated, String type, String user) {
+        authentication.showAuthResult(authenticated, mainPane, type, user);
+    }
+
+    public void showMessage(boolean save, String messageType) {
+        switch(messageType) {
+            case "save":
+                if (save) {
+                    JOptionPane.showMessageDialog(mainPane, "Successfully saved the game.", "Save", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(mainPane, "Cannot save the game", "Save", JOptionPane.ERROR_MESSAGE);
+                }
+                break;
+            case "not logged in":
+                JOptionPane.showMessageDialog(mainPane, "You must login to save games", "Not logged in", JOptionPane.ERROR_MESSAGE);
+                break;
+            case "delete":
+                JOptionPane.showMessageDialog(mainPane, "Error deleting the game", "Database error", JOptionPane.ERROR_MESSAGE);
+                break;
+            case "win":
+                JOptionPane.showMessageDialog(mainPane, "You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
+                break;
+            default:
+                break;
         }
-    }
-
-    public void showErrorSaved(){
-        JOptionPane.showMessageDialog(mainPane, "You must login to save games", "Not logged in", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public void showErrorDelete(){
-        JOptionPane.showMessageDialog(mainPane, "Error deleting the game", "Database error", JOptionPane.ERROR_MESSAGE);
     }
 
 }
