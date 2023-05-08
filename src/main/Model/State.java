@@ -87,18 +87,17 @@ class State {
     public Rectangle moveSelectedPiece(Point p){
 
         if(selectedPiece == null)
-            return null;
+            throw new RuntimeException("No piece selected");
 
         Rectangle possiblePosition = selectedPiece.checkAvailable(p);
         Rectangle window = new Rectangle(0, 0, 400, 500);
 
-        if (possiblePosition == null || !window.contains(possiblePosition)) {
-            return null;
-        }
+        if (possiblePosition == null || !window.contains(possiblePosition))
+            throw new RuntimeException();
 
         for (Piece piece : current_config) {
             if (piece != selectedPiece && piece.intersection(possiblePosition)) {
-                return null;
+                throw new RuntimeException();
             }
         }
 
@@ -118,7 +117,7 @@ class State {
 
     public boolean getWin(){return win;}
 
-    public void undo(){
+    public Move undo(){
 
         Move lastMove = moves.getLast();
         setSelectedPiece(lastMove.getFinalPosition().getLocation());
@@ -126,6 +125,8 @@ class State {
         selectedPiece = null;
         moves.removeLast();
         counter--;
+        return lastMove;
+
     }
 
 }

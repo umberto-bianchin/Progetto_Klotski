@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Model;
+import Model.Move;
 import View.View;
 
 import javax.swing.*;
@@ -12,7 +13,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.Locale;
 
-
 public class Controller {
 
     private final View view;
@@ -23,60 +23,51 @@ public class Controller {
         this.view = view;
         this.model = model;
 
-        model.initDatabase();
-        view.initStart();
-
-        view.addConfigurationListener(new ConfigurationListener());
-        view.addAuthListener(new AuthListener());
-        view.addLogOutListener(new LogOutListener());
-        view.addSavedListener(new SavedListener());
-
-    }
-
-    private void initBoardListener() {
-        view.addBlockListener(new BlockListener());
-        view.addBoardListener(new BoardListener());
-
-        ActionListener[] actionListeners = {new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand(), new HomeCommand()};
-        view.addButtonsListener(actionListeners);
-
-    }
-
-    private void move(Point p) {
-
-        Rectangle possiblePosition = model.moveSelectedPiece(p);
-
-        if (possiblePosition == null)
-            return;
-
-        if (model.hasWin()) {
-            view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
+        try{
+            model.initDatabase();
+            view.initStart();
+            view.addConfigurationListener(new ConfigurationListener());
+            view.addAuthenticationListeners(new AuthListener(), new LogOutListener(), new SavedListener());
+        } catch(Exception e){
+            view.showMessage("Server SQL error", "Start", JOptionPane.ERROR_MESSAGE);
         }
 
-        view.moveSelectedBlock(possiblePosition, model.getCounter());
+    }
+
+    private void initGameView(Rectangle[] currentPositions, int counter) {
+
+        view.initGame(currentPositions, counter);
+        view.addGameBoardListeners(new BoardListener(), new BlockListener());
+        view.addButtonsListeners(new RestartCommand(), new SaveCommand(), new NextCommand(), new UndoCommand(), new HomeCommand());
+
     }
 
 
     class BoardListener extends MouseAdapter {
-
         @Override
         public void mousePressed(MouseEvent e) {
-            move(e.getPoint());
+
+            try {
+                Rectangle finalPosition = model.moveSelectedPiece(e.getPoint());
+                view.moveSelectedBlock(finalPosition, model.getCounter());
+
+                if (model.hasWin())
+                    view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (RuntimeException ignored){}
+
         }
     }
 
     class BlockListener extends MouseAdapter {
-
         @Override
         public void mousePressed(MouseEvent e) {
             model.setSelectedPiece(e.getComponent().getLocation());
             view.selectBlock(e.getComponent());
         }
-
     }
 
     class NextCommand implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
         }
@@ -99,8 +90,6 @@ public class Controller {
             try {
                 model.saveGame(name);
                 view.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                view.showMessage("Database error, retry later", "Save", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 view.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             }
@@ -112,14 +101,11 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            if (model.getCounter() == 0)
-                return;
-
-            Rectangle initial_position = model.getLastMove().getInitialPosition();
-            Point final_location = model.getLastMove().getFinalPosition().getLocation();
-
-            model.undo();
-            view.undo(initial_position, final_location, model.getCounter());
+            try {
+                Move lastMove = model.undo();
+                view.undo(lastMove, model.getCounter());
+            }
+            catch (RuntimeException ignored){}
 
         }
     }
@@ -135,12 +121,15 @@ public class Controller {
     class ConfigurationListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
 
-            model.initState(num_config);
-            view.initGame(model.getInitialPositions(), 0);
-
-            initBoardListener();
+            try {
+                int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
+                model.initState(num_config);
+                initGameView(model.getInitialPositions(), 0);
+            }
+            catch (SQLException ex){
+                view.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -150,7 +139,6 @@ public class Controller {
 
             String username = ((JButton) e.getSource()).getClientProperty("username").toString();
             String password = ((JButton) e.getSource()).getClientProperty("password").toString();
-
             String type = ((JButton) e.getSource()).getText();
 
             try {
@@ -161,22 +149,16 @@ public class Controller {
                     model.registration(username, password);
                 }
 
-                view.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), "type", JOptionPane.INFORMATION_MESSAGE);
+                view.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
                 view.initUser(username);
 
-
-            } catch (SQLException ex) {
-                view.showMessage("Database error, retry later", type, JOptionPane.ERROR_MESSAGE);
-            } catch (Exception ex) {
+            }  catch (Exception ex) {
                 view.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
             }
-
-
         }
     }
 
     class LogOutListener implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e) {
             model.logout();
@@ -188,9 +170,9 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
+                view.showSavedGames(model.getSavedGameList(), new SelectSavedGamesListener());
             } catch (SQLException ex) {
-                view.showMessage("Database error, retry later", "Saved Games", JOptionPane.ERROR_MESSAGE);
+                view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -198,22 +180,21 @@ public class Controller {
     class SelectSavedGamesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             try {
 
                 if (((JButton) e.getSource()).getName().startsWith("game")) {
 
                     model.resumeState(((JButton) e.getSource()).getName().substring(4));
-                    view.initGame(model.getCurrentPositions(), model.getCounter());
-                    initBoardListener();
+                    initGameView(model.getCurrentPositions(), model.getCounter());
 
                 } else if (((JButton) e.getSource()).getName().startsWith("delete")) {
-                    model.delete(((JButton) e.getSource()).getName().substring(6));
-                    view.showSavedGames(model.getGameList(), new SelectSavedGamesListener());
+
+                    model.deleteSavedGame(((JButton) e.getSource()).getName().substring(6));
+                    view.showSavedGames(model.getSavedGameList(), new SelectSavedGamesListener());
                 }
 
             } catch (SQLException ex) {
-                view.showMessage("Database error, retry later", "Saved Games", JOptionPane.ERROR_MESSAGE);
+                view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
 
         }

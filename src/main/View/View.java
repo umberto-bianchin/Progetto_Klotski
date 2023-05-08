@@ -74,7 +74,11 @@ public class View {
         board.setDisplayedCounter(0);
     }
 
-    public void undo(Rectangle initial_position, Point final_location, int step) {
+    public void undo(Model.Move lastMove, int step) {
+
+        Rectangle initial_position = lastMove.getInitialPosition();
+        Point final_location = lastMove.getFinalPosition().getLocation();
+
         board.highlightSelected(null);
         board.selectBlock(new Point(final_location));
         board.moveSelectedBlock(initial_position, step);
@@ -88,41 +92,29 @@ public class View {
         board.moveSelectedBlock(newPos, count);
     }
 
-    public void addBoardListener(MouseAdapter listener) {
-        board.addListener(listener);
-    }
-
-    public void addBlockListener(MouseAdapter listener) {
-        board.addBlockListener(listener);
+    public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
+        board.addListener(whiteBoard);
+        board.addBlockListener(block);
     }
 
     public void addConfigurationListener(ActionListener listener) {
         start.addConfigurationListener(listener);
     }
 
-    public void addButtonsListener(ActionListener[] listener) {
-        buttons.addButtonListener(listener);
+    public void addButtonsListeners(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home) {
+        buttons.addButtonListener(restart, save, next, undo, home);
     }
 
-    public void addAuthListener(ActionListener listener) {
-        authentication.addAuthListener(listener);
+    public void addAuthenticationListeners(ActionListener auth, ActionListener logOut, ActionListener saved){
+        authentication.addAuthenticationListeners(auth, logOut, saved);
     }
-
-    public void addLogOutListener(ActionListener listener) {
-        authentication.addLogOutListener(listener);
-    }
-
 
     public void logout() {
         authentication.initAuthentication();
     }
 
-    public void addSavedListener(ActionListener listener) {
-        authentication.addSavedListener(listener);
-    }
-
-    public void showSavedGames(Vector<String> numberSavedGames, ActionListener listener) {
-        SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, numberSavedGames);
+    public void showSavedGames(Vector<String> savedGamesNames, ActionListener listener) {
+        SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, savedGamesNames);
         savedGames.setVisible(true);
     }
 
@@ -137,6 +129,8 @@ public class View {
     public void showMessage(String message, String title, int type){
         if(message.isBlank())
             return;
+        if(message.contains("SQL"))
+            message = "Database error, retry later";
         JOptionPane.showMessageDialog(mainPane, message, title, type);
     }
 

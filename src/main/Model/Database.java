@@ -12,14 +12,10 @@ public class Database {
     private final String password = "mypassword";
     private int id_player = -1;
 
-    public Database() {
+    public Database() throws Exception{
         //database connection
-        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, username, password);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException{

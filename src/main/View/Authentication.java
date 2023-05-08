@@ -51,14 +51,11 @@ class Authentication extends JPanel{
         revalidate();
     }
 
-    public void addAuthListener(ActionListener listener){
-        authListener = listener;
+    public void addAuthenticationListeners(ActionListener authListener, ActionListener logOutListener, ActionListener savedListener) {
+        Authentication.authListener = authListener;
+        log_out.addActionListener(logOutListener);
+        saved_games.addActionListener(savedListener);
     }
 
-    public void addLogOutListener(ActionListener listener){
-        log_out.addActionListener(listener);
-    }
-
-    public void addSavedListener(ActionListener listener){saved_games.addActionListener(listener);}
 }
 
