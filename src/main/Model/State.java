@@ -111,10 +111,6 @@ class State {
 
     }
 
-    public Move getLastMove(){
-        return moves.getLast();
-    }
-
     public boolean getWin(){return win;}
 
     public Move undo(){
