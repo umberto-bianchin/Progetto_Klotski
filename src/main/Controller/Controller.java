@@ -10,12 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
 
 public class Controller {
-
     private final View view;
     private final Model model;
 
@@ -72,15 +70,14 @@ public class Controller {
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                Rectangle[] bestMove = model.nextBestMove();
-                model.makeMove(bestMove);
+                Move bestMove = model.nextBestMove();
                 view.makeMove(bestMove, model.getCounter());
 
                 if (model.hasWin())
                     view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (IOException ex){
-                //TODO gestire eccezioni
+            } catch (Exception ex) {
+                view.showMessage("Connectivity problems using solver, retry later", "Solver", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -115,7 +112,7 @@ public class Controller {
 
             try {
                 Move lastMove = model.undo();
-                view.undo(lastMove, model.getCounter());
+                view.makeMove(lastMove.invert(), model.getCounter());
             }
             catch (RuntimeException ignored){}
 
@@ -208,7 +205,6 @@ public class Controller {
             } catch (SQLException ex) {
                 view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }
 

@@ -74,14 +74,10 @@ public class View {
         board.setDisplayedCounter(0);
     }
 
-    public void undo(Model.Move lastMove, int step) {
-
-        Rectangle initial_position = lastMove.getInitialPosition();
-        Point final_location = lastMove.getFinalPosition().getLocation();
-
+    public void makeMove(Model.Move lastMove, int step) {
         board.highlightSelected(null);
-        board.selectBlock(new Point(final_location));
-        board.moveSelectedBlock(initial_position, step);
+        board.selectBlock(lastMove.getInitialPosition().getLocation());
+        board.moveSelectedBlock(lastMove.getFinalPosition(), step);
     }
 
     public void selectBlock(Component selected) {
@@ -133,10 +129,5 @@ public class View {
             message = "Database error, retry later";
         JOptionPane.showMessageDialog(mainPane, message, title, type);
     }
-
-    public void makeMove(Rectangle[] move, int count){
-        board.makeMove(move, count);
-    }
-
 
 }

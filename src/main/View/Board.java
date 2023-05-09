@@ -85,9 +85,6 @@ class Board extends JPanel {
         }
     }
 
-    public void makeMove(Rectangle[] move, int count){
-        selectBlock(move[0].getLocation());
-        moveSelectedBlock(move[1], count);
-    }
+
 }
 
