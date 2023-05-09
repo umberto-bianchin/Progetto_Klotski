@@ -73,13 +73,13 @@ class State {
 
     public void setSelectedPiece(Point p) {
 
-        if(p==null){
+        if (p == null) {
             selectedPiece = null;
             return;
         }
 
-        for(Piece piece : current_config) {
-            if(piece.contains(p))
+        for (Piece piece : current_config) {
+            if (piece.contains(p))
                 selectedPiece = piece;
         }
     }

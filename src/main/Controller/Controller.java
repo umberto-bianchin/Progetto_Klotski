@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -70,6 +71,17 @@ public class Controller {
     class NextCommand implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            try {
+                Rectangle[] bestMove = model.nextBestMove();
+                model.makeMove(bestMove);
+                view.makeMove(bestMove, model.getCounter());
+
+                if (model.hasWin())
+                    view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IOException ex){
+                //TODO gestire eccezioni
+            }
         }
     }
 

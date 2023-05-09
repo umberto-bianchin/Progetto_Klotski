@@ -1,6 +1,7 @@
 package Model;
 
 import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -102,6 +103,16 @@ public class Model {
 
     public void deleteSavedGame(String name) throws SQLException {
         db.deleteGame(name);
+    }
+
+    public Rectangle[] nextBestMove() throws IOException {
+        Rectangle[] config = state.getCurrentPositions();
+        return Solver.nextBestMove(config);
+    }
+
+    public void makeMove(Rectangle[] move){
+        setSelectedPiece(move[0].getLocation());
+        moveSelectedPiece(move[1].getLocation());
     }
 
 }

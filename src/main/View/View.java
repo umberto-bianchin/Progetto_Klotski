@@ -134,5 +134,9 @@ public class View {
         JOptionPane.showMessageDialog(mainPane, message, title, type);
     }
 
+    public void makeMove(Rectangle[] move, int count){
+        board.makeMove(move, count);
+    }
+
 
 }
