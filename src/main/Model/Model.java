@@ -9,12 +9,8 @@ public class Model {
     private State state;
     private Database db;
 
-    public void initState(int config) {
-        try {
-            state = new State(db.getInitialConfig(config), config);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void initState(int config) throws SQLException {
+        state = new State(db.getInitialConfig(config), config);
     }
 
     public void resumeState(String name_game) throws SQLException {
@@ -27,7 +23,7 @@ public class Model {
         setSelectedPiece(null);
     }
 
-    public void initDatabase() {
+    public void initDatabase() throws Exception {
         db = new Database();
     }
 
@@ -55,12 +51,12 @@ public class Model {
         return state.getCounter();
     }
 
-    public Move getLastMove() {
-        return state.getLastMove();
-    }
 
-    public void undo() {
-        state.undo();
+    public Move undo() {
+        if(state.getCounter()==0)
+            throw new RuntimeException();
+
+        return state.undo();
     }
 
     public void login(String username, String password) throws Exception {
@@ -100,11 +96,11 @@ public class Model {
 
     }
 
-    public Vector<String> getGameList() throws SQLException {
+    public Vector<String> getSavedGameList() throws SQLException {
         return db.getGameList();
     }
 
-    public void delete(String name) throws SQLException {
+    public void deleteSavedGame(String name) throws SQLException {
         db.deleteGame(name);
     }
 

@@ -49,7 +49,7 @@ public class SavedGamesDialog extends JDialog {
 
         JButton delete = new JButton();
         delete.setName("delete"+name);
-        delete.setIcon(new ImageIcon("./src/images/close.png"));
+        delete.setIcon(new ImageIcon("./src/images/delete.png"));
         delete.setBorder(null);
         delete.setBackground(Color.white);
         delete.addActionListener(e -> {

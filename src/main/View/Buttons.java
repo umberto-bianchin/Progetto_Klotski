@@ -32,11 +32,13 @@ public class Buttons extends JPanel {
         }
     }
 
-    public void addButtonListener(ActionListener[] command){
+    public void addButtonListener(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home){
 
-        for(int i=0; i<5; i++) {
-            buttons[i].addActionListener(command[i]);
-        }
+        buttons[0].addActionListener(restart);
+        buttons[1].addActionListener(save);
+        buttons[2].addActionListener(next);
+        buttons[3].addActionListener(undo);
+        buttons[4].addActionListener(home);
 
     }
 

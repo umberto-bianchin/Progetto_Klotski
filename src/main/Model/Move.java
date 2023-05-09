@@ -10,7 +10,6 @@ public class Move {
     public Move(Rectangle i, Rectangle f){
         initial_pos = new Rectangle(i);
         final_pos = new Rectangle(f);
-
     }
 
     public Rectangle getInitialPosition(){return new Rectangle(initial_pos);}
