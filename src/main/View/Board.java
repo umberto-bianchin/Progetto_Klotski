@@ -6,9 +6,10 @@ import java.awt.event.MouseAdapter;
 
 class Board extends JPanel {
 
-    private final Block[] blocks = new Block[10];
-    private final JLabel displayedCounter;
-    private Block selectedBlock;
+    final Block[] blocks = new Block[10];
+    final JLabel displayedCounter;
+    Block selectedBlock;
+
 
     public Board(int counter) {
         setLayout(null);
@@ -67,15 +68,15 @@ class Board extends JPanel {
 
     }
 
-    public void addListener(MouseAdapter listener) {
-        addMouseListener(listener);
-    }
-
     public void setPositions(Rectangle[] position) {
 
         for (int i = 0; i < 10; i++) {
             blocks[i].setBlockAppearance(position[i]);
         }
+    }
+
+    public void addListener(MouseAdapter listener) {
+        addMouseListener(listener);
     }
 
     public void addBlockListener(MouseAdapter listener){
