@@ -12,10 +12,6 @@ class Block extends JLabel{
         setBounds(position);
     }
 
-    public void addListener(MouseAdapter listener){
-        this.addMouseListener(listener);
-    }
-
     private void setImage(Rectangle initial_position) {
         ImageIcon myPicture = new ImageIcon("./src/images/" + initial_position.width + "x" + initial_position.height + ".png");
         setIcon(myPicture);
@@ -27,4 +23,9 @@ class Block extends JLabel{
         else
             setBorder(null);
     }
+
+    public void addListener(MouseAdapter listener){
+        this.addMouseListener(listener);
+    }
+
 }

@@ -88,23 +88,6 @@ public class View {
         board.moveSelectedBlock(newPos, count);
     }
 
-    public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
-        board.addListener(whiteBoard);
-        board.addBlockListener(block);
-    }
-
-    public void addConfigurationListener(ActionListener listener) {
-        start.addConfigurationListener(listener);
-    }
-
-    public void addButtonsListeners(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home) {
-        buttons.addButtonListener(restart, save, next, undo, home);
-    }
-
-    public void addAuthenticationListeners(ActionListener auth, ActionListener logOut, ActionListener saved){
-        authentication.addAuthenticationListeners(auth, logOut, saved);
-    }
-
     public void logout() {
         authentication.initAuthentication();
     }
@@ -128,6 +111,23 @@ public class View {
         if(message.contains("SQL"))
             message = "Database error, retry later";
         JOptionPane.showMessageDialog(mainPane, message, title, type);
+    }
+
+    public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
+        board.addListener(whiteBoard);
+        board.addBlockListener(block);
+    }
+
+    public void addConfigurationListener(ActionListener listener) {
+        start.addConfigurationListener(listener);
+    }
+
+    public void addButtonsListeners(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home) {
+        buttons.addButtonListener(restart, save, next, undo, home);
+    }
+
+    public void addAuthenticationListeners(ActionListener auth, ActionListener logOut, ActionListener saved){
+        authentication.addAuthenticationListeners(auth, logOut, saved);
     }
 
 }
