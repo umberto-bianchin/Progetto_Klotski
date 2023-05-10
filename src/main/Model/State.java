@@ -125,4 +125,13 @@ class State {
 
     }
 
+    public void nextBest(Move best){
+
+        setSelectedPiece(best.getInitialPosition().getLocation());
+        win = selectedPiece.move(best.getFinalPosition());
+        selectedPiece = null;
+        counter++;
+
+    }
+
 }

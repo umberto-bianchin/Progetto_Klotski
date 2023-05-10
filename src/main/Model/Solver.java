@@ -1,19 +1,28 @@
 package Model;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
 import java.awt.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Solver {
 
     private static final JSONParser parser = new JSONParser();
+    private long hashCurrentConf = 0;
 
-    private static String jsonString(Rectangle[] config){
+    private JSONArray moves;
+    private int index_moves = 0;
+
+    private static String jsonString(Rectangle[] config) {
 
         StringBuilder json = new StringBuilder();
         json.append("{\"blocks\":[");
@@ -52,17 +61,23 @@ public class Solver {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
             return bufferedReader.readLine();
         }
-        throw new IOException();
+        throw new IOException("1");
     }
 
-    public static Move nextBestMove(Rectangle[] config) throws Exception {
-        String response = sendPostRequest(jsonString(config));
+    public Move nextBestMove(Rectangle[] config) throws Exception {
+
+
+        if (Arrays.hashCode(config) != hashCurrentConf) {
+            String response = sendPostRequest(jsonString(config));
+            moves = (JSONArray) parser.parse(response);
+            index_moves = 0;
+        }
+
+        JSONObject json = (JSONObject) moves.get(index_moves++);
         Rectangle[] positions = new Rectangle[2];
 
-        JSONObject json = (JSONObject) parser.parse(response);
-
         int blockIdx = ((Long) json.get("blockIdx")).intValue();
-        int dirIdx =  ((Long) json.get("dirIdx")).intValue();
+        int dirIdx = ((Long) json.get("dirIdx")).intValue();
 
         positions[0] = new Rectangle(config[blockIdx]);
         positions[1] = new Rectangle(config[blockIdx]);
@@ -71,11 +86,16 @@ public class Solver {
             case 1 -> positions[1].translate(100, 0);
             case 2 -> positions[1].translate(0, -100);
             case 3 -> positions[1].translate(-100, 0);
-            default -> throw new IOException();
+            default -> throw new IOException("2");
         }
 
         return new Move(positions[0], positions[1]);
     }
+
+    public void setConfigurationHash(long hash) {
+        hashCurrentConf = hash;
+    }
+
 }
 
 

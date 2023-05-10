@@ -2,12 +2,15 @@ package Model;
 
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Model {
 
     private State state;
     private Database db;
+    private final Solver solver = new Solver();
+
 
     public void initState(int config) throws SQLException {
         state = new State(db.getInitialConfig(config), config);
@@ -50,7 +53,6 @@ public class Model {
     public int getCounter() {
         return state.getCounter();
     }
-
 
     public Move undo() {
         if(state.getCounter()==0)
@@ -105,9 +107,10 @@ public class Model {
     }
 
     public Move nextBestMove() throws Exception {
-        Move bestMove = Solver.nextBestMove(state.getCurrentPositions());
-        setSelectedPiece(bestMove.getInitialPosition().getLocation());
-        moveSelectedPiece(bestMove.getFinalPosition().getLocation());
+        Move bestMove = solver.nextBestMove(state.getCurrentPositions());
+        state.nextBest(bestMove);
+        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
+
         return bestMove;
 
     }
