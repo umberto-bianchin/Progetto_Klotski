@@ -55,6 +55,14 @@ class Authentication extends JPanel{
         // TODO: 06/05/23 SETTARE STILE SCRITTA
         name.setForeground(Color.WHITE);
 
+        ImageIcon logout = new ImageIcon("./src/images/logout.png");
+        log_out.setIcon(logout);
+        log_out.setBorder(null);
+
+        ImageIcon savedGames = new ImageIcon("./src/images/savedGames.png");
+        saved_games.setIcon(savedGames);
+        saved_games.setBorder(null);
+
         setBounds(220,550,350,50);
         add(name);
         add(log_out);
