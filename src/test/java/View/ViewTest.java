@@ -27,8 +27,8 @@ class ViewTest {
         view.initStart();
 
         assertEquals("Select a Configuration", ((JLabel)view.mainPane.getComponent(0)).getText());
-        assertNotNull((Start)view.mainPane.getComponent(1));
-        assertNotNull((Authentication)view.mainPane.getComponent(2));
+        assertNotNull(view.mainPane.getComponent(1));
+        assertNotNull(view.mainPane.getComponent(2));
     }
 
     @Test
@@ -83,9 +83,7 @@ class ViewTest {
         String expectedInput = "test";
         final String[] input = {""};
 
-        Thread t = new Thread(() -> {
-            input[0] = view.askGameName();
-        });
+        Thread t = new Thread(() -> input[0] = view.askGameName());
         t.start();
         robot.delay(1000);
         for (char c : expectedInput.toCharArray()) {
