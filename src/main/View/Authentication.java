@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 
 class Authentication extends JPanel{
 
-    private final JButton sign_up = new JButton("Sign up");
-    private final JButton log_in = new JButton("Log in");
-    private final JButton log_out = new JButton("Log out");
-    private final JButton saved_games = new JButton("Saved games");
+    private final JButton sign_up = new JButton();
+    private final JButton log_in = new JButton();
+    private final JButton log_out = new JButton();
+    private final JButton saved_games = new JButton();
     private static ActionListener authListener;
     private AuthenticationDialog auth;
 
@@ -18,7 +18,7 @@ class Authentication extends JPanel{
         initAuthentication();
 
         ActionListener listener = e -> {
-            auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getName(), authListener);
+            auth = new AuthenticationDialog(frame, ((JButton) e.getSource()).getClientProperty("name").toString(), authListener);
             auth.setVisible(true);
         };
 
@@ -28,12 +28,15 @@ class Authentication extends JPanel{
         ImageIcon signup = new ImageIcon("./src/images/signup.png");
         sign_up.setIcon(signup);
         sign_up.setBorder(null);
-        //sign_up.setName("Sign up");
+        sign_up.setContentAreaFilled(false);
+        sign_up.setBackground(null);
         sign_up.putClientProperty("name", "Sign up");
 
         ImageIcon login = new ImageIcon("./src/images/login.png");
         log_in.setIcon(login);
         log_in.setBorder(null);
+        log_in.setContentAreaFilled(false);
+        log_in.setBackground(null);
         log_in.setName("Log in");
         log_in.putClientProperty("name", "Log in");
 
@@ -58,10 +61,14 @@ class Authentication extends JPanel{
         ImageIcon logout = new ImageIcon("./src/images/logout.png");
         log_out.setIcon(logout);
         log_out.setBorder(null);
+        log_out.setContentAreaFilled(false);
+        log_out.setBackground(null);
 
         ImageIcon savedGames = new ImageIcon("./src/images/savedGames.png");
         saved_games.setIcon(savedGames);
         saved_games.setBorder(null);
+        saved_games.setContentAreaFilled(false);
+        saved_games.setBackground(null);
 
         setBounds(220,550,350,50);
         add(name);

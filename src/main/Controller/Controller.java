@@ -154,7 +154,7 @@ public class Controller {
 
             String username = ((JButton) e.getSource()).getClientProperty("username").toString();
             String password = ((JButton) e.getSource()).getClientProperty("password").toString();
-            String type = ((JButton) e.getSource()).getClientProperty("name").toString();
+            String type = ((JButton) e.getSource()).getText();
 
             try {
 
