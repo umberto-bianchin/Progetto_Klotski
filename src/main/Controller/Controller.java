@@ -154,13 +154,13 @@ public class Controller {
 
             String username = ((JButton) e.getSource()).getClientProperty("username").toString();
             String password = ((JButton) e.getSource()).getClientProperty("password").toString();
-            String type = ((JButton) e.getSource()).getText();
+            String type = ((JButton) e.getSource()).getClientProperty("name").toString();
 
             try {
 
                 if (type.equals("Log in")) {
                     model.login(username, password);
-                } else if (type.equals("Sign in")) {
+                } else if (type.equals("Sign up")) {
                     model.registration(username, password);
                 }
 
@@ -169,6 +169,7 @@ public class Controller {
 
             }  catch (Exception ex) {
                 view.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
+
             }
         }
     }

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 class Authentication extends JPanel{
 
-    private final JButton sign_up = new JButton("Sign in");
+    private final JButton sign_up = new JButton("Sign up");
     private final JButton log_in = new JButton("Log in");
     private final JButton log_out = new JButton("Log out");
     private final JButton saved_games = new JButton("Saved games");
@@ -18,12 +18,24 @@ class Authentication extends JPanel{
         initAuthentication();
 
         ActionListener listener = e -> {
-            auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getText(), authListener);
+            auth = new AuthenticationDialog(frame, ((JButton)e.getSource()).getName(), authListener);
             auth.setVisible(true);
         };
 
         log_in.addActionListener(listener);
         sign_up.addActionListener(listener);
+
+        ImageIcon signup = new ImageIcon("./src/images/signup.png");
+        sign_up.setIcon(signup);
+        sign_up.setBorder(null);
+        //sign_up.setName("Sign up");
+        sign_up.putClientProperty("name", "Sign up");
+
+        ImageIcon login = new ImageIcon("./src/images/login.png");
+        log_in.setIcon(login);
+        log_in.setBorder(null);
+        log_in.setName("Log in");
+        log_in.putClientProperty("name", "Log in");
 
     }
 
