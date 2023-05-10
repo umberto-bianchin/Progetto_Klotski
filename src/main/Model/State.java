@@ -115,21 +115,23 @@ class State {
 
     public Move undo(){
 
-        Move lastMove = moves.getLast();
-        setSelectedPiece(lastMove.getFinalPosition().getLocation());
-        selectedPiece.move(lastMove.getInitialPosition());
-        selectedPiece = null;
+        Move lastMoveRev = moves.getLast().reverse();
+        makeMove(lastMoveRev);
+
         moves.removeLast();
-        counter--;
-        return lastMove;
+        moves.removeLast();
+
+        counter-=2;
+        return lastMoveRev;
 
     }
 
-    public void nextBest(Move best){
+    public void makeMove(Move move){
 
-        setSelectedPiece(best.getInitialPosition().getLocation());
-        win = selectedPiece.move(best.getFinalPosition());
+        setSelectedPiece(move.getInitialPosition().getLocation());
+        win = selectedPiece.move(move.getFinalPosition());
         selectedPiece = null;
+        moves.add(move);
         counter++;
 
     }

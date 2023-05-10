@@ -117,8 +117,8 @@ public class Controller {
         public void actionPerformed(ActionEvent e) {
 
             try {
-                Move lastMove = model.undo();
-                view.makeMove(lastMove.invert(), model.getCounter());
+                Move lastMoveRev = model.undo();
+                view.makeMove(lastMoveRev, model.getCounter());
             }
             catch (RuntimeException ignored){}
 

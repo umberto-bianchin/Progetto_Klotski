@@ -108,7 +108,7 @@ public class Model {
 
     public Move nextBestMove() throws Exception {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
-        state.nextBest(bestMove);
+        state.makeMove(bestMove);
         solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
 
         return bestMove;
