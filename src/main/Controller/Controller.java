@@ -41,6 +41,14 @@ public class Controller {
 
     }
 
+    private void checkWin(){
+        if (model.hasWin()){
+            view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
+            model.restartState();
+            view.initStart();
+        }
+    }
+
 
     class BoardListener extends MouseAdapter {
         @Override
@@ -50,11 +58,7 @@ public class Controller {
                 Rectangle finalPosition = model.moveSelectedPiece(e.getPoint());
                 view.moveSelectedBlock(finalPosition, model.getCounter());
 
-                if (model.hasWin()){
-                    view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
-                    model.restartState();
-                    view.initStart();
-                }
+                checkWin();
             }
             catch (RuntimeException ignored){}
 
@@ -76,11 +80,7 @@ public class Controller {
                 Move bestMove = model.nextBestMove();
                 view.makeMove(bestMove, model.getCounter());
 
-                if (model.hasWin()){
-                    view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
-                    model.restartState();
-                    view.initStart();
-                }
+                checkWin();
 
             } catch (Exception ex) {
                 view.showMessage("Connectivity problems using solver, retry later", "Solver", JOptionPane.ERROR_MESSAGE);
