@@ -53,12 +53,15 @@ public class View {
     public void initGame(Rectangle[] position, int counter) {
 
         mainPane.removeAll();
-        mainPane.setIcon(null);
+        ImageIcon background = new ImageIcon("./src/images/background2.png");
+        mainPane.setIcon(background);
 
         buttons = new Buttons();
         board = new Board(counter);
 
         board.setPositions(position);
+        board.setOpaque(false);
+        buttons.setOpaque(false);
 
         buttons.setBounds(420, 10, 100, 700);
         mainPane.add(buttons);
