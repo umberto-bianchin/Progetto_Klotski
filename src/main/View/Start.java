@@ -22,7 +22,10 @@ class Start extends JPanel{
             label.setOpaque(false);
             buttons[i] = new JButton(myPicture);
             buttons[i].setName(String.valueOf(i));
-            buttons[i].setBounds(60,5, 150, 170);
+            buttons[i].setBounds(60,5, 155, 180);
+            buttons[i].setBorder(null);
+            buttons[i].setContentAreaFilled(false);
+            buttons[i].setBackground(null);
             label.add(buttons[i]);
 
             add(label);

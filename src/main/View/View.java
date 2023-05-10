@@ -42,6 +42,7 @@ public class View {
         title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
         title_text.setForeground(Color.white);
         title_text.setBounds(0, 20, 550, 50);
+        title_text.setHorizontalTextPosition(SwingConstants.CENTER);
 
         mainPane.add(title_text);
         mainPane.add(start);
