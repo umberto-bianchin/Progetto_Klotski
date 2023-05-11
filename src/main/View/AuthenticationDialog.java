@@ -43,7 +43,6 @@ public class AuthenticationDialog extends JDialog {
         panel.add(passwordField, cs);
 
         confirmButton.setText(title);
-        confirmButton.setForeground(Color.BLUE);
 
         confirmButton.addActionListener(
                 e-> {

@@ -14,7 +14,9 @@ class Authentication extends JPanel{
     private AuthenticationDialog auth;
 
     public Authentication(JFrame frame){
-        setOpaque(false);
+//        setOpaque(false);
+        setBounds(0,550,550,50);
+
         initAuthentication();
 
         ActionListener listener = e -> {
@@ -44,7 +46,8 @@ class Authentication extends JPanel{
 
     public void initAuthentication(){
         removeAll();
-        setBounds(350,550,200,50);
+        setBounds(0,550,550,50);
+
         add(sign_up);
         add(log_in);
         repaint();
@@ -53,10 +56,18 @@ class Authentication extends JPanel{
 
     public void initUser(String user){
         removeAll();
-        JLabel name = new JLabel(user);
+        setBounds(0,550,550,50);
 
-        // TODO: 06/05/23 SETTARE STILE SCRITTA
+//        setAlignmentX(RIGHT_ALIGNMENT);
+
+        JLabel name = new JLabel(user);
+        name.setFont(new Font("Agency FB", Font.BOLD, 20));
         name.setForeground(Color.WHITE);
+
+
+//        saved_games.setAlignmentX(RIGHT_ALIGNMENT);
+//        log_out.setAlignmentX(RIGHT_ALIGNMENT);
+
 
         ImageIcon logout = new ImageIcon("./src/images/logout.png");
         log_out.setIcon(logout);
@@ -70,7 +81,8 @@ class Authentication extends JPanel{
         saved_games.setContentAreaFilled(false);
         saved_games.setBackground(null);
 
-        setBounds(220,550,350,50);
+//        setBounds(0,550,550,50);
+//        setBounds(220,550,350,50);
         add(name);
         add(log_out);
         add(saved_games);

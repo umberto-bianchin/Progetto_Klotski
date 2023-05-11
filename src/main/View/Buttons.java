@@ -27,7 +27,8 @@ public class Buttons extends JPanel {
 
         for(JButton button : buttons){
             button.setBorder(null);
-            button.setOpaque(false);
+            button.setContentAreaFilled(false);
+            button.setBackground(null);
             add(button);
         }
     }

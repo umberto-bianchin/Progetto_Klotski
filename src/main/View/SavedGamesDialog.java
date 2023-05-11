@@ -13,12 +13,14 @@ public class SavedGamesDialog extends JDialog {
         super(parent, "Saved games", true);
         cs.fill = GridBagConstraints.HORIZONTAL;
         cs.insets = new Insets(3,10,3,10);
-        panel.setBackground(Color.white);
 
         if(numberSavedGames.size() == 0)
         {
             JLabel message = new JLabel("No saved match to show");
-            message.setBackground(Color.white);
+            message.setFont(new Font("Agency FB", Font.PLAIN, 20));
+            message.setForeground(Color.white);
+
+
             cs.gridx = 0;
             cs.gridy = 0;
             panel.add(message, cs);
@@ -35,9 +37,12 @@ public class SavedGamesDialog extends JDialog {
 
     private void addEntry(int number, ActionListener listener, String name){
         JButton game = new JButton("Match Name: "+name);
+        game.setFont(new Font("Agency FB", Font.PLAIN, 20));
+        game.setForeground(Color.white);
+
         game.setName("game"+name);
         game.setBorder(null);
-        game.setBackground(Color.white);
+        game.setBackground(null);
         game.addActionListener(e -> {
             dispose();
             listener.actionPerformed(e);
@@ -51,7 +56,8 @@ public class SavedGamesDialog extends JDialog {
         delete.setName("delete"+name);
         delete.setIcon(new ImageIcon("./src/images/delete.png"));
         delete.setBorder(null);
-        delete.setBackground(Color.white);
+        delete.setContentAreaFilled(false);
+        delete.setBackground(null);
         delete.addActionListener(e -> {
             dispose();
             listener.actionPerformed(e);
@@ -62,9 +68,6 @@ public class SavedGamesDialog extends JDialog {
         panel.add(delete, cs);
 
     }
-
-
-
 
 
 }

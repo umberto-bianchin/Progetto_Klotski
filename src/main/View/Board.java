@@ -18,14 +18,14 @@ class Board extends JPanel {
         JLabel line = new JLabel();
         line.setBackground(Color.red);
         line.setOpaque(true);
-        line.setBounds(100, 505, 200, 10);
+        line.setBounds(100, 510, 200, 10);
         line.setSize(200, 10);
         add(line);
 
         displayedCounter = new JLabel("Moves: " + counter);
         displayedCounter.setHorizontalAlignment(JLabel.CENTER);
-        displayedCounter.setBackground(Color.white);
-        displayedCounter.setFont(new Font("Serif", Font.BOLD, 25));
+        displayedCounter.setForeground(Color.white);
+        displayedCounter.setFont(new Font("Agency FB", Font.BOLD, 25));
         displayedCounter.setBounds(10, 525, 400, 40);
         displayedCounter.setSize(400, 40);
         add(displayedCounter);

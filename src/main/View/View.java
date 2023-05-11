@@ -1,5 +1,8 @@
 package View;
 
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarculaLaf;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -10,12 +13,18 @@ public class View {
 
     Board board;
     Buttons buttons;
-    JFrame frame = new JFrame("KLOTSKI's PUZZLE");
+    JFrame frame;
     JLabel mainPane = new JLabel();
     Start start = new Start();
-    Authentication authentication = new Authentication(frame);
+    Authentication authentication;
 
     public View() {
+        FlatLightLaf.setup(new FlatDarculaLaf());
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        frame = new JFrame("KLOTSKI's PUZZLE");
+        authentication = new Authentication(frame);
+//        frame.getRootPane().putClientProperty("JRootPane.titleBarBackground", );
+//        frame.getRootPane().putClientProperty("JRootPane.titleBarForeground", Color.white);
 
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
@@ -36,7 +45,6 @@ public class View {
 
         ImageIcon background = new ImageIcon("./src/images/background.png");
         mainPane.setIcon(background);
-        mainPane.setOpaque(true);
 
         JLabel title_text = new JLabel("Select a Configuration", SwingConstants.CENTER);
         title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
@@ -64,7 +72,7 @@ public class View {
         board.setOpaque(false);
         buttons.setOpaque(false);
 
-        buttons.setBounds(420, 10, 100, 700);
+        buttons.setBounds(425, 10, 100, 700);
         mainPane.add(buttons);
 
         board.setBounds(10, 10, 400, 700);
