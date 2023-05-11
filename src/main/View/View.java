@@ -1,8 +1,6 @@
 package View;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.FlatDarculaLaf;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -19,7 +17,7 @@ public class View {
     Authentication authentication;
 
     public View() {
-        FlatLightLaf.setup(new FlatDarculaLaf());
+        FlatDarculaLaf.setup();
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("KLOTSKI's PUZZLE");
         authentication = new Authentication(frame);

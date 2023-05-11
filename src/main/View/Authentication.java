@@ -14,7 +14,7 @@ class Authentication extends JPanel{
     private AuthenticationDialog auth;
 
     public Authentication(JFrame frame){
-//        setOpaque(false);
+        setOpaque(false);
         setBounds(0,550,550,50);
 
         initAuthentication();
