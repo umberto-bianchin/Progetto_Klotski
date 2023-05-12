@@ -3,6 +3,7 @@ package Model;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -61,11 +62,10 @@ public class Solver {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
             return bufferedReader.readLine();
         }
-        throw new IOException("1");
+        return jsonBody;
     }
 
-    public Move nextBestMove(Rectangle[] config) throws Exception {
-
+    public Move nextBestMove(Rectangle[] config) throws IOException, ParseException {
 
         if (Arrays.hashCode(config) != hashCurrentConf) {
             String response = sendPostRequest(jsonString(config));
@@ -86,7 +86,7 @@ public class Solver {
             case 1 -> positions[1].translate(100, 0);
             case 2 -> positions[1].translate(0, -100);
             case 3 -> positions[1].translate(-100, 0);
-            default -> throw new IOException("2");
+            default -> throw new IOException();
         }
 
         return new Move(positions[0], positions[1]);

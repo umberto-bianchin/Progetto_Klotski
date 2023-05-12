@@ -20,8 +20,6 @@ public class View {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("KLOTSKI's PUZZLE");
         authentication = new Authentication(frame);
-//        frame.getRootPane().putClientProperty("JRootPane.titleBarBackground", );
-//        frame.getRootPane().putClientProperty("JRootPane.titleBarForeground", Color.white);
 
         mainPane.setLayout(null);
         mainPane.setBackground(Color.white);
@@ -29,7 +27,6 @@ public class View {
 
         frame.add(mainPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
         frame.pack();
         frame.setLocationRelativeTo(null);
@@ -40,7 +37,6 @@ public class View {
     }
 
     public void initStart() {
-
 
         mainPane.removeAll();
 
@@ -63,8 +59,17 @@ public class View {
     public void initGame(Rectangle[] position, int counter) {
 
         mainPane.removeAll();
-        ImageIcon background = new ImageIcon("./src/images/background2.png");
-        mainPane.setIcon(background);
+
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if(os.contains("win")){
+            ImageIcon background = new ImageIcon("./src/images/background2win.png");
+            mainPane.setIcon(background);
+        }
+        else {
+            ImageIcon background = new ImageIcon("./src/images/background2mac.png");
+            mainPane.setIcon(background);
+        }
 
         buttons = new Buttons();
         board = new Board(counter);

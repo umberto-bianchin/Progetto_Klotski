@@ -17,6 +17,10 @@ public class Controller {
 
         this.view = view;
         this.model = model;
+        initStart();
+    }
+
+    private void initStart(){
 
         WindowAdapter exit = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -50,6 +54,16 @@ public class Controller {
             view.initStart();
         }
     }
+
+//    void executeWithTryCatch(CodeBlock code) {
+//        try {
+//            code.execute();
+//        } catch (SQLException ex) {
+//            view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
+//        } catch (IOException | ParseException ex){
+//
+//        }
+//    }
 
 }
 

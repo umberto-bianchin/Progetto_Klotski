@@ -19,7 +19,6 @@ class NextCommand implements ActionListener {
         this.model = model;
         this.view = view;
         this.controller = controller;
-
     }
 
     @Override

@@ -1,6 +1,9 @@
 package Model;
 
+import org.json.simple.parser.ParseException;
+
 import java.awt.*;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Vector;
@@ -106,7 +109,7 @@ public class Model {
         db.deleteGame(name);
     }
 
-    public Move nextBestMove() throws Exception {
+    public Move nextBestMove() throws IOException, ParseException {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
         state.makeMove(bestMove);
         solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
