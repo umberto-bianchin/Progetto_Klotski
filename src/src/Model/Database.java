@@ -4,9 +4,11 @@ import java.awt.*;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.Vector;
+
+
 public class Database {
 
-    private final Connection conn;
+    private Connection conn;
     private final String dbURL = "jdbc:mysql://progettoklotski.c6i3tfhv1iee.eu-north-1.rds.amazonaws.com:3306/progettoklotski";
     private final String username = "admin";
     private final String password = "mypassword";
@@ -16,6 +18,7 @@ public class Database {
         //database connection
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, username, password);
+
     }
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException{
@@ -80,6 +83,8 @@ public class Database {
         stmt.close();
         return ret;
     }
+
+
 
     public int getIdConf(String game_name) throws SQLException {
         Statement stmt = conn.createStatement();
@@ -220,14 +225,13 @@ public class Database {
         }
     }
 
-
-    public void databaseClose() throws SQLException {
-        conn.close();
-    }
-
     public void resetIdPlayer() {
         //logout
         id_player = -1;
+    }
+
+    public void closeConnection() throws SQLException {
+        conn.close();
     }
 
     public boolean isLogged(){

@@ -115,5 +115,11 @@ public class Model {
 
     }
 
+    public void closeDatabaseConnection(){
+        try {
+            db.closeConnection();
+        } catch (SQLException ignored) {}
+    }
+
 
 }

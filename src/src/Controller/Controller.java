@@ -6,10 +6,7 @@ import View.View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -17,15 +14,22 @@ public class Controller {
     private final View view;
     private final Model model;
 
+
     public Controller(View view, Model model) {
 
         this.view = view;
         this.model = model;
 
+        WindowAdapter exit = new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                model.closeDatabaseConnection();
+            }
+        };
+
         try{
             model.initDatabase();
             view.initStart();
-            view.addConfigurationListener(new ConfigurationListener());
+            view.addConfigurationListener(exit, new ConfigurationListener());
             view.addAuthenticationListeners(new AuthListener(), new LogOutListener(), new SavedListener());
         } catch(Exception e){
             view.showMessage("Server SQL error", "Start", JOptionPane.ERROR_MESSAGE);

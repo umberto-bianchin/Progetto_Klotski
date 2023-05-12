@@ -3,8 +3,7 @@ package View;
 import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
+import java.awt.event.*;
 import java.util.Vector;
 
 public class View {
@@ -30,6 +29,8 @@ public class View {
 
         frame.add(mainPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -39,6 +40,8 @@ public class View {
     }
 
     public void initStart() {
+
+
         mainPane.removeAll();
 
         ImageIcon background = new ImageIcon("./src/images/background.png");
@@ -128,8 +131,10 @@ public class View {
         board.addBlockListener(block);
     }
 
-    public void addConfigurationListener(ActionListener listener) {
-        start.addConfigurationListener(listener);
+    public void addConfigurationListener(WindowAdapter close, ActionListener configuration) {
+
+        frame.addWindowListener(close);
+        start.addConfigurationListener(configuration);
     }
 
     public void addButtonsListeners(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home) {
