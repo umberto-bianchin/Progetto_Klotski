@@ -11,14 +11,17 @@ public class View {
     Board board;
     Buttons buttons;
     JFrame frame;
-    JLabel mainPane = new JLabel();
-    Start start = new Start();
+    JLabel mainPane;
+    Start start;
     Authentication authentication;
 
     public View() {
         FlatDarculaLaf.setup();
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("KLOTSKI's PUZZLE");
+
+        mainPane = new JLabel();
+        start = new Start();
         authentication = new Authentication(frame);
 
         mainPane.setLayout(null);
