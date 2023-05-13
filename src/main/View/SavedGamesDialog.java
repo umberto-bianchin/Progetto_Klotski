@@ -19,7 +19,6 @@ public class SavedGamesDialog extends JDialog {
             message.setFont(new Font("Agency FB", Font.PLAIN, 20));
             message.setForeground(Color.white);
 
-
             cs.gridx = 0;
             cs.gridy = 0;
             panel.add(message, cs);

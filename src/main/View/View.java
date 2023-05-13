@@ -153,4 +153,24 @@ public class View {
         authentication.addAuthenticationListeners(auth, logOut, saved);
     }
 
+    public boolean showAuthenticationDialog(){
+
+        Object[] options = {"Log in", "Sign up", "Back"};
+
+        int n = JOptionPane.showOptionDialog(frame,
+                "You can't save a game without being authenticated ",
+                "Error Saving Match",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[2]);
+
+        if(n == 2 || n == -1)
+            return false;
+
+        authentication.showAuthenticationDialog(frame, (String) options[n]);
+        return true;
+    }
+
 }

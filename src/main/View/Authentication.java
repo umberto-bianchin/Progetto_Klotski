@@ -11,7 +11,6 @@ class Authentication extends JPanel{
     private final JButton log_out = new JButton();
     private final JButton saved_games = new JButton();
     private static ActionListener authListener;
-    private AuthenticationDialog auth;
 
     public Authentication(JFrame frame){
         setOpaque(false);
@@ -19,10 +18,8 @@ class Authentication extends JPanel{
 
         initAuthentication();
 
-        ActionListener listener = e -> {
-            auth = new AuthenticationDialog(frame, ((JButton) e.getSource()).getClientProperty("name").toString(), authListener);
-            auth.setVisible(true);
-        };
+        ActionListener listener = e -> showAuthenticationDialog(frame, ((JButton) e.getSource()).getClientProperty("name").toString());
+
 
         log_in.addActionListener(listener);
         sign_up.addActionListener(listener);
@@ -43,6 +40,14 @@ class Authentication extends JPanel{
         log_in.putClientProperty("name", "Log in");
 
     }
+
+    public void showAuthenticationDialog(JFrame frame, String type){
+
+        AuthenticationDialog auth = new AuthenticationDialog(frame, type, authListener);
+        auth.setVisible(true);
+
+    }
+
 
     public void initAuthentication(){
         removeAll();
