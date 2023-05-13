@@ -186,8 +186,10 @@ public class Database {
             cstmt.execute();
 
             int rowsAffected = cstmt.getInt(4);
-            if (rowsAffected == 1)
+            if (rowsAffected == 1) {
+                id_player = id;
                 return true;
+            }
 
         }
         return false;
