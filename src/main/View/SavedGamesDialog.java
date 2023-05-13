@@ -14,8 +14,7 @@ public class SavedGamesDialog extends JDialog {
         cs.fill = GridBagConstraints.HORIZONTAL;
         cs.insets = new Insets(3,10,3,10);
 
-        if(numberSavedGames.size() == 0)
-        {
+        if(numberSavedGames.size() == 0) {
             JLabel message = new JLabel("No saved match to show");
             message.setFont(new Font("Agency FB", Font.PLAIN, 20));
             message.setForeground(Color.white);
@@ -29,7 +28,7 @@ public class SavedGamesDialog extends JDialog {
         for(int i = 0; i<numberSavedGames.size(); i++)
             addEntry(i, listener, numberSavedGames.get(i));
 
-        setSize(220, 250);
+        setSize(400, 250);
         add(BorderLayout.CENTER, new JScrollPane(panel));
         setResizable(false);
         setLocationRelativeTo(parent);

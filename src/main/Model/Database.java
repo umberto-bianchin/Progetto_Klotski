@@ -144,7 +144,7 @@ public class Database {
         String query = "CALL delete_game('" + game_name + "')";
 
         try (Statement stmt = conn.createStatement()) {
-            stmt.executeQuery(query);
+            stmt.execute(query);
         }
 
     }
