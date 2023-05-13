@@ -26,7 +26,7 @@ class NextCommand implements ActionListener {
         try {
             Move bestMove = model.nextBestMove();
             view.makeMove(bestMove, model.getCounter());
-            controller.WinHandler();
+            controller.winHandler();
         } catch (Exception ex) {
             view.showMessage("Connectivity problems using solver, retry later", "Solver", JOptionPane.ERROR_MESSAGE);
         }

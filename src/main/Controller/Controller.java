@@ -47,7 +47,7 @@ public class Controller {
 
     }
 
-    void WinHandler(){
+    void winHandler(){
         if (model.hasWin()){
             view.showMessage("You won!", "Win", JOptionPane.INFORMATION_MESSAGE);
             model.restartState();
@@ -55,15 +55,6 @@ public class Controller {
         }
     }
 
-//    void executeWithTryCatch(CodeBlock code) {
-//        try {
-//            code.execute();
-//        } catch (SQLException ex) {
-//            view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
-//        } catch (IOException | ParseException ex){
-//
-//        }
-//    }
 
 }
 

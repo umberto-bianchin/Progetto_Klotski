@@ -28,7 +28,7 @@ class BoardListener extends MouseAdapter {
         try {
             Rectangle finalPosition = model.moveSelectedPiece(e.getPoint());
             view.moveSelectedBlock(finalPosition, model.getCounter());
-            controller.WinHandler();
+            controller.winHandler();
         }
         catch (RuntimeException ignored){}
 
