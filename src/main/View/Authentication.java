@@ -24,15 +24,13 @@ class Authentication extends JPanel{
         log_in.addActionListener(listener);
         sign_up.addActionListener(listener);
 
-        ImageIcon signup = new ImageIcon("./src/images/signup.png");
-        sign_up.setIcon(signup);
+        sign_up.setIcon(new ImageIcon("./src/images/signup.png"));
         sign_up.setBorder(null);
         sign_up.setContentAreaFilled(false);
         sign_up.setBackground(null);
         sign_up.putClientProperty("name", "Sign up");
 
-        ImageIcon login = new ImageIcon("./src/images/login.png");
-        log_in.setIcon(login);
+        log_in.setIcon(new ImageIcon("./src/images/login.png"));
         log_in.setBorder(null);
         log_in.setContentAreaFilled(false);
         log_in.setBackground(null);
@@ -69,25 +67,16 @@ class Authentication extends JPanel{
         name.setFont(new Font("Agency FB", Font.BOLD, 20));
         name.setForeground(Color.WHITE);
 
-
-//        saved_games.setAlignmentX(RIGHT_ALIGNMENT);
-//        log_out.setAlignmentX(RIGHT_ALIGNMENT);
-
-
-        ImageIcon logout = new ImageIcon("./src/images/logout.png");
-        log_out.setIcon(logout);
+        log_out.setIcon(new ImageIcon("./src/images/logout.png"));
         log_out.setBorder(null);
         log_out.setContentAreaFilled(false);
         log_out.setBackground(null);
 
-        ImageIcon savedGames = new ImageIcon("./src/images/savedGames.png");
-        saved_games.setIcon(savedGames);
+        saved_games.setIcon(new ImageIcon("./src/images/savedGames.png"));
         saved_games.setBorder(null);
         saved_games.setContentAreaFilled(false);
         saved_games.setBackground(null);
 
-//        setBounds(0,550,550,50);
-//        setBounds(220,550,350,50);
         add(name);
         add(log_out);
         add(saved_games);

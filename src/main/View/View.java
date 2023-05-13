@@ -43,8 +43,7 @@ public class View {
 
         mainPane.removeAll();
 
-        ImageIcon background = new ImageIcon("./src/images/background.png");
-        mainPane.setIcon(background);
+        mainPane.setIcon(new ImageIcon("./src/images/background.png"));
 
         JLabel title_text = new JLabel("Select a Configuration", SwingConstants.CENTER);
         title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
@@ -66,12 +65,10 @@ public class View {
         String os = System.getProperty("os.name").toLowerCase();
 
         if(os.contains("win")){
-            ImageIcon background = new ImageIcon("./src/images/background2win.png");
-            mainPane.setIcon(background);
+            mainPane.setIcon(new ImageIcon("./src/images/background2win.png"));
         }
         else {
-            ImageIcon background = new ImageIcon("./src/images/background2mac.png");
-            mainPane.setIcon(background);
+            mainPane.setIcon(new ImageIcon("./src/images/background2mac.png"));
         }
 
         buttons = new Buttons();

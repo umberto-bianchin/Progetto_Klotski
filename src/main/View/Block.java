@@ -13,8 +13,7 @@ class Block extends JLabel{
     }
 
     private void setImage(Rectangle initial_position) {
-        ImageIcon myPicture = new ImageIcon("./src/images/" + initial_position.width + "x" + initial_position.height + ".png");
-        setIcon(myPicture);
+        setIcon(new ImageIcon("./src/images/" + initial_position.width + "x" + initial_position.height + ".png"));
     }
 
     public void setBorder(boolean on){

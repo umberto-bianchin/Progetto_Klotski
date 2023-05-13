@@ -16,11 +16,10 @@ class Start extends JPanel{
         setBounds(32, 100, 420, 440);
 
         for(int i=0; i<4; i++) {
-            ImageIcon myPicture = new ImageIcon("./src/images/miniatura"+i+".png");
             JLabel label = new JLabel();
 
             label.setOpaque(false);
-            buttons[i] = new JButton(myPicture);
+            buttons[i] = new JButton(new ImageIcon("./src/images/miniatura"+i+".png"));
             buttons[i].setName(String.valueOf(i));
             buttons[i].setBounds(60,5, 155, 180);
             buttons[i].setBorder(null);
