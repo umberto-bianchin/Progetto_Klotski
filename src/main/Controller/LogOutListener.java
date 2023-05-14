@@ -1,25 +1,25 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class LogOutListener implements ActionListener{
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
 
-    LogOutListener(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    LogOutListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        model.logout();
-        view.logout();
+        klotskiModel.logout();
+        klotskiUI.logout();
     }
 
 }

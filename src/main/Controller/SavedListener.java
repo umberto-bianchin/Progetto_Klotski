@@ -1,32 +1,30 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 
 class SavedListener implements ActionListener {
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
     private final Controller controller;
 
-    SavedListener(Model model, View view, Controller controller) {
-        this.model = model;
-        this.view = view;
+    SavedListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            view.showSavedGames(model.getSavedGameList(), new SelectSavedGamesListener(model, view, controller));
-        } catch (SQLException ex) {
-            view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
+            klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), new SelectSavedGamesListener(klotskiModel, klotskiUI, controller));
+        } catch (Exception ex) {
+            klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

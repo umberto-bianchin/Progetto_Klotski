@@ -9,7 +9,6 @@ class State {
     Rectangle[] initial_config;
     Piece[] current_config;
     private Piece selectedPiece;
-    private int counter = 0;
     private boolean win=false;
     private final int initial_conf;
 
@@ -27,19 +26,12 @@ class State {
 
     public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config, int conf){
         moves = saved_moves;
-        counter = saved_moves.size();
         initial_conf = conf;
         initial_config = starting_config;
 
         current_config = new Piece[10];
         for(int i=0; i<10; i++){
             current_config[i] = new Piece(saved_config[i]);
-        }
-    }
-
-    public void setCurrentConfig(Rectangle[] saved_config){
-        for(int i=0; i<10; i++){
-            current_config[i].setPosition(saved_config[i]);
         }
     }
 
@@ -61,14 +53,6 @@ class State {
 
     public Rectangle[] getInitialPositions(){
         return initial_config;
-    }
-
-    public void setCounter(int i){
-        counter = i;
-    }
-
-    public int getCounter(){
-        return counter;
     }
 
     public void setSelectedPiece(Point p) {
@@ -105,7 +89,6 @@ class State {
 
         win = selectedPiece.move(possiblePosition);
         selectedPiece = null;
-        counter++;
 
         return possiblePosition;
 
@@ -121,7 +104,6 @@ class State {
         moves.removeLast();
         moves.removeLast();
 
-        counter-=2;
         return lastMoveRev;
 
     }
@@ -132,7 +114,6 @@ class State {
         win = selectedPiece.move(move.getFinalPosition());
         selectedPiece = null;
         moves.add(move);
-        counter++;
 
     }
 

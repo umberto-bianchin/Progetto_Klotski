@@ -1,25 +1,21 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import View.KlotskiUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 class HomeCommand implements ActionListener {
 
-    private final Model model;
-    private final View view;
+    private final KlotskiUI klotskiUI;
 
-    HomeCommand(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    HomeCommand(KlotskiUI klotskiUI) {
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        model.restartState();
-        view.initStart();
+        klotskiUI.initStart();
     }
 
 }

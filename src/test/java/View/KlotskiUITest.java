@@ -12,23 +12,23 @@ import java.awt.event.KeyEvent;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ViewTest {
+class KlotskiUITest {
 
-    private View view;
+    private KlotskiUI klotskiUI;
 
     @BeforeEach
     void setUp(){
-        view = new View();
+        klotskiUI = new KlotskiUI();
     }
 
 
     @Test
     void testInitStart() {
-        view.initStart();
+        klotskiUI.initStart();
 
-        assertEquals("Select a Configuration", ((JLabel)view.mainPane.getComponent(0)).getText());
-        assertNotNull(view.mainPane.getComponent(1));
-        assertNotNull(view.mainPane.getComponent(2));
+        assertEquals("Select a Configuration", ((JLabel) klotskiUI.mainPane.getComponent(0)).getText());
+        assertNotNull(klotskiUI.mainPane.getComponent(1));
+        assertNotNull(klotskiUI.mainPane.getComponent(2));
     }
 
     @Test
@@ -37,9 +37,9 @@ class ViewTest {
                 new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
                 new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
                 new Rectangle(300,400,100,100)};
-        view.initGame(positions, 0);
-        assertNotNull(view.buttons);
-        assertNotNull(view.board);
+        klotskiUI.initGame(positions, 0);
+        assertNotNull(klotskiUI.buttons);
+        assertNotNull(klotskiUI.board);
     }
 
     @Test
@@ -48,11 +48,11 @@ class ViewTest {
                 new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
                 new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
                 new Rectangle(300,400,100,100)};
-        view.initGame(positions, 3);
-        view.board.selectedBlock = new Block();
-        view.restart(positions);
-        assertNull(view.board.selectedBlock);
-        assertEquals("Moves: 0", view.board.displayedCounter.getText());
+        klotskiUI.initGame(positions, 3);
+        klotskiUI.board.selectedBlock = new Block();
+        klotskiUI.restart(positions);
+        assertNull(klotskiUI.board.selectedBlock);
+        assertEquals("Moves: 0", klotskiUI.board.displayedCounter.getText());
 
     }
 
@@ -62,12 +62,12 @@ class ViewTest {
                 new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
                 new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
                 new Rectangle(300,400,100,100)};
-        view.initGame(positions, 0);
+        klotskiUI.initGame(positions, 0);
         Move move = new Move(positions[2], new Rectangle(100, 400, 100, 100));
         Block block = new Block();
         block.setBounds(move.getFinalPosition());
-        view.board.selectedBlock = block;
-        view.board.moveSelectedBlock(move.getInitialPosition(), 1);
+        klotskiUI.board.selectedBlock = block;
+        klotskiUI.board.moveSelectedBlock(move.getInitialPosition(), 1);
         assertEquals(move.getInitialPosition(), block.getBounds());
 
     }
@@ -83,7 +83,7 @@ class ViewTest {
         String expectedInput = "test";
         final String[] input = {""};
 
-        Thread t = new Thread(() -> input[0] = view.askGameName());
+        Thread t = new Thread(() -> input[0] = klotskiUI.askGameName());
         t.start();
         robot.delay(1000);
         for (char c : expectedInput.toCharArray()) {

@@ -1,22 +1,21 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 class SelectSavedGamesListener implements ActionListener{
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
     private final Controller controller;
 
-    SelectSavedGamesListener(Model model, View view, Controller controller) {
-        this.model = model;
-        this.view = view;
+    SelectSavedGamesListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
         this.controller = controller;
 
     }
@@ -27,17 +26,17 @@ class SelectSavedGamesListener implements ActionListener{
 
             if (((JButton) e.getSource()).getName().startsWith("game")) {
 
-                model.resumeState(((JButton) e.getSource()).getName().substring(4));
-                controller.initGameView(model.getCurrentPositions(), model.getCounter());
+                klotskiModel.resumeState(((JButton) e.getSource()).getName().substring(4));
+                controller.initGameView(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
 
             } else if (((JButton) e.getSource()).getName().startsWith("delete")) {
 
-                model.deleteSavedGame(((JButton) e.getSource()).getName().substring(6));
-                view.showSavedGames(model.getSavedGameList(), this);
+                klotskiModel.deleteSavedGame(((JButton) e.getSource()).getName().substring(6));
+                klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), this);
             }
 
-        } catch (SQLException ex) {
-            view.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

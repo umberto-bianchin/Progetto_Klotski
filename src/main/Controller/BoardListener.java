@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,13 +11,13 @@ import java.awt.event.MouseEvent;
 class BoardListener extends MouseAdapter {
 
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
     private final Controller controller;
 
-    BoardListener(Model model, View view, Controller controller) {
-        this.model = model;
-        this.view = view;
+    BoardListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
         this.controller = controller;
 
     }
@@ -26,8 +26,8 @@ class BoardListener extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
 
         try {
-            Rectangle finalPosition = model.moveSelectedPiece(e.getPoint());
-            view.moveSelectedBlock(finalPosition, model.getCounter());
+            Rectangle finalPosition = klotskiModel.moveSelectedPiece(e.getPoint());
+            klotskiUI.moveSelectedBlock(finalPosition, klotskiModel.getCounter());
             controller.winHandler();
         }
         catch (RuntimeException ignored){}

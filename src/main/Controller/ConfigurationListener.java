@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -11,13 +11,13 @@ import java.sql.SQLException;
 
 class ConfigurationListener  implements ActionListener {
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
     private final Controller controller;
 
-    ConfigurationListener(Model model, View view, Controller controller) {
-        this.model = model;
-        this.view = view;
+    ConfigurationListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
         this.controller = controller;
 
     }
@@ -27,11 +27,11 @@ class ConfigurationListener  implements ActionListener {
 
         try {
             int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
-            model.initState(num_config);
-            controller.initGameView(model.getInitialPositions(), 0);
+            klotskiModel.initState(num_config);
+            controller.initGameView(klotskiModel.getInitialPositions(), 0);
         }
         catch (SQLException ex){
-            view.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
+            klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

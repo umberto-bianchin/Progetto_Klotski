@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Vector;
 
-public class View {
+public class KlotskiUI {
 
     Board board;
     Buttons buttons;
@@ -15,7 +15,7 @@ public class View {
     Start start;
     Authentication authentication;
 
-    public View() {
+    public KlotskiUI() {
         FlatDarculaLaf.setup();
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("KLOTSKI's PUZZLE");
@@ -136,7 +136,7 @@ public class View {
         board.addBlockListener(block);
     }
 
-    public void addConfigurationListener(WindowAdapter close, ActionListener configuration) {
+    public void addStartListener(WindowAdapter close, ActionListener configuration) {
 
         frame.addWindowListener(close);
         start.addConfigurationListener(configuration);

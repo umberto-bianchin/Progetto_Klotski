@@ -10,9 +10,9 @@ public class Database {
     private final Connection conn;
     private int id_player = -1;
 
-    public Database() throws Exception {
+    public Database() throws SQLException {
         //database connection
-        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Class.forName("com.mysql.cj.jdbc.Driver");
         String dbURL = "jdbc:mysql://progettoklotski.c6i3tfhv1iee.eu-north-1.rds.amazonaws.com:3306/progettoklotski";
         conn = DriverManager.getConnection(dbURL, "admin", "mypassword");
     }
@@ -55,7 +55,7 @@ public class Database {
         }
     }
 
-    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException {
+    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException{
         LinkedList<Move> moves = new LinkedList<>();
         String query = "SELECT * FROM saved_move WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
 

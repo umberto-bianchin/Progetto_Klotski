@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -10,12 +10,12 @@ import java.util.Locale;
 
 public class AuthListener implements ActionListener{
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
 
-    public AuthListener(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    public AuthListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
@@ -28,17 +28,18 @@ public class AuthListener implements ActionListener{
         try {
 
             if (type.equals("Log in")) {
-                model.login(username, password);
+                klotskiModel.login(username, password);
             } else if (type.equals("Sign up")) {
-                model.registration(username, password);
+                klotskiModel.registration(username, password);
             }
 
-            view.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
-            view.initUser(username);
+            klotskiUI.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
+            klotskiUI.initUser(username);
 
         }  catch (Exception ex) {
-            view.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
+            klotskiUI.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
 }

@@ -1,24 +1,24 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 
 class BlockListener extends MouseAdapter {
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
 
-    public BlockListener(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    public BlockListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        model.setSelectedPiece(e.getComponent().getLocation());
-        view.selectBlock(e.getComponent());
+        klotskiModel.setSelectedPiece(e.getComponent().getLocation());
+        klotskiUI.selectBlock(e.getComponent());
     }
 }

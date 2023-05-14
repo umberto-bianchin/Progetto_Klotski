@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,36 +9,36 @@ import java.awt.event.ActionListener;
 
 class SaveCommand implements ActionListener {
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
     private String name = "";
 
-    SaveCommand(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    SaveCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() != this)
-            name = view.askGameName();
+            name = klotskiUI.askGameName();
 
         try {
-            model.saveGame(name);
-            view.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
+            klotskiModel.saveGame(name);
+            klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
         } catch(IllegalAccessException ex){
 
-            if(view.showAuthenticationDialog()) {
+            if(klotskiUI.showAuthenticationDialog()) {
                 e.setSource(this);
                 actionPerformed(e);
             }
         } catch(IllegalArgumentException ex) {
-            view.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
+            klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             e.setSource(null);
             actionPerformed(e);
         } catch (Exception ex) {
-            view.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
+            klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
         }
 
     }

@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Model;
-import View.View;
+import Model.KlotskiModel;
+import View.KlotskiUI;
 import Model.Move;
 
 import java.awt.event.ActionEvent;
@@ -10,20 +10,20 @@ import java.awt.event.ActionListener;
 
 class UndoCommand implements ActionListener{
 
-    private final Model model;
-    private final View view;
+    private final KlotskiModel klotskiModel;
+    private final KlotskiUI klotskiUI;
 
-    UndoCommand(Model model, View view) {
-        this.model = model;
-        this.view = view;
+    UndoCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        this.klotskiModel = klotskiModel;
+        this.klotskiUI = klotskiUI;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
         try {
-            Move lastMoveRev = model.undo();
-            view.makeMove(lastMoveRev, model.getCounter());
+            Move lastMoveRev = klotskiModel.undo();
+            klotskiUI.makeMove(lastMoveRev, klotskiModel.getCounter());
         }
         catch (RuntimeException ignored){}
 }
