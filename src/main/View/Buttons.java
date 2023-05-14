@@ -12,6 +12,8 @@ public class Buttons extends JPanel {
 
         setBackground(Color.white);
         setLayout(null);
+        setBounds(425, 10, 100, 700);
+        setOpaque(false);
 
         buttons[0] = new JButton(new ImageIcon("./src/images/restart.png"));
         buttons[1] = new JButton(new ImageIcon("./src/images/save.png"));

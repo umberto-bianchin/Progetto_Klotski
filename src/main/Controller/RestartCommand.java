@@ -19,6 +19,6 @@ class RestartCommand implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         klotskiModel.restartState();
-        klotskiUI.restart(klotskiModel.getInitialPositions());
+        klotskiUI.restart(klotskiModel.getCurrentPositions());
     }
 }

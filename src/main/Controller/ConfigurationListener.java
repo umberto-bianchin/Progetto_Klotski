@@ -28,7 +28,7 @@ class ConfigurationListener  implements ActionListener {
         try {
             int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
             klotskiModel.initState(num_config);
-            controller.initGameView(klotskiModel.getInitialPositions(), 0);
+            controller.initGameView(klotskiModel.getCurrentPositions(), 0);
         }
         catch (SQLException ex){
             klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);

@@ -14,6 +14,8 @@ class Board extends JPanel {
     public Board(int counter) {
         setLayout(null);
         setBackground(Color.white);
+        setOpaque(false);
+        setBounds(10, 10, 400, 700);
 
         JLabel line = new JLabel();
         line.setBackground(Color.red);

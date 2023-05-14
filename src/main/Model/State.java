@@ -68,7 +68,7 @@ class State {
         }
     }
 
-    public Rectangle moveSelectedPiece(Point p){
+    public Move moveSelectedPiece(Point p){
 
         if(selectedPiece == null)
             throw new RuntimeException("No piece selected");
@@ -85,12 +85,13 @@ class State {
             }
         }
 
-        moves.add(new Move(selectedPiece.getPosition(),possiblePosition));
+        Move move = new Move(selectedPiece.getPosition(),possiblePosition);
+        moves.add(move);
 
         win = selectedPiece.move(possiblePosition);
         selectedPiece = null;
 
-        return possiblePosition;
+        return move;
 
     }
 

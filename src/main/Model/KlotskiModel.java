@@ -36,7 +36,7 @@ public class KlotskiModel {
      * Used when a game is restarted, in order to reinitialize the State object
      */
     public void restartState() {
-        state = new State(getInitialPositions(), state.getInitialConfig());
+        state = new State(state.getInitialPositions(), state.getInitialConfig());
     }
 
     /**
@@ -45,13 +45,6 @@ public class KlotskiModel {
      */
     public void initDatabase() throws SQLException {
         db = new Database();
-    }
-
-    /**
-     * @return array[10] representing the initial positions of the pieces
-     */
-    public Rectangle[] getInitialPositions() {
-        return state.getInitialPositions();
     }
 
     /**
@@ -70,10 +63,10 @@ public class KlotskiModel {
 
     /**
      * @param p Point contained in the desired final location of the selected piece
-     * @return final position
+     * @return Move done
      * @throws RuntimeException when the move is invalid
      */
-    public Rectangle moveSelectedPiece(Point p) throws RuntimeException {
+    public Move moveSelectedPiece(Point p) throws RuntimeException {
         return state.moveSelectedPiece(p);
     }
 
@@ -149,7 +142,7 @@ public class KlotskiModel {
     }
 
     /**
-     * @return names of finded saved games of that logged player
+     * @return names of found saved games of that logged player
      * @throws IllegalAccessException when the player isn't logged into the database
      * @throws SQLException when database raise an Exception (timeout)
      */
@@ -175,7 +168,7 @@ public class KlotskiModel {
 
     /**
      * @throws IOException if an error occurred with the POST request
-     * @throws ParseException when the responded JSON is invalid
+     * @throws ParseException when the received JSON is invalid
      */
     public Move nextBestMove() throws IOException, ParseException {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
@@ -191,6 +184,5 @@ public class KlotskiModel {
             db.closeConnection();
         } catch (SQLException ignored) {}
     }
-
 
 }
