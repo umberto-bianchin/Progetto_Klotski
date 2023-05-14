@@ -30,9 +30,12 @@ public class KlotskiUI {
         authentication = new Authentication(frame);
 
         frame.add(mainPane);
+
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setSize(new Dimension(550, 620));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
 
     }
