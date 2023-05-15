@@ -1,20 +1,17 @@
 package Controller;
 
+import Model.KlotskiModel;
 import View.KlotskiUI;
+import java.awt.event.MouseEvent;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+class HomeCommand extends UIController{
 
-class HomeCommand implements ActionListener {
-
-    private final KlotskiUI klotskiUI;
-
-    HomeCommand(KlotskiUI klotskiUI) {
-        this.klotskiUI = klotskiUI;
+    HomeCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mousePressed(MouseEvent e) {
         klotskiUI.initStart();
     }
 

@@ -31,6 +31,9 @@ public class KlotskiUI {
 
         frame.add(mainPane);
 
+        buttons = new Buttons();
+        board = new Board();
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -72,8 +75,7 @@ public class KlotskiUI {
         String imagePath = os.contains("win") ? "./src/images/background2win.png" : "./src/images/background2mac.png";
         mainPane.setIcon(new ImageIcon(imagePath));
 
-        buttons = new Buttons();
-        board = new Board(counter);
+        board.setDisplayedCounter(counter);
         board.setPositions(position);
 
         mainPane.add(buttons);
@@ -124,7 +126,7 @@ public class KlotskiUI {
      * @param savedGamesNames string representing the saved games of the logged user
      * @param listener that handle the click in the button with a saved game
      */
-    public void showSavedGames(Vector<String> savedGamesNames, ActionListener listener) {
+    public void showSavedGames(Vector<String> savedGamesNames, MouseAdapter listener) {
         SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, savedGamesNames);
         savedGames.setVisible(true);
     }
@@ -180,20 +182,21 @@ public class KlotskiUI {
     }
 
     public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
-        board.addListener(whiteBoard);
+        board.addMouseListener(whiteBoard);
+//        board.addLis(whiteBoard);
         board.addBlockListener(block);
     }
 
-    public void addStartListener(WindowAdapter close, ActionListener configuration) {
+    public void addStartListener(WindowAdapter close, MouseAdapter configuration) {
         frame.addWindowListener(close);
         start.addConfigurationListener(configuration);
     }
 
-    public void addButtonsListeners(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home) {
+    public void addButtonsListeners(MouseAdapter restart, MouseAdapter save, MouseAdapter next, MouseAdapter undo, MouseAdapter home) {
         buttons.addButtonListener(restart, save, next, undo, home);
     }
 
-    public void addAuthenticationListeners(ActionListener auth, ActionListener logOut, ActionListener saved){
+    public void addAuthenticationListeners(MouseAdapter auth, MouseAdapter logOut, MouseAdapter saved){
         authentication.addAuthenticationListeners(auth, logOut, saved);
     }
 

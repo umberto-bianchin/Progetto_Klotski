@@ -4,30 +4,22 @@ import Model.KlotskiModel;
 import View.KlotskiUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
-class SelectSavedGamesListener implements ActionListener{
+class SelectSavedGamesListener extends UIController {
 
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
-    private final Controller controller;
-
-    SelectSavedGamesListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
-        this.controller = controller;
-
+    SelectSavedGamesListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        super(klotskiModel, klotskiUI);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mousePressed(MouseEvent e) {
+
         try {
 
             if (((JButton) e.getSource()).getName().startsWith("game")) {
 
                 klotskiModel.resumeState(((JButton) e.getSource()).getName().substring(4));
-                controller.initGameView(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
+                klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
 
             } else if (((JButton) e.getSource()).getName().startsWith("delete")) {
 
@@ -38,7 +30,9 @@ class SelectSavedGamesListener implements ActionListener{
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
         }
+
     }
+
 }
 
 

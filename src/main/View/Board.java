@@ -11,7 +11,7 @@ class Board extends JPanel {
     Block selectedBlock;
 
 
-    public Board(int counter) {
+    public Board() {
         setLayout(null);
         setBackground(Color.white);
         setOpaque(false);
@@ -24,7 +24,7 @@ class Board extends JPanel {
         line.setSize(200, 10);
         add(line);
 
-        displayedCounter = new JLabel("Moves: " + counter);
+        displayedCounter = new JLabel("Moves: 0" );
         displayedCounter.setHorizontalAlignment(JLabel.CENTER);
         displayedCounter.setForeground(Color.white);
         displayedCounter.setFont(new Font("Agency FB", Font.BOLD, 25));
@@ -75,10 +75,6 @@ class Board extends JPanel {
         for (int i = 0; i < 10; i++) {
             blocks[i].setBlockAppearance(position[i]);
         }
-    }
-
-    public void addListener(MouseAdapter listener) {
-        addMouseListener(listener);
     }
 
     public void addBlockListener(MouseAdapter listener){

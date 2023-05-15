@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 class Authentication extends JPanel{
 
@@ -10,7 +11,7 @@ class Authentication extends JPanel{
     private final JButton log_in = new JButton();
     private final JButton log_out = new JButton();
     private final JButton saved_games = new JButton();
-    private static ActionListener authListener;
+    private static MouseAdapter authListener;
 
     public Authentication(JFrame frame){
         setOpaque(false);
@@ -82,10 +83,10 @@ class Authentication extends JPanel{
         revalidate();
     }
 
-    public void addAuthenticationListeners(ActionListener authListener, ActionListener logOutListener, ActionListener savedListener) {
+    public void addAuthenticationListeners(MouseAdapter authListener, MouseAdapter logOutListener, MouseAdapter savedListener) {
         Authentication.authListener = authListener;
-        log_out.addActionListener(logOutListener);
-        saved_games.addActionListener(savedListener);
+        log_out.addMouseListener(logOutListener);
+        saved_games.addMouseListener(savedListener);
     }
 
 }

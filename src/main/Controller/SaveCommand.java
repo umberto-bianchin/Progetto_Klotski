@@ -4,23 +4,18 @@ import Model.KlotskiModel;
 import View.KlotskiUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
-class SaveCommand implements ActionListener {
+class SaveCommand extends UIController {
 
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
-    private String name = "";
+    String name = "";
 
     SaveCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void mousePressed(MouseEvent e) {
         if(e.getSource() != this)
             name = klotskiUI.askGameName();
 
@@ -36,17 +31,17 @@ class SaveCommand implements ActionListener {
 
             if(klotskiUI.showAuthenticationDialog()) {
                 e.setSource(this);
-                actionPerformed(e);
+                mousePressed(e);
             }
         } catch(IllegalArgumentException ex) {
 
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             e.setSource(null);
-            actionPerformed(e);
+            mousePressed(e);
 
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
         }
-
     }
+
 }

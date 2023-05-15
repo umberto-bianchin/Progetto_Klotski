@@ -4,34 +4,38 @@ import Model.KlotskiModel;
 import View.KlotskiUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 
-class ConfigurationListener  implements ActionListener {
+class ConfigurationListener extends UIController {
 
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
-    private final Controller controller;
-
-    ConfigurationListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
-        this.controller = controller;
-
+    ConfigurationListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void mousePressed(MouseEvent e) {
         try {
             int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
             klotskiModel.initState(num_config);
-            controller.initGameView(klotskiModel.getCurrentPositions(), 0);
+            klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
         }
         catch (SQLException ex){
             klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//
+//        try {
+//            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
+//            klotskiModel.initState(num_config);
+//            klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
+//        }
+//        catch (SQLException ex){
+//            klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 }

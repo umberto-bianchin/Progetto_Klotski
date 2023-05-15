@@ -2,7 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 class Start extends JPanel{
 
@@ -32,9 +32,9 @@ class Start extends JPanel{
 
     }
 
-    public void addConfigurationListener(ActionListener listener){
+    public void addConfigurationListener(MouseAdapter listener){
         for(JButton button : buttons)
-            button.addActionListener(listener);
+            button.addMouseListener(listener);
     }
 
 }

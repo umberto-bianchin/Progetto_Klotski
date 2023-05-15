@@ -4,29 +4,23 @@ import Model.KlotskiModel;
 import View.KlotskiUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
-class SavedListener implements ActionListener {
+class SavedListener extends UIController {
 
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
-    private final Controller controller;
-
-    SavedListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, Controller controller) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
-        this.controller = controller;
+    SavedListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mousePressed(MouseEvent e) {
         try {
-            klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), new SelectSavedGamesListener(klotskiModel, klotskiUI, controller));
+            klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), new SelectSavedGamesListener(klotskiModel, klotskiUI));
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }
 
 

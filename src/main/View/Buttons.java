@@ -2,7 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 public class Buttons extends JPanel {
 
@@ -35,13 +35,13 @@ public class Buttons extends JPanel {
         }
     }
 
-    public void addButtonListener(ActionListener restart, ActionListener save, ActionListener next, ActionListener undo, ActionListener home){
+    public void addButtonListener(MouseAdapter restart, MouseAdapter save, MouseAdapter next, MouseAdapter undo, MouseAdapter home){
 
-        buttons[0].addActionListener(restart);
-        buttons[1].addActionListener(save);
-        buttons[2].addActionListener(next);
-        buttons[3].addActionListener(undo);
-        buttons[4].addActionListener(home);
+        buttons[0].addMouseListener(restart);
+        buttons[1].addMouseListener(save);
+        buttons[2].addMouseListener(next);
+        buttons[3].addMouseListener(undo);
+        buttons[4].addMouseListener(home);
 
     }
 

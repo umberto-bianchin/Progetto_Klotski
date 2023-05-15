@@ -3,22 +3,18 @@ package Controller;
 import Model.KlotskiModel;
 import View.KlotskiUI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
-class RestartCommand implements ActionListener {
-
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
+class RestartCommand extends UIController {
 
     RestartCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void mousePressed(MouseEvent e) {
         klotskiModel.restartState();
         klotskiUI.restart(klotskiModel.getCurrentPositions());
     }
+
 }

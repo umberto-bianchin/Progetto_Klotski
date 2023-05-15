@@ -2,14 +2,15 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 public class SavedGamesDialog extends JDialog {
     JPanel panel = new JPanel(new GridBagLayout());
     GridBagConstraints cs = new GridBagConstraints();
 
-    public SavedGamesDialog(Frame parent, ActionListener listener, Vector<String> numberSavedGames) {
+    public SavedGamesDialog(Frame parent, MouseAdapter listener, Vector<String> numberSavedGames) {
         super(parent, "Saved games", true);
         cs.fill = GridBagConstraints.HORIZONTAL;
         cs.insets = new Insets(3,10,3,10);
@@ -33,7 +34,7 @@ public class SavedGamesDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
 
-    private void addEntry(int number, ActionListener listener, String name){
+    private void addEntry(int number, MouseAdapter listener, String name){
         JButton game = new JButton("Match Name: "+name);
         game.setFont(new Font("Agency FB", Font.PLAIN, 20));
         game.setForeground(Color.white);
@@ -41,10 +42,15 @@ public class SavedGamesDialog extends JDialog {
         game.setName("game"+name);
         game.setBorder(null);
         game.setBackground(null);
-        game.addActionListener(e -> {
-            dispose();
-            listener.actionPerformed(e);
+
+        game.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                dispose();
+                listener.mousePressed(e);
+            }
         });
+
         cs.gridx = 0;
         cs.gridy = number;
         cs.gridwidth = 2;
@@ -56,10 +62,15 @@ public class SavedGamesDialog extends JDialog {
         delete.setBorder(null);
         delete.setContentAreaFilled(false);
         delete.setBackground(null);
-        delete.addActionListener(e -> {
-            dispose();
-            listener.actionPerformed(e);
+
+        delete.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                dispose();
+                listener.mousePressed(e);
+            }
         });
+
         cs.gridx = 2;
         cs.gridy = number;
         cs.gridwidth = 1;

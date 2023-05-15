@@ -4,27 +4,22 @@ import Model.KlotskiModel;
 import View.KlotskiUI;
 import Model.Move;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 
-class UndoCommand implements ActionListener{
-
-    private final KlotskiModel klotskiModel;
-    private final KlotskiUI klotskiUI;
+class UndoCommand extends UIController{
 
     UndoCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
-        this.klotskiModel = klotskiModel;
-        this.klotskiUI = klotskiUI;
+        super(klotskiModel, klotskiUI);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-
+    public void mousePressed(MouseEvent e) {
         try {
             Move lastMoveRev = klotskiModel.undo();
             klotskiUI.makeMove(lastMoveRev, klotskiModel.getCounter());
         }
         catch (RuntimeException ignored){}
-}
+    }
+
 }

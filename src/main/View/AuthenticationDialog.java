@@ -2,7 +2,8 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AuthenticationDialog extends JDialog {
 
@@ -10,7 +11,7 @@ public class AuthenticationDialog extends JDialog {
     private final JPasswordField passwordField;
     private final JButton confirmButton = new JButton();
 
-    public AuthenticationDialog(Frame parent, String title, ActionListener listener) {
+    public AuthenticationDialog(Frame parent, String title, MouseAdapter listener) {
         super(parent, title, true);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -44,13 +45,14 @@ public class AuthenticationDialog extends JDialog {
 
         confirmButton.setText(title);
 
-        confirmButton.addActionListener(
-                e-> {
-                    confirmButton.putClientProperty( "username", usernameField.getText().trim() );
-                    confirmButton.putClientProperty( "password", new String(passwordField.getPassword()));
-                    dispose();
-                    listener.actionPerformed(e);
-                });
+        confirmButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                confirmButton.putClientProperty( "username", usernameField.getText().trim() );
+                confirmButton.putClientProperty( "password", new String(passwordField.getPassword()));
+                dispose();
+                listener.mousePressed(e);            }
+        });
 
         cs.gridx = 2;
         cs.gridy = 2;
