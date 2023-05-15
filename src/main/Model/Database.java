@@ -12,10 +12,13 @@ public class Database {
 
     private final Connection conn;
     private int id_player = -1;
+    private String name=null;
     private String username;
+
 
     /**
      * Constructs a new Database object and establishes a connection to the database
+     *
      * @throws SQLException if a database access error occurs
      */
     public Database() throws SQLException {
@@ -24,72 +27,51 @@ public class Database {
     }
 
     /**
-     * @param moves The list of moves made in the game
-     * @param game_id The initial configuration of the game (0-3)
+     * @param moves           The list of moves made in the game
+     * @param id_conf         The initial configuration of the game (0-4)
      * @param final_positions The final configuration of the game
-     * @param game_name The name of the game
+     * @param game_name       The name of the game
      * @return true if the game is successfully saved, false otherwise
-     * @throws SQLException if a database access error occurs
+     * @throws SQLException           if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
-    public boolean saveGame(LinkedList<Move> moves, int game_id, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
-
+    public int saveGame(LinkedList<Move> moves, int id_conf, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
         if (!isLogged())
             throw new IllegalAccessException("You must login to save games");
 
-        String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
-
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            if (rs.next())
-                return false;
-
-            query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + "," + game_id + ",'" + game_name + "');"; //inserisce il game (autoincrementa)
-            stmt.execute(query);
-        }
-
-        query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
-
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
-            rs.next();
-            int id_game = rs.getInt("ID_GAME");
-
-            for (Move move : moves) {
-                query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
-                        "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
-                        + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
-                stmt.execute(query);
-            }
-
-            for (Rectangle rectangle : final_positions) {
-                query = "INSERT INTO saved_state(ID_GAME, ID_USER, x,y,width,height) VALUES(" + id_game + ", " + id_player + ", " + rectangle.x + "," + rectangle.y + "," + rectangle.width + "," + rectangle.height + ");";
-                stmt.execute(query);
-            }
-
-            return true;
+        if (isResumed(game_name)) {
+            name = game_name;
+            saveResumed(moves, game_name, final_positions);
+            return 0;
+        } else {
+            return newGame(moves, id_conf, final_positions, game_name);
         }
     }
 
+
     /**
      * Retrieves the saved moves of a game from the database, empty if the game isn't found
+     *
      * @param game_name The name of the game in which the saved moves is needed
      * @return a LinkedList of Move objects representing the saved moves
-     * @throws SQLException if a database access error occurs
+     * @throws SQLException           if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
-    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException, IllegalAccessException{
+    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException, IllegalAccessException {
 
         if (!isLogged())
             throw new IllegalAccessException("You must login");
 
+        String query = "UPDATE games SET resume=1 WHERE ID_USER="+id_player+" AND name='"+game_name+"';";
+        try(Statement stmt = conn.createStatement()){
+            stmt.execute(query);
+            name = game_name;
+        }
+
         LinkedList<Move> moves = new LinkedList<>();
-        String query = "SELECT * FROM saved_move WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
+        query = "SELECT * FROM saved_move WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
 
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 int x_ini = rs.getInt("x_ini");
                 int y_ini = rs.getInt("y_ini");
@@ -108,8 +90,9 @@ public class Database {
 
     /**
      * Retrieves the ID of the game configuration with the given name
-     * @return the ID of the game configuration (0-3)
-     * @throws SQLException if a database access error occurs or the game isn't found
+     *
+     * @return the ID of the game configuration (0-4)
+     * @throws SQLException           if a database access error occurs or the game isn't found
      * @throws IllegalAccessException if the user is not logged in
      */
     public int getIdConfiguration(String game_name) throws SQLException, IllegalAccessException {
@@ -129,8 +112,9 @@ public class Database {
 
     /**
      * Retrieves the initial positions of a game from the database
+     *
      * @param game_id The ID of the game configuration.
-     * @return an array of Rectangle[10] objects representing the initial positions, empty if there is not that configuration id
+     * @return an array of Rectangle[10] objects representing the initial positions.
      * @throws SQLException if a database access error occurs.
      */
     public Rectangle[] getInitialPositions(int game_id) throws SQLException {
@@ -140,9 +124,10 @@ public class Database {
 
     /**
      * Retrieves the final positions of a game from the database
-     * @param game_name name of the game
-     * @return an array of Rectangle[10] objects representing the final positions, empty array if there is not any game with that name
-     * @throws SQLException if a database access error occurs
+     *
+     * @param game_name name of the game (not null)
+     * @return an array of Rectangle[10] objects representing the final positions
+     * @throws SQLException           if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
     public Rectangle[] getFinalPositions(String game_name) throws SQLException, IllegalAccessException {
@@ -177,7 +162,7 @@ public class Database {
 
     /**
      * @return a Vector of game names associated with the logged-in user
-     * @throws SQLException if a database access error occurs.
+     * @throws SQLException           if a database access error occurs.
      * @throws IllegalAccessException if the user is not logged in.
      */
     public Vector<String> getGameList() throws SQLException, IllegalAccessException {
@@ -199,9 +184,8 @@ public class Database {
     }
 
     /**
-     * Delete the game with the corresponding name, nothing happened if the game_name doesn't exist
-     * @param game_name The name of the game to be deleted
-     * @throws SQLException if a database access error occurs
+     * @param game_name The name of the game to be deleted (not null)
+     * @throws SQLException           if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
     public void deleteGame(String game_name) throws SQLException, IllegalAccessException {
@@ -236,7 +220,6 @@ public class Database {
 
             if (rs.next()) {
                 id_player = user + pass;
-                this.username = username;
                 return true;
             }
         }
@@ -245,6 +228,7 @@ public class Database {
 
     /**
      * Registers a new user with the given username and password
+     *
      * @param username The username of the new user (not null)
      * @param password The password of the new user (not null)
      * @return true if the registration is successful, false otherwise
@@ -257,8 +241,7 @@ public class Database {
         int pass = password.hashCode();
         int id = user + pass;
 
-        try (Statement stmt = conn.createStatement();
-             CallableStatement cstmt = conn.prepareCall(query)) {
+        try (CallableStatement cstmt = conn.prepareCall(query)) {
 
             cstmt.setInt(1, id);
             cstmt.setString(2, username);
@@ -269,7 +252,6 @@ public class Database {
             int rowsAffected = cstmt.getInt(4);
             if (rowsAffected == 1) {
                 id_player = id;
-                this.username = username;
                 return true;
             }
 
@@ -285,9 +267,10 @@ public class Database {
 
     /**
      * Closes the database connection and resets the ID of the currently logged-in player
+     *
      * @throws SQLException if a database access error occurs
      */
-    public void closeConnection() throws SQLException{
+    public void closeConnection() throws SQLException {
         conn.close();
         resetIdPlayer();
     }
@@ -298,12 +281,14 @@ public class Database {
 
     /**
      * Deletes all games associated with the logged-in user
-     * @throws SQLException if a database access error occurs.
+     *
+     * @throws SQLException           if a database access error occurs.
      * @throws IllegalAccessException if the user is not logged in.
      */
     public void deleteAllGames() throws SQLException, IllegalAccessException {
+
         Vector<String> gameList = getGameList();
-        for(String name : gameList)
+        for (String name : gameList)
             deleteGame(name);
     }
 
@@ -320,8 +305,92 @@ public class Database {
         }
         resetIdPlayer();
     }
-}
 
+    public boolean isResumed(String game_name) throws SQLException {
+        String query = "SELECT resume FROM games WHERE Name='"+game_name+"' AND ID_USER="+id_player+";";
+        try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)){
+            if(rs.next()){
+                if(rs.getInt("resume")==1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public void saveResumed(LinkedList<Move> moves, String game_name, Rectangle[] final_positions) throws SQLException {
+        String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
+        int id_game = 0;
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next())
+                id_game = rs.getInt("ID_GAME");
+        }
+        name = game_name;
+        try (Statement stmt = conn.createStatement()) {
+            for (Move move : moves) {
+                query ="DELETE FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
+                stmt.execute(query);
+                query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
+                        "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
+                        + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
+                stmt.execute(query);
+            }
+
+            query = "DELETE FROM saved_state WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
+            stmt.execute(query);
+
+            for (Rectangle rectangle : final_positions) {
+                query = "INSERT INTO saved_state(ID_GAME, ID_USER, x,y,width,height) VALUES(" + id_game + ", " + id_player + ", " + rectangle.x + "," + rectangle.y + "," + rectangle.width + "," + rectangle.height + ");";
+                stmt.execute(query);
+            }
+
+        }
+
+        try (Statement stmt = conn.createStatement()){
+            query = "UPDATE games SET resume = 1 WHERE ID_GAME ="+id_game+";";
+            stmt.execute(query);
+        }
+    }
+
+    public int newGame(LinkedList<Move> moves, int id_conf, Rectangle[] final_positions, String game_name) throws SQLException {
+        String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
+
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next())
+                return -1;
+
+            query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + "," + id_conf + ",'" + game_name + "');"; //inserisce il game (autoincrementa)
+            stmt.execute(query);
+        }
+
+        query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            rs.next();
+            int id_game = rs.getInt("ID_GAME");
+
+            for (Move move : moves) {
+                query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
+                        "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
+                        + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
+                stmt.execute(query);
+            }
+
+            for (Rectangle rectangle : final_positions) {
+                query = "INSERT INTO saved_state(ID_GAME, ID_USER, x,y,width,height) VALUES(" + id_game + ", " + id_player + ", " + rectangle.x + "," + rectangle.y + "," + rectangle.width + "," + rectangle.height + ");";
+                stmt.execute(query);
+            }
+            return 1;
+        }
+    }
+
+    public String getName(){
+        return name;
+    }
+}
 
 
 

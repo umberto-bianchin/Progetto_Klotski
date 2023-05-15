@@ -49,13 +49,10 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      */
     public void initDatabase() throws SQLException {
-
         if(db != null)
             db.closeConnection();
 
         db = new Database();
-
-
     }
 
     /**
@@ -135,14 +132,16 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalArgumentException when tha name is invalid (blank or already used)
      */
-    public void saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
-
+    public int saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
         if (name.isBlank())
             throw new IllegalArgumentException("You can't save match with blank names");
 
-        if (!db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name))
+        int tmp = db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name);
+
+        if (tmp ==-1)
             throw new IllegalArgumentException("You can't save more than one match with the same name");
 
+        return tmp;
     }
 
     /**
@@ -169,22 +168,6 @@ public class KlotskiModel {
     }
 
     /**
-     * Delete the game with that name, if not found the database call doesn't do anything
-     * @throws SQLException when database raise an Exception (timeout)
-     * @throws IllegalAccessException  when the player isn't logged into the database
-     */
-    public void deleteAll() throws SQLException, IllegalAccessException {
-        db.deleteAllGames();
-    }
-
-
-
-    public void delUser() throws SQLException, IllegalAccessException {
-        db.deleteUser();
-    }
-
-
-    /**
      * @throws IOException if an error occurred with the POST request
      * @throws ParseException when the received JSON is invalid
      */
@@ -203,6 +186,10 @@ public class KlotskiModel {
             db.closeConnection();
         } catch (SQLException | NullPointerException ignored) {}
         // catch NullPointerException if the initial connection was unsuccessful (db == null)
+    }
+
+    public String getName(){
+        return db.getName();
     }
 
 }
