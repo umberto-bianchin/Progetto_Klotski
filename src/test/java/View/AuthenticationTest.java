@@ -5,12 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 
-import java.awt.event.ActionListener;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuthenticationTest {
-    private JFrame frame;
     private Authentication auth;
 
     /**
@@ -20,7 +17,7 @@ class AuthenticationTest {
      */
     @BeforeEach
     void setUp(){
-        frame = new JFrame();
+        JFrame frame = new JFrame();
         auth = new Authentication(frame);
     }
 

@@ -299,7 +299,6 @@ public class Database {
      * @throws IllegalAccessException if the user is not logged in.
      */
     public void deleteAllGames() throws SQLException, IllegalAccessException {
-
         Vector<String> gameList = getGameList();
         for(String name : gameList)
             deleteGame(name);
@@ -309,8 +308,11 @@ public class Database {
      * Deletes a user from the database.
      * @param username The username of the user to be deleted
      */
-    public void deleteUser(String username){
-        // TODO: 15/05/23 implement the possibility to delete a user
+    public void deleteUser(String username) throws SQLException{
+        String query = "CALL delete_user('" + username + "')";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(query);
+        }
     }
 }
 
