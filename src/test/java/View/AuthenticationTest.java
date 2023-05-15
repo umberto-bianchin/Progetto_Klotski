@@ -13,12 +13,21 @@ class AuthenticationTest {
     private JFrame frame;
     private Authentication auth;
 
+    /**
+     * Set up method executed before each test.
+     * Creates a new instance of the Authentication class.
+     * Creates a new instance of the JFrame class.
+     */
     @BeforeEach
     void setUp(){
         frame = new JFrame();
         auth = new Authentication(frame);
     }
 
+    /**
+     * Test case for the initAuthentication() method.
+     * It verifies the behavior of initializing the authentication buttons of the UI.
+     */
     @Test
     void testInitAuthentication() {
         auth.initAuthentication();
@@ -30,6 +39,10 @@ class AuthenticationTest {
         assertEquals("Log in", buttons[1].getClientProperty("name"));
     }
 
+    /**
+     * Test case for the initUser() method.
+     * It verifies the behavior of initializing the user.
+     */
     @Test
     void testInitUser() {
         auth.initUser("test");

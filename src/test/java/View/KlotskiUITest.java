@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,12 +17,19 @@ class KlotskiUITest {
 
     private KlotskiUI klotskiUI;
 
+    /**
+     * Set up method executed before each test.
+     * Creates a new instance of the KlotskiUI class.
+     */
     @BeforeEach
     void setUp(){
         klotskiUI = new KlotskiUI();
     }
 
-
+    /**
+     * Test case for the initStart() method.
+     * It verifies the behavior of initializing the choose configuration screen of the UI.
+     */
     @Test
     void testInitStart() {
         klotskiUI.initStart();
@@ -31,6 +39,10 @@ class KlotskiUITest {
         assertNotNull(klotskiUI.mainPane.getComponent(2));
     }
 
+    /**
+     * Test case for the initGame() method.
+     * It verifies the behavior of initializing the game screen of the UI.
+     */
     @Test
     void testInitGame() {
         Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
@@ -42,6 +54,10 @@ class KlotskiUITest {
         assertNotNull(klotskiUI.board);
     }
 
+    /**
+     * Test case for the restart() method.
+     * It verifies the behavior of restarting a game.
+     */
     @Test
     void testRestart() {
         Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
@@ -53,9 +69,12 @@ class KlotskiUITest {
         klotskiUI.restart(positions);
         assertNull(klotskiUI.board.selectedBlock);
         assertEquals("Moves: 0", klotskiUI.board.displayedCounter.getText());
-
     }
 
+    /**
+     * Test case for the makeMove() method.
+     * It verifies the behavior of making a move.
+     */
     @Test
     void testMakeMove() {
         Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
@@ -64,14 +83,15 @@ class KlotskiUITest {
                 new Rectangle(300,400,100,100)};
         klotskiUI.initGame(positions, 0);
         Move move = new Move(positions[2], new Rectangle(100, 400, 100, 100));
-        Block block = new Block();
-        block.setBounds(move.getFinalPosition());
-        klotskiUI.board.selectedBlock = block;
-        klotskiUI.board.moveSelectedBlock(move.getInitialPosition(), 1);
-        assertEquals(move.getInitialPosition(), block.getBounds());
-
+        klotskiUI.makeMove(move, 1);
+        Block block = klotskiUI.board.blocks[2];
+        assertEquals(move.getFinalPosition(), block.getBounds());
     }
 
+    /**
+     * Test case for the askGameName() method.
+     * It verifies the behavior of asking the game name.
+     */
     @Test
     void testAskGameName() throws AWTException, InterruptedException {
         Robot robot = new Robot();

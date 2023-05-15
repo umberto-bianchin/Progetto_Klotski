@@ -255,7 +255,7 @@ class DatabaseTest {
         Rectangle[] finalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
 
         //Test unauthorized delete game attempt
-        assertThrows(IllegalAccessException.class, () -> db.getGameList());
+        assertThrows(IllegalAccessException.class, () -> db.deleteGame("Database Test"));
 
         //Log in and save data
         db.login("JTest", "JTest");
@@ -309,7 +309,7 @@ class DatabaseTest {
         assertFalse(db.registration("JTest", "JTest"));
 
         //Registration with correct credentials
-        assertTrue(db.registration("JTest2", "JTest2"));
+        assertTrue(db.registration("JTest4", "JTest4"));
 
         db.deleteUser("JTest2");
 
