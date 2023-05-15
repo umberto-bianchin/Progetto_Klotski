@@ -5,12 +5,21 @@ import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-class UIController extends MouseAdapter {
+/**
+ * The UIController class is an abstract class that serves as a base for UI controllers in the Klotski game
+ * It provides common functionality and defines an abstract method for handling mouse events
+ */
+abstract class UIController extends MouseAdapter {
 
     protected final KlotskiModel klotskiModel;
     protected final KlotskiUI klotskiUI;
 
+    /**
+     * Constructs a new object with the specified Klotski model and UI
+     * @throws NullPointerException if either the model or the view is null
+     */
     UIController(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
         if(klotskiModel == null || klotskiUI == null)
             throw new NullPointerException("model or view null");
@@ -28,5 +37,9 @@ class UIController extends MouseAdapter {
             klotskiUI.initStart();
         }
     }
+
+    @Override
+    public abstract void mousePressed(MouseEvent e);
+
 
 }

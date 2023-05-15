@@ -8,8 +8,10 @@ import View.KlotskiUI;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * The class is a UI controller that retrieve the nextBestMove and displayed it
+ */
 class NextCommand extends UIController {
-
 
     NextCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
         super(klotskiModel, klotskiUI);

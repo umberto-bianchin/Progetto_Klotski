@@ -24,7 +24,7 @@ public class Database {
 
     /**
      * @param moves The list of moves made in the game
-     * @param game_id The initial configuration of the game (0-4)
+     * @param game_id The initial configuration of the game (0-3)
      * @param final_positions The final configuration of the game
      * @param game_name The name of the game
      * @return true if the game is successfully saved, false otherwise
@@ -107,7 +107,7 @@ public class Database {
 
     /**
      * Retrieves the ID of the game configuration with the given name
-     * @return the ID of the game configuration (0-4)
+     * @return the ID of the game configuration (0-3)
      * @throws SQLException if a database access error occurs or the game isn't found
      * @throws IllegalAccessException if the user is not logged in
      */
@@ -129,7 +129,7 @@ public class Database {
     /**
      * Retrieves the initial positions of a game from the database
      * @param game_id The ID of the game configuration.
-     * @return an array of Rectangle[10] objects representing the initial positions.
+     * @return an array of Rectangle[10] objects representing the initial positions, empty if there is not that configuration id
      * @throws SQLException if a database access error occurs.
      */
     public Rectangle[] getInitialPositions(int game_id) throws SQLException {
@@ -139,8 +139,8 @@ public class Database {
 
     /**
      * Retrieves the final positions of a game from the database
-     * @param game_name name of the game (not null)
-     * @return an array of Rectangle[10] objects representing the final positions
+     * @param game_name name of the game
+     * @return an array of Rectangle[10] objects representing the final positions, empty array if there is not any game with that name
      * @throws SQLException if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
@@ -198,7 +198,8 @@ public class Database {
     }
 
     /**
-     * @param game_name The name of the game to be deleted (not null)
+     * Delete the game with the corresponding name, nothing happened if the game_name doesn't exist
+     * @param game_name The name of the game to be deleted
      * @throws SQLException if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
@@ -306,7 +307,7 @@ public class Database {
 
     /**
      * Deletes a user from the database.
-     * @param username The username of the user to be deleted (not null)
+     * @param username The username of the user to be deleted
      */
     public void deleteUser(String username){
         // TODO: 15/05/23 implement the possibility to delete a user

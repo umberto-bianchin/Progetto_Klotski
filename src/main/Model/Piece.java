@@ -2,22 +2,38 @@ package Model;
 
 import java.awt.*;
 
+/**
+ * The class represents a game piece with a position and its available moves
+ * It provides methods to manipulate and query the piece's state
+ */
 class Piece {
-
-    private Rectangle position;
+    private final Rectangle position;
     private final Rectangle[] availableMoves = new Rectangle[4];
     private static final Rectangle FINISH_POSITION = new Rectangle(100, 300, 200, 200);
-    
-    public Piece(Rectangle position){
-        this.position = position;
+
+    /**
+     * @param position the initial position of the piece
+     */
+    public Piece(Rectangle position) {
+
+        if(position == null)
+            throw new NullPointerException("null piece position");
+
+        this.position = new Rectangle(position);
         for (int i = 0; i < 4; i++)
             availableMoves[i] = new Rectangle();
     }
 
-    public Rectangle getPosition(){
-        return position;
+    /**
+     * Returns a copy of the current position of the piece
+     */
+    public Rectangle getPosition() {
+        return new Rectangle(position);
     }
 
+    /**
+     * Update the available positions of the piece, that are the four that have a border in common with the actual position
+     */
     private void updateAvailable() {
         for (int i = 0; i < 4; i++) {
             availableMoves[i].setBounds(position);
@@ -30,15 +46,29 @@ class Piece {
 
     }
 
+    /**
+     * Moves the piece to the specified new position.
+     * @param newPos the new position of the piece as a {@code Rectangle} object
+     * @return true if the new position is at the escape point
+     */
     public boolean move(Rectangle newPos) {
-        position = new Rectangle(newPos);
+        position.setBounds(newPos);
         return position.contains(FINISH_POSITION);
     }
 
+    /**
+     * Checks if the piece's current position intersects with the specified position.
+     * @return true if there is an intersection, false otherwise
+     */
     public boolean intersection(Rectangle newPos) {
         return position.intersects(newPos);
     }
 
+    /**
+     * Checks if the specified point is within any of the available move positions.
+     * @param p the point to check
+     * @return the Rectangle corresponding to the available move that contains the point, or null if no available move contains the point
+     */
     public Rectangle checkAvailable(Point p) {
 
         updateAvailable();
@@ -51,8 +81,11 @@ class Piece {
         return null;
     }
 
-    public boolean contains(Point p){
+    /**
+     * Checks if the specified point is within the piece's current position.
+     * @return true if the point is within the piece's current position, false otherwise
+     */
+    public boolean contains(Point p) {
         return position.contains(p);
     }
-
 }

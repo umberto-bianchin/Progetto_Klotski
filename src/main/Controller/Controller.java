@@ -12,6 +12,9 @@ public class Controller {
     private final KlotskiModel klotskiModel;
 
 
+    /**
+     * Initialize the object and check the argument if null. Display the game UI
+     */
     public Controller(KlotskiUI klotskiUI, KlotskiModel klotskiModel) {
 
         if(klotskiUI == null || klotskiModel == null)
@@ -48,7 +51,7 @@ public class Controller {
         };
 
         klotskiUI.addStartListener(exit, new ConfigurationListener(klotskiModel, klotskiUI));
-        klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new LogOutListener(klotskiModel, klotskiUI), new SavedListener(klotskiModel, klotskiUI));
+        klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new LogOutListener(klotskiModel, klotskiUI), new SavedGamesListListener(klotskiModel, klotskiUI));
         klotskiUI.addGameBoardListeners(new BoardListener(klotskiModel, klotskiUI), new BlockListener(klotskiModel, klotskiUI));
         klotskiUI.addButtonsListeners(new RestartCommand(klotskiModel, klotskiUI), new SaveCommand(klotskiModel, klotskiUI), new NextCommand(klotskiModel, klotskiUI), new UndoCommand(klotskiModel, klotskiUI), new HomeCommand(klotskiModel, klotskiUI));
 

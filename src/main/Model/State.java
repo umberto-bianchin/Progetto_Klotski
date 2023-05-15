@@ -17,7 +17,7 @@ class State {
 
     /**
      * @param initial_positions Array[10] of initial pieces position
-     * @param id_configuration int representing the initial configuration (0-4)
+     * @param id_configuration int representing the initial configuration (0-3)
      */
     public State(Rectangle[] initial_positions, int id_configuration){
 
@@ -30,7 +30,7 @@ class State {
      * @param saved_moves LinkedList of saved moves
      * @param initial_positions Array[10] of initial pieces position
      * @param saved_positions Array[10] of saved pieces position
-     * @param id_configuration int representing the initial configuration (0-4)
+     * @param id_configuration int representing the initial configuration (0-3)
      */
     public State(LinkedList<Move> saved_moves, Rectangle[] initial_positions, Rectangle[] saved_positions, int id_configuration){
 

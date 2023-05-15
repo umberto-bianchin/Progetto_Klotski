@@ -6,7 +6,9 @@ import Model.Move;
 
 import java.awt.event.MouseEvent;
 
-
+/**
+ * The class is a UI controller that handles the Undo operation in the Klotski game.
+ */
 class UndoCommand extends UIController{
 
     UndoCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {

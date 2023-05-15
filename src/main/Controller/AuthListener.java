@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
+/**
+ * The class is a UI controller that handles authentication actions (logging in and signing up) in the Klotski game.
+ */
 public class AuthListener extends UIController{
 
 
@@ -18,7 +21,7 @@ public class AuthListener extends UIController{
     public void mousePressed(MouseEvent e) {
         String username = ((JButton) e.getSource()).getClientProperty("username").toString();
         String password = ((JButton) e.getSource()).getClientProperty("password").toString();
-        String type = ((JButton) e.getSource()).getText();
+        String type = ((JButton) e.getSource()).getText();  // Log in or Sign up
 
         try {
 

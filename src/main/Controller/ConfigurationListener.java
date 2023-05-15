@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
-
+/**
+ * The class is a UI controller that handles the choice of initial configuration in the Klotski game
+ */
 class ConfigurationListener extends UIController {
 
     ConfigurationListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
@@ -17,7 +19,7 @@ class ConfigurationListener extends UIController {
     @Override
     public void mousePressed(MouseEvent e) {
         try {
-            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
+            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());  // 0-3
             klotskiModel.initState(num_config);
             klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
         }

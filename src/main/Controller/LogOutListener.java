@@ -5,6 +5,9 @@ import View.KlotskiUI;
 
 import java.awt.event.MouseEvent;
 
+/**
+ * The class is a UI controller that handles the logout of a user
+ */
 class LogOutListener extends UIController{
 
     LogOutListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {

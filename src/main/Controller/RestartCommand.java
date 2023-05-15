@@ -5,6 +5,9 @@ import View.KlotskiUI;
 
 import java.awt.event.MouseEvent;
 
+/**
+ * The class is a UI controller that handles the restart of a match
+ */
 class RestartCommand extends UIController {
 
     RestartCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {

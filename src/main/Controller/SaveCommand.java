@@ -6,6 +6,9 @@ import View.KlotskiUI;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * The class is a UI controller that handles the process of saving games
+ */
 class SaveCommand extends UIController {
 
     String name = "";
@@ -16,28 +19,28 @@ class SaveCommand extends UIController {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getSource() != this)
+
+        if(e.getSource() != this) //not ask always the new game name, because it could already know (explained later in the code)
             name = klotskiUI.askGameName();
 
         if(name == null) // when the askName windows is closed with "X"
             return;
 
         try {
-
             klotskiModel.saveGame(name);
             klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
 
-        } catch(IllegalAccessException ex){
+        } catch(IllegalAccessException ex){ // when the player isn't authenticated
 
-            if(klotskiUI.showAuthenticationDialog()) {
-                e.setSource(this);
+            if(klotskiUI.showAuthenticationDialog()) { //ask if the player want to authenticate if true:
+                e.setSource(this); //so the name isn't asked again, but used the one already typed
                 mousePressed(e);
             }
-        } catch(IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {  //blank names or more than one
 
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
-            e.setSource(null);
-            mousePressed(e);
+            e.setSource(null); // null otherwise it could skip the askGame
+            mousePressed(e); // re-ask how to save the game
 
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
