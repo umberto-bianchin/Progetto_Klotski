@@ -11,7 +11,7 @@ class State {
     LinkedList<Move> moves;
     Rectangle[] initial_positions;
     Piece[] pieces;
-    private Piece selectedPiece = null;
+    Piece selectedPiece = null;
     private boolean win = false;
     private int id_configuration;
 
@@ -147,8 +147,10 @@ class State {
         Move lastMoveRev = moves.getLast().reverse();
         makeMove(lastMoveRev);
 
-        moves.removeLast(); // remove the reversed move added
-        moves.removeLast(); // remove the moves wanted to be deleted
+        // remove the reversed move added
+        moves.removeLast();
+        // remove the moves wanted to be deleted
+        moves.removeLast();
 
         return lastMoveRev;
 
