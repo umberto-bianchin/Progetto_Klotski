@@ -151,7 +151,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetInitialConfig() throws SQLException, IllegalAccessException {
+    void testGetInitialConfig() throws SQLException {
         //Prepare test data
         int initialConf = 0;
         Rectangle[] positions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
