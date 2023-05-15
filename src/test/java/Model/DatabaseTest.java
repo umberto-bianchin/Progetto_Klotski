@@ -298,13 +298,15 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void testRegistration() throws SQLException {
+    void testRegistration() throws SQLException, IllegalAccessException {
         //Try to register with a username already created
         assertFalse(db.registration("JTest", "JTest"));
 
         //Registration with correct credentials
         assertTrue(db.registration("JTest2", "JTest2"));
 
+        //Log in to deleting user
+        db.login("User", "User");
         db.deleteUser();
     }
 
@@ -342,10 +344,11 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void deleteUser() throws SQLException {
+    void deleteUser() throws SQLException, IllegalAccessException {
         db.registration("User", "User");
-        db.deleteUser();
+        assertTrue(db.login("User", "User"));
 
+        db.deleteUser();
         assertFalse(db.login("User", "User"));
 
     }

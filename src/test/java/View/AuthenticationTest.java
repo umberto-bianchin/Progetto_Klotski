@@ -43,11 +43,13 @@ class AuthenticationTest {
     @Test
     void testInitUser() {
         auth.initUser("test");
-        assertEquals(3, auth.getComponentCount());
+        assertEquals(4, auth.getComponentCount());
         assertTrue(auth.getComponent(0) instanceof JLabel);
         assertEquals("test", ((JLabel)auth.getComponent(0)).getText());
         assertTrue(auth.getComponent(1) instanceof JButton);
         assertTrue(auth.getComponent(2) instanceof JButton);
+        assertTrue(auth.getComponent(3) instanceof JButton);
+
 
     }
 }

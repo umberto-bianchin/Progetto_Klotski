@@ -10,7 +10,7 @@ class Authentication extends JPanel{
     private final JButton sign_up = new JButton();
     private final JButton log_in = new JButton();
     private final JButton log_out = new JButton();
-    private final JButton del_user = new JButton("Delete user");
+    private final JButton del_user = new JButton();
 
     private final JButton saved_games = new JButton();
     private static MouseAdapter authListener;
@@ -68,7 +68,8 @@ class Authentication extends JPanel{
         log_out.setName("logOut");
 
 
-        // TODO: 15/05/2023 add delete foto
+        del_user.setIcon(new ImageIcon("./src/images/deleteUser.png"));
+        del_user.setContentAreaFilled(false);
         del_user.setName("delUser");
 
 
