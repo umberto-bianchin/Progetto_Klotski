@@ -73,11 +73,6 @@ class KlotskiUITest {
     }
 
     @Test
-    void testShowSavedGames(){
-        // TODO: 10/05/23 test
-    }
-
-    @Test
     void testAskGameName() throws AWTException, InterruptedException {
         Robot robot = new Robot();
         String expectedInput = "test";

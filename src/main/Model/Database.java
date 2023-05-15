@@ -11,8 +11,6 @@ public class Database {
     private int id_player = -1;
 
     public Database() throws SQLException {
-        //database connection
-//        Class.forName("com.mysql.cj.jdbc.Driver");
         String dbURL = "jdbc:mysql://progettoklotski.c6i3tfhv1iee.eu-north-1.rds.amazonaws.com:3306/progettoklotski";
         conn = DriverManager.getConnection(dbURL, "admin", "mypassword");
     }
@@ -125,9 +123,6 @@ public class Database {
         return configuration;
     }
 
-
-
-
     public Vector<String> getGameList() throws SQLException {
         Vector<String> gameList = new Vector<>();
         String query = "SELECT name FROM games WHERE ID_USER=" + id_player + ";";
@@ -212,6 +207,11 @@ public class Database {
         return id_player != -1;
     }
 
+    public void deleteAllGames() throws SQLException {
+        Vector<String> gameList = getGameList();
+        for(String name : gameList)
+            deleteGame(name);
+    }
 }
 
 

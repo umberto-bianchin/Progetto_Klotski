@@ -61,8 +61,6 @@ class Authentication extends JPanel{
         removeAll();
         setBounds(0,550,550,50);
 
-//        setAlignmentX(RIGHT_ALIGNMENT);
-
         JLabel name = new JLabel(user);
         name.setFont(new Font("Agency FB", Font.BOLD, 20));
         name.setForeground(Color.WHITE);
