@@ -18,9 +18,7 @@ class SaveCommand extends UIController {
     @Override
     public void mousePressed(MouseEvent e) {
         name = klotskiModel.getName();
-        System.out.println(name);
         if(e.getSource() != this && name==null) {
-            System.out.println("sono qua!!");
             name = klotskiUI.askGameName();
         }
         if(name == null) { // when the askName windows is closed with "X"

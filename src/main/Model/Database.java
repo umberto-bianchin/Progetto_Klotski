@@ -193,7 +193,7 @@ public class Database {
         if (!isLogged())
             throw new IllegalAccessException("You must login");
 
-        String query = "CALL delete_game('" + game_name + "')";
+        String query = "CALL delete_game('" + game_name + "','"+username+"');";
 
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(query);
@@ -265,6 +265,7 @@ public class Database {
     public void resetIdPlayer() {
         //logout
         id_player = -1;
+        name=null;
     }
 
     /**
@@ -330,9 +331,10 @@ public class Database {
         }
         name = game_name;
         try (Statement stmt = conn.createStatement()) {
+            query ="DELETE FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
+            stmt.execute(query);
             for (Move move : moves) {
-                query ="DELETE FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
-                stmt.execute(query);
+
                 query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
                         "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
                         + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
