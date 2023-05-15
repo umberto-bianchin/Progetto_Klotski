@@ -10,6 +10,8 @@ class Authentication extends JPanel{
     private final JButton sign_up = new JButton();
     private final JButton log_in = new JButton();
     private final JButton log_out = new JButton();
+    private final JButton del_user = new JButton("Delete user");
+
     private final JButton saved_games = new JButton();
     private static MouseAdapter authListener;
 
@@ -26,16 +28,11 @@ class Authentication extends JPanel{
         sign_up.addActionListener(listener);
 
         sign_up.setIcon(new ImageIcon("./src/images/signup.png"));
-        sign_up.setBorder(null);
         sign_up.setContentAreaFilled(false);
-        sign_up.setBackground(null);
         sign_up.putClientProperty("name", "Sign up");
 
         log_in.setIcon(new ImageIcon("./src/images/login.png"));
-        log_in.setBorder(null);
         log_in.setContentAreaFilled(false);
-        log_in.setBackground(null);
-        log_in.setName("Log in");
         log_in.putClientProperty("name", "Log in");
 
     }
@@ -67,18 +64,21 @@ class Authentication extends JPanel{
         name.setForeground(Color.WHITE);
 
         log_out.setIcon(new ImageIcon("./src/images/logout.png"));
-        log_out.setBorder(null);
         log_out.setContentAreaFilled(false);
-        log_out.setBackground(null);
+        log_out.setName("logOut");
+
+
+        // TODO: 15/05/2023 add delete foto
+        del_user.setName("delUser");
+
 
         saved_games.setIcon(new ImageIcon("./src/images/savedGames.png"));
-        saved_games.setBorder(null);
         saved_games.setContentAreaFilled(false);
-        saved_games.setBackground(null);
 
         add(name);
         add(log_out);
         add(saved_games);
+        add(del_user);
         repaint();
         revalidate();
     }
@@ -86,6 +86,7 @@ class Authentication extends JPanel{
     public void addAuthenticationListeners(MouseAdapter authListener, MouseAdapter logOutListener, MouseAdapter savedListener) {
         Authentication.authListener = authListener;
         log_out.addMouseListener(logOutListener);
+        del_user.addMouseListener(logOutListener);
         saved_games.addMouseListener(savedListener);
     }
 

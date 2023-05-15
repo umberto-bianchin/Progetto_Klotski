@@ -12,6 +12,7 @@ public class Database {
 
     private final Connection conn;
     private int id_player = -1;
+    private String username;
 
     /**
      * Constructs a new Database object and establishes a connection to the database
@@ -235,6 +236,7 @@ public class Database {
 
             if (rs.next()) {
                 id_player = user + pass;
+                this.username = username;
                 return true;
             }
         }
@@ -267,6 +269,7 @@ public class Database {
             int rowsAffected = cstmt.getInt(4);
             if (rowsAffected == 1) {
                 id_player = id;
+                this.username = username;
                 return true;
             }
 
@@ -305,14 +308,14 @@ public class Database {
     }
 
     /**
-     * Deletes a user from the database.
-     * @param username The username of the user to be deleted
+     * Deletes the logged user from the database and logged out
      */
-    public void deleteUser(String username) throws SQLException{
+    public void deleteUser() throws SQLException{
         String query = "CALL delete_user('" + username + "')";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(query);
         }
+        resetIdPlayer();
     }
 }
 

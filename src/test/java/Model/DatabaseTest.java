@@ -305,7 +305,7 @@ class DatabaseTest {
         //Registration with correct credentials
         assertTrue(db.registration("JTest2", "JTest2"));
 
-        db.deleteUser("JTest2");
+        db.deleteUser();
     }
 
     /**
@@ -344,7 +344,7 @@ class DatabaseTest {
     @Test
     void deleteUser() throws SQLException {
         db.registration("User", "User");
-        db.deleteUser("User");
+        db.deleteUser();
 
         assertFalse(db.login("User", "User"));
 

@@ -30,6 +30,10 @@ class SavedGamesListener extends UIController {
 
                 klotskiModel.deleteSavedGame(name.substring(6)); // name is in the form delete11
                 klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), this); //reopen the updated page
+
+            } else if (name.equals("delAll")) {
+                klotskiModel.deleteAll();
+                klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), this); //reopen the updated page
             }
 
         } catch (Exception ex) {
