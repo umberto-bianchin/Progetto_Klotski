@@ -310,7 +310,10 @@ public class Database {
     /**
      * Deletes the logged user from the database and logged out
      */
-    public void deleteUser() throws SQLException{
+    public void deleteUser() throws SQLException, IllegalAccessException {
+        if (!isLogged())
+            throw new IllegalAccessException("You must login");
+
         String query = "CALL delete_user('" + username + "')";
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(query);

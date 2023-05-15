@@ -31,8 +31,8 @@ class DisconnectionListener extends UIController{
             try {
                 klotskiModel.delUser(); //delete user and logout
                 klotskiUI.logout();
-            } catch (SQLException ex) {
-                klotskiUI.showMessage("Database error, retry later", "Saved Games", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
             }
 
         }

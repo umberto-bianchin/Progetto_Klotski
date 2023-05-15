@@ -179,7 +179,7 @@ public class KlotskiModel {
 
 
 
-    public void delUser() throws SQLException {
+    public void delUser() throws SQLException, IllegalAccessException {
         db.deleteUser();
     }
 
