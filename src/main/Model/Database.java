@@ -27,15 +27,15 @@ public class Database {
     }
 
     /**
-     * @param moves           The list of moves made in the game
-     * @param id_conf         The initial configuration of the game (0-4)
+     * @param moves The list of moves made in the game
+     * @param game_id The initial configuration of the game (0-3)
      * @param final_positions The final configuration of the game
-     * @param game_name       The name of the game
+     * @param game_name The name of the game
      * @return true if the game is successfully saved, false otherwise
-     * @throws SQLException           if a database access error occurs
+     * @throws SQLException if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
-    public int saveGame(LinkedList<Move> moves, int id_conf, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
+    public int saveGame(LinkedList<Move> moves, int game_id, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
         if (!isLogged())
             throw new IllegalAccessException("You must login to save games");
 
@@ -44,7 +44,7 @@ public class Database {
             saveResumed(moves, game_name, final_positions);
             return 0;
         } else {
-            return newGame(moves, id_conf, final_positions, game_name);
+            return newGame(moves, game_id, final_positions, game_name);
         }
     }
 
@@ -220,6 +220,7 @@ public class Database {
 
             if (rs.next()) {
                 id_player = user + pass;
+                this.username = username;
                 return true;
             }
         }
@@ -252,6 +253,7 @@ public class Database {
             int rowsAffected = cstmt.getInt(4);
             if (rowsAffected == 1) {
                 id_player = id;
+                this.username = username;
                 return true;
             }
 

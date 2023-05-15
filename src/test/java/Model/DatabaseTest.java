@@ -301,19 +301,27 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void testRegistration() throws SQLException {
+    void testRegistration() throws SQLException, IllegalAccessException {
         //Try to register with a username already created
         assertFalse(db.registration("JTest", "JTest"));
 
         //Registration with correct credentials
         assertTrue(db.registration("JTest2", "JTest2"));
 
-        db.deleteUser("JTest2");
+        //Log in to deleting user
+        db.login("User", "User");
+        db.deleteUser();
 
     }
 
+    /**
+     * Test case for the deleteAllGames() method.
+     * It verifies the behavior of deleting all the saved games of a user.
+     * @throws SQLException if there is an error in the database operations.
+     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     */
     @Test
-    void testDeleteAll() throws SQLException, IllegalAccessException {
+    void testDeleteAllGames() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -334,8 +342,19 @@ class DatabaseTest {
         assertEquals(0, db.getGameList().size());
     }
 
+    /**
+     * Test case for the deleteUser() method.
+     * It verifies the behavior of deleting all the saved games of a user.
+     * @throws SQLException if there is an error in the database operations.
+     */
     @Test
-    void deleteUser(){
-        // TODO: 15/05/23 delete user test
+    void deleteUser() throws SQLException, IllegalAccessException {
+        db.registration("User", "User");
+        assertTrue(db.login("User", "User"));
+
+        db.login("User", "User");
+        db.deleteUser();
+        assertFalse(db.login("User", "User"));
+
     }
 }

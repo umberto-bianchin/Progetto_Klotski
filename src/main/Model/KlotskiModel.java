@@ -168,6 +168,20 @@ public class KlotskiModel {
     }
 
     /**
+     * Delete the game with that name, if not found the database call doesn't do anything
+     * @throws SQLException when database raise an Exception (timeout)
+     * @throws IllegalAccessException  when the player isn't logged into the database
+     */
+    public void deleteAll() throws SQLException, IllegalAccessException {
+        db.deleteAllGames();
+    }
+
+    // TODO: 15/05/23 comment
+    public void delUser() throws SQLException, IllegalAccessException {
+        db.deleteUser();
+    }
+
+    /**
      * @throws IOException if an error occurred with the POST request
      * @throws ParseException when the received JSON is invalid
      */
