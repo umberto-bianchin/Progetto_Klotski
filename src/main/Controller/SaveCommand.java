@@ -24,8 +24,12 @@ class SaveCommand implements ActionListener {
         if(e.getSource() != this)
             name = klotskiUI.askGameName();
 
+        if(name == null)
+            return;
+
         try {
             klotskiModel.saveGame(name);
+
             klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
         } catch(IllegalAccessException ex){
 

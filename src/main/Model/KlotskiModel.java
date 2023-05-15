@@ -16,11 +16,15 @@ public class KlotskiModel {
 
     /**
      * Used when is opened a new game, ask the database for the necessary information to create a new State
-     * @param config is the number of the desired configuration (1-4)
+     * @param id_configuration is the number of the desired configuration (1-4)
      * @throws SQLException when database raise an Exception (timeout)
      */
-    public void initState(int config) throws SQLException {
-        state = new State(db.getInitialConfig(config), config);
+    public void initState(int id_configuration) throws SQLException {
+
+        if(id_configuration<0 || id_configuration>=4)
+            throw new IllegalArgumentException("configuration_id invalid");
+
+        state = new State(db.getInitialConfig(id_configuration), id_configuration);
     }
 
     /**
@@ -36,7 +40,7 @@ public class KlotskiModel {
      * Used when a game is restarted, in order to reinitialize the State object
      */
     public void restartState() {
-        state = new State(state.getInitialPositions(), state.getInitialConfig());
+        state = new State(state.getInitialPositions(), state.getIdConfiguration());
     }
 
     /**
@@ -120,23 +124,16 @@ public class KlotskiModel {
     }
 
     /**
-     * @throws NullPointerException when the name is null
      * @throws IllegalAccessException when the player isn't logged into the database
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalArgumentException when tha name is invalid (blank or already used)
      */
-    public void saveGame(String name) throws IllegalArgumentException, NullPointerException, IllegalAccessException, SQLException {
-
-        if (name == null)
-            throw new NullPointerException("");
-
-        if (!db.isLogged())
-            throw new IllegalAccessException("You must login to save games");
+    public void saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
 
         if (name.isBlank())
             throw new IllegalArgumentException("You can't save match with blank names");
 
-        if (!db.saveGame(state.getMoves(), state.getInitialConfig(), state.getCurrentPositions(), name))
+        if (!db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name))
             throw new IllegalArgumentException("You can't save more than one match with the same name");
 
     }

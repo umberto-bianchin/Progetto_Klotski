@@ -6,55 +6,85 @@ import java.util.LinkedList;
 class State {
 
     LinkedList<Move> moves;
-    Rectangle[] initial_config;
-    Piece[] current_config;
-    private Piece selectedPiece;
-    private boolean win=false;
-    private final int initial_conf;
+    Rectangle[] initial_positions;
+    Piece[] pieces;
+    private Piece selectedPiece = null;
+    private boolean win = false;
+    private int id_configuration;
 
-    public State(Rectangle[] config, int conf){
-        initial_config = config;
-        initial_conf = conf;
+    /**
+     * @param initial_positions Array[10] of initial pieces position
+     * @param id_configuration int representing the initial configuration (0-4)
+     */
+    public State(Rectangle[] initial_positions, int id_configuration){
+
+        initAttributes(initial_positions, initial_positions, id_configuration);
         moves = new LinkedList<>();
 
-        current_config = new Piece[10];
-        for(int i=0; i<10; i++){
-            current_config[i] = new Piece(config[i]);
-        }
-
     }
 
-    public State(LinkedList<Move> saved_moves, Rectangle[] starting_config, Rectangle[] saved_config, int conf){
+    /**
+     * @param saved_moves LinkedList of saved moves
+     * @param initial_positions Array[10] of initial pieces position
+     * @param saved_positions Array[10] of saved pieces position
+     * @param id_configuration int representing the initial configuration (0-4)
+     */
+    public State(LinkedList<Move> saved_moves, Rectangle[] initial_positions, Rectangle[] saved_positions, int id_configuration){
+
+        initAttributes(initial_positions, saved_positions, id_configuration);
         moves = saved_moves;
-        initial_conf = conf;
-        initial_config = starting_config;
 
-        current_config = new Piece[10];
+    }
+
+    /**
+     * Initialize object attributes, with controls on the arguments
+     */
+    private void initAttributes(Rectangle[] initial_positions, Rectangle[] current_positions, int id_configuration) {
+
+        if(initial_positions.length != 10 || current_positions.length != 10)
+            throw new IllegalArgumentException("positions array invalid");
+
+        if(id_configuration<0 || id_configuration>=4)
+            throw new IllegalArgumentException("configuration_id invalid");
+
+        this.initial_positions = initial_positions;
+        this.id_configuration = id_configuration;
+        pieces = new Piece[10];
+
         for(int i=0; i<10; i++){
-            current_config[i] = new Piece(saved_config[i]);
+            pieces[i] = new Piece(current_positions[i]);
         }
     }
 
+    /**
+     * @return Array[10] of the current pieces positions
+     */
     public Rectangle[] getCurrentPositions(){
 
         Rectangle[] currentPos = new Rectangle[10];
         for(int i=0; i<10; i++)
-            currentPos[i] = current_config[i].getPosition();
+            currentPos[i] = pieces[i].getPosition();
         return currentPos;
     }
 
-    public int getInitialConfig(){
-        return  initial_conf;
+    public int getIdConfiguration(){
+        return id_configuration;
     }
 
+    /**
+     * @return LinkedList with the performed ordered moves
+     */
     public LinkedList<Move> getMoves(){
         return moves;
     }
 
     public Rectangle[] getInitialPositions(){
-        return initial_config;
+        return initial_positions;
     }
 
+    /**
+     * @param p Point contained by the desired pieces, if null reset the selected piece
+     */
     public void setSelectedPiece(Point p) {
 
         if (p == null) {
@@ -62,13 +92,14 @@ class State {
             return;
         }
 
-        for (Piece piece : current_config) {
+        for (Piece piece : pieces) {
             if (piece.contains(p))
                 selectedPiece = piece;
         }
     }
 
-    public Move moveSelectedPiece(Point p){
+
+    public Move moveSelectedPiece(Point p) throws RuntimeException{
 
         if(selectedPiece == null)
             throw new RuntimeException("No piece selected");
@@ -79,7 +110,7 @@ class State {
         if (possiblePosition == null || !window.contains(possiblePosition))
             throw new RuntimeException();
 
-        for (Piece piece : current_config) {
+        for (Piece piece : pieces) {
             if (piece != selectedPiece && piece.intersection(possiblePosition)) {
                 throw new RuntimeException();
             }

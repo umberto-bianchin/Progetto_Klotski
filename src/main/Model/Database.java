@@ -17,7 +17,10 @@ public class Database {
         conn = DriverManager.getConnection(dbURL, "admin", "mypassword");
     }
 
-    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException {
+    public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException, IllegalAccessException {
+
+        if (id_player == -1)
+            throw new IllegalAccessException("You must login to save games");
 
         String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
 
