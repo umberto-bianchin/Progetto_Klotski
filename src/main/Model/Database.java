@@ -12,7 +12,7 @@ public class Database {
 
     private final Connection conn;
     private int id_player = -1;
-    private String name=null;
+    private String name = null;
     private String username;
 
 
@@ -27,12 +27,12 @@ public class Database {
     }
 
     /**
-     * @param moves The list of moves made in the game
-     * @param game_id The initial configuration of the game (0-3)
+     * @param moves           The list of moves made in the game
+     * @param game_id         The initial configuration of the game (0-3)
      * @param final_positions The final configuration of the game
-     * @param game_name The name of the game
-     * @return true if the game is successfully saved, false otherwise
-     * @throws SQLException if a database access error occurs
+     * @param game_name       The name of the game
+     * @return 0 if the game was saved and then resumed, 1 if it's a new game, and it has to be saved
+     * @throws SQLException           if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
     public int saveGame(LinkedList<Move> moves, int game_id, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
@@ -62,8 +62,8 @@ public class Database {
         if (!isLogged())
             throw new IllegalAccessException("You must login");
 
-        String query = "UPDATE games SET resume=1 WHERE ID_USER="+id_player+" AND name='"+game_name+"';";
-        try(Statement stmt = conn.createStatement()){
+        String query = "UPDATE games SET resume=1 WHERE ID_USER=" + id_player + " AND name='" + game_name + "';";
+        try (Statement stmt = conn.createStatement()) {
             stmt.execute(query);
             name = game_name;
         }
@@ -193,7 +193,7 @@ public class Database {
         if (!isLogged())
             throw new IllegalAccessException("You must login");
 
-        String query = "CALL delete_game('" + game_name + "','"+username+"');";
+        String query = "CALL delete_game('" + game_name + "','" + username + "');";
 
         try (Statement stmt = conn.createStatement()) {
             stmt.execute(query);
@@ -265,7 +265,7 @@ public class Database {
     public void resetIdPlayer() {
         //logout
         id_player = -1;
-        name=null;
+        name = null;
     }
 
     /**
@@ -310,10 +310,10 @@ public class Database {
     }
 
     public boolean isResumed(String game_name) throws SQLException {
-        String query = "SELECT resume FROM games WHERE Name='"+game_name+"' AND ID_USER="+id_player+";";
-        try(Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)){
-            if(rs.next()){
-                if(rs.getInt("resume")==1){
+        String query = "SELECT resume FROM games WHERE Name='" + game_name + "' AND ID_USER=" + id_player + ";";
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                if (rs.getInt("resume") == 1) {
                     return true;
                 }
             }
@@ -330,29 +330,11 @@ public class Database {
                 id_game = rs.getInt("ID_GAME");
         }
         name = game_name;
+
+        MovesAndFinal(moves, final_positions);
+
         try (Statement stmt = conn.createStatement()) {
-            query ="DELETE FROM saved_move WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
-            stmt.execute(query);
-            for (Move move : moves) {
-
-                query = "INSERT INTO saved_move(ID_GAME,ID_USER,width,height,x_ini,y_ini,x_fin,y_fin) " +
-                        "VALUES(" + id_game + "," + id_player + "," + move.getInitialPosition().width + "," + move.getInitialPosition().height + ","
-                        + move.getInitialPosition().x + "," + move.getInitialPosition().y + "," + move.getFinalPosition().x + "," + move.getFinalPosition().y + ");";
-                stmt.execute(query);
-            }
-
-            query = "DELETE FROM saved_state WHERE ID_GAME="+id_game+" AND ID_USER="+id_player+";";
-            stmt.execute(query);
-
-            for (Rectangle rectangle : final_positions) {
-                query = "INSERT INTO saved_state(ID_GAME, ID_USER, x,y,width,height) VALUES(" + id_game + ", " + id_player + ", " + rectangle.x + "," + rectangle.y + "," + rectangle.width + "," + rectangle.height + ");";
-                stmt.execute(query);
-            }
-
-        }
-
-        try (Statement stmt = conn.createStatement()){
-            query = "UPDATE games SET resume = 1 WHERE ID_GAME ="+id_game+";";
+            query = "UPDATE games SET resume = 1 WHERE ID_GAME =" + id_game + ";";
             stmt.execute(query);
         }
     }
@@ -368,10 +350,19 @@ public class Database {
             stmt.execute(query);
         }
 
-        query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
+        MovesAndFinal(moves, final_positions);
+        return 1;
 
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+    }
+
+
+    public String getName(){
+        return name;
+    }
+
+    public void MovesAndFinal(LinkedList<Move> moves, Rectangle[] final_positions) throws SQLException{
+        String query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
+        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
 
             rs.next();
             int id_game = rs.getInt("ID_GAME");
@@ -387,14 +378,7 @@ public class Database {
                 query = "INSERT INTO saved_state(ID_GAME, ID_USER, x,y,width,height) VALUES(" + id_game + ", " + id_player + ", " + rectangle.x + "," + rectangle.y + "," + rectangle.width + "," + rectangle.height + ");";
                 stmt.execute(query);
             }
-            return 1;
+
         }
     }
-
-    public String getName(){
-        return name;
-    }
 }
-
-
-
