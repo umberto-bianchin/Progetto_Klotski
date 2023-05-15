@@ -32,7 +32,7 @@ class Piece {
     }
 
     /**
-     * Update the available positions of the piece, that are the four that have a border in common with the actual position
+     * Update the available positions of the piece, that are the four translated from all the direction from the initial position
      */
     private void updateAvailable() {
         for (int i = 0; i < 4; i++) {
@@ -68,17 +68,27 @@ class Piece {
      * Checks if the specified point is within any of the available move positions.
      * @param p the point to check
      * @return the Rectangle corresponding to the available move that contains the point, or null if no available move contains the point
+     * @throws RuntimeException when there are more than one available position associated with that point
      */
     public Rectangle checkAvailable(Point p) {
 
         updateAvailable();
 
+        int count = 0;
+        Rectangle final_position = null;
+
         for (Rectangle available : availableMoves) {
             if (available.contains(p)) {
-                return available;
+                count++;
+                final_position = available;
             }
         }
-        return null;
+
+        if(count <= 1)
+            return final_position;
+
+        throw new RuntimeException("More than one possible position");
+
     }
 
     /**
