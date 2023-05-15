@@ -26,7 +26,9 @@ class BlockTest {
      */
     @Test
     void testSetBlockAppearance() {
+        //Prepare test data
         Rectangle position = new Rectangle(100,100,200,200);
+
         block.setBlockAppearance(position);
 
         assertEquals(position, block.getBounds());

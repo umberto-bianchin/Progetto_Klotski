@@ -55,9 +55,4 @@ class Piece {
         return position.contains(p);
     }
 
-
-    public void setPosition(Rectangle position) {
-        this.position = position;
-    }
-
 }

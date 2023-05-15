@@ -45,11 +45,14 @@ class KlotskiUITest {
      */
     @Test
     void testInitGame() {
+        //Prepare test data
         Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
                 new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
                 new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
                 new Rectangle(300,400,100,100)};
+
         klotskiUI.initGame(positions, 0);
+
         assertNotNull(klotskiUI.buttons);
         assertNotNull(klotskiUI.board);
     }
@@ -60,13 +63,16 @@ class KlotskiUITest {
      */
     @Test
     void testRestart() {
+        //Prepare test data
         Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
                 new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
                 new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
                 new Rectangle(300,400,100,100)};
+
         klotskiUI.initGame(positions, 3);
         klotskiUI.board.selectedBlock = new Block();
         klotskiUI.restart(positions);
+
         assertNull(klotskiUI.board.selectedBlock);
         assertEquals("Moves: 0", klotskiUI.board.displayedCounter.getText());
     }
@@ -90,24 +96,36 @@ class KlotskiUITest {
 
     /**
      * Test case for the askGameName() method.
-     * It verifies the behavior of asking the game name.
+     * It verifies the behavior of prompting the user to enter a game name.
+     * @throws AWTException if there is an error in creating the Robot instance.
+     * @throws InterruptedException if the thread is interrupted while waiting.
      */
     @Test
     void testAskGameName() throws AWTException, InterruptedException {
+        // Create a Robot instance to simulate user input
         Robot robot = new Robot();
-        String expectedInput = "test";
-        final String[] input = {""};
 
+        // Prepare the expected input
+        String expectedInput = "test";
+
+        // Create a thread to execute the askGameName() method and capture the input
+        final String[] input = {""};
         Thread t = new Thread(() -> input[0] = klotskiUI.askGameName());
         t.start();
+
+        // Simulate the user typing the expected input
         robot.delay(1000);
         for (char c : expectedInput.toCharArray()) {
             robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(c));
             robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(c));
             robot.delay(100);
         }
+
+        // Simulate the user pressing the Enter key
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
+
+        // Wait for the thread to complete and capture the input
         t.join();
 
         assertEquals(expectedInput, input[0]);
