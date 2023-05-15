@@ -85,7 +85,7 @@ class Piece {
         }
 
         if(count <= 1)
-            return final_position;
+            return final_position; //null or the final position
 
         throw new RuntimeException("More than one possible position");
 
