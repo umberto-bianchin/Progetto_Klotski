@@ -24,7 +24,7 @@ public class KlotskiModel {
         if(id_configuration<0 || id_configuration>=4)
             throw new IllegalArgumentException("configuration_id invalid");
 
-        state = new State(db.getInitialConfig(id_configuration), id_configuration);
+        state = new State(db.getInitialPositions(id_configuration), id_configuration);
     }
 
     /**
@@ -34,7 +34,7 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout or not existing game)
      */
     public void resumeState(String name_game) throws SQLException, IllegalAccessException {
-        state = new State(db.getSavedMoves(name_game), db.getInitialConfig(db.getIdConf(name_game)), db.getFinalConfig(name_game), db.getIdConf(name_game));
+        state = new State(db.getSavedMoves(name_game), db.getInitialPositions(db.getIdConfiguration(name_game)), db.getFinalPositions(name_game), db.getIdConfiguration(name_game));
     }
 
     /**
@@ -49,7 +49,13 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      */
     public void initDatabase() throws SQLException {
+
+        if(db != null)
+            db.closeConnection();
+
         db = new Database();
+
+
     }
 
     /**
@@ -145,9 +151,6 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      */
     public Vector<String> getSavedGameList() throws SQLException, IllegalAccessException {
-        if (!db.isLogged())
-            throw new IllegalAccessException("You have to be logged to view your games");
-
         return db.getGameList();
     }
 
@@ -156,10 +159,11 @@ public class KlotskiModel {
      * @param name game name that is wanted to be deleted
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalAccessException  when the player isn't logged into the database
+     * @throws NullPointerException when the string is null
      */
-    public void deleteSavedGame(String name) throws SQLException, IllegalAccessException {
-        if (!db.isLogged())
-            throw new IllegalAccessException("You have to be logged to delete your games");
+    public void deleteSavedGame(String name) throws SQLException, IllegalAccessException, NullPointerException {
+        if (name == null)
+            throw new NullPointerException();
 
         db.deleteGame(name);
     }

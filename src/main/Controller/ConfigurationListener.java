@@ -26,16 +26,4 @@ class ConfigurationListener extends UIController {
         }
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//        try {
-//            int num_config = Integer.parseInt(((JButton) e.getSource()).getName());
-//            klotskiModel.initState(num_config);
-//            klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
-//        }
-//        catch (SQLException ex){
-//            klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
 }

@@ -158,10 +158,10 @@ class State {
      * Make the specified move
      */
     void makeMove(Move move){
-
         setSelectedPiece(move.getInitialPosition().getLocation());
-        moveSelectedPiece(move.getFinalPosition().getLocation());
-
+        win = selectedPiece.move(move.getFinalPosition());
+        selectedPiece = null;
+        moves.add(move);
     }
 
 }

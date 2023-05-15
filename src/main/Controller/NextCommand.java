@@ -26,14 +26,4 @@ class NextCommand extends UIController {
         }
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        try {
-//            Move bestMove = klotskiModel.nextBestMove();
-//            klotskiUI.makeMove(bestMove, klotskiModel.getCounter());
-//            controller.winHandler();
-//        } catch (Exception ex) {
-//            klotskiUI.showMessage("Connectivity problems using solver, retry later", "Solver", JOptionPane.ERROR_MESSAGE);
-//        }
-//    }
 }

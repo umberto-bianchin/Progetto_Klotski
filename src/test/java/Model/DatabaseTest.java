@@ -127,7 +127,7 @@ class DatabaseTest {
         Rectangle[] finalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
 
         //Test unauthorized get id config attempt
-        assertThrows(IllegalAccessException.class, () -> db.getIdConf("Database Test"));
+        assertThrows(IllegalAccessException.class, () -> db.getIdConfiguration("Database Test"));
 
         //Log in and save data
         db.login("JTest", "JTest");
@@ -137,8 +137,8 @@ class DatabaseTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(initialConf, db.getIdConf("Database Test"));
-        assertNotEquals(2, db.getIdConf("Database Test"));
+        assertEquals(initialConf, db.getIdConfiguration("Database Test"));
+        assertNotEquals(2, db.getIdConfiguration("Database Test"));
 
         //Clean up saved games
         db.deleteAllGames();
@@ -160,7 +160,7 @@ class DatabaseTest {
                 new Rectangle(300,400,100,100)};
 
 
-        Rectangle[] initialConfig = db.getInitialConfig(initialConf);
+        Rectangle[] initialConfig = db.getInitialPositions(initialConf);
 
         for(int i=0; i<10; i++)
             assertEquals(positions[i], initialConfig[i]);
@@ -182,7 +182,7 @@ class DatabaseTest {
         Rectangle[] expectedFinalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
 
         //Test unauthorized get final config attempt
-        assertThrows(IllegalAccessException.class, () -> db.getFinalConfig("Database Test"));
+        assertThrows(IllegalAccessException.class, () -> db.getFinalPositions("Database Test"));
 
         //Log in and save data
         db.login("JTest", "JTest");
@@ -192,7 +192,7 @@ class DatabaseTest {
             throw new RuntimeException(e);
         }
 
-        Rectangle[] finalConfig = db.getFinalConfig("Database Test");
+        Rectangle[] finalConfig = db.getFinalPositions("Database Test");
 
         for(int i=0; i<2; i++)
             assertEquals(expectedFinalConfig[i], finalConfig[i]);

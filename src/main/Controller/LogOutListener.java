@@ -17,10 +17,4 @@ class LogOutListener extends UIController{
         klotskiUI.logout();
     }
 
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        klotskiModel.logout();
-//        klotskiUI.logout();
-//    }
-
 }

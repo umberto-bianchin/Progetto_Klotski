@@ -37,29 +37,4 @@ public class AuthListener extends UIController{
 
     }
 
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//        String username = ((JButton) e.getSource()).getClientProperty("username").toString();
-//        String password = ((JButton) e.getSource()).getClientProperty("password").toString();
-//        String type = ((JButton) e.getSource()).getText();
-//
-//        try {
-//
-//            if (type.equals("Log in")) {
-//                klotskiModel.login(username, password);
-//            } else if (type.equals("Sign up")) {
-//                klotskiModel.registration(username, password);
-//            }
-//
-//            klotskiUI.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
-//            klotskiUI.initUser(username);
-//
-//        }  catch (Exception ex) {
-//            klotskiUI.showMessage(ex.getMessage(), type, JOptionPane.ERROR_MESSAGE);
-//        }
-//
-//    }
-
 }
