@@ -182,7 +182,8 @@ public class KlotskiModel {
     public void closeDatabaseConnection(){
         try {
             db.closeConnection();
-        } catch (SQLException ignored) {}
+        } catch (SQLException | NullPointerException ignored) {}
+        // catch NullPointerException if the initial connection was unsuccessful (db == null)
     }
 
 }

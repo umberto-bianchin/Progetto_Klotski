@@ -34,10 +34,10 @@ public class Controller {
 
         try{
             klotskiModel.initDatabase();
+            klotskiUI.initStart();
         } catch(Exception e){
             klotskiUI.showMessage("Server SQL error", "Start", JOptionPane.ERROR_MESSAGE); }
 
-        klotskiUI.initStart();
         klotskiUI.addStartListener(exit, new ConfigurationListener(klotskiModel, klotskiUI, this));
         klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new LogOutListener(klotskiModel, klotskiUI), new SavedListener(klotskiModel, klotskiUI, this));
 

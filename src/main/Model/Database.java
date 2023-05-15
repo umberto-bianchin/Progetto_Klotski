@@ -201,7 +201,7 @@ public class Database {
         id_player = -1;
     }
 
-    public void closeConnection() throws SQLException {
+    public void closeConnection() throws SQLException{
         conn.close();
     }
 
