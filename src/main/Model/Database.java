@@ -180,7 +180,6 @@ public class Database {
             }
         }
         return false;
-
     }
 
     public boolean registration(String username, String password) throws SQLException {
@@ -229,6 +228,10 @@ public class Database {
         Vector<String> gameList = getGameList();
         for(String name : gameList)
             deleteGame(name);
+    }
+
+    public void deleteUser(String username){
+        // TODO: 15/05/23 implement the possibility to delete a user
     }
 }
 
