@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.sql.SQLException;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,12 +43,10 @@ class StateTest {
      */
     @Test
     void testSetSelectedPiece() {
-        Point point = null;
-
-        state.setSelectedPiece(point);
+        state.setSelectedPiece(null);
         assertNull(state.selectedPiece);
 
-        point = new Point(50, 20);
+        Point point = new Point(50, 20);
         state.setSelectedPiece(point);
 
         assertEquals(initialPos[1], state.selectedPiece.getPosition());

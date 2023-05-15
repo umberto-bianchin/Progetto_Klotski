@@ -10,8 +10,8 @@ import java.util.Vector;
 
 public class KlotskiModel {
 
-    private State state;
-    private Database db;
+    State state;
+    Database db;
     private final Solver solver = new Solver();
 
     /**
@@ -22,19 +22,19 @@ public class KlotskiModel {
     public void initState(int id_configuration) throws SQLException {
 
         if(id_configuration<0 || id_configuration>=4)
-            throw new IllegalArgumentException("configuration_id invalid");
+            throw new IllegalArgumentException("id_configuration invalid");
 
         state = new State(db.getInitialPositions(id_configuration), id_configuration);
     }
 
     /**
      * Used when a game is resumed between ones of the already saved
-     * @param name_game is the name of the saved game
+     * @param game_name is the name of the saved game
      * @throws IllegalAccessException if the player is not logged in to the system
      * @throws SQLException when database raise an Exception (timeout or not existing game)
      */
-    public void resumeState(String name_game) throws SQLException, IllegalAccessException {
-        state = new State(db.getSavedMoves(name_game), db.getInitialPositions(db.getIdConfiguration(name_game)), db.getFinalPositions(name_game), db.getIdConfiguration(name_game));
+    public void resumeState(String game_name) throws SQLException, IllegalAccessException {
+        state = new State(db.getSavedMoves(game_name), db.getInitialPositions(db.getIdConfiguration(game_name)), db.getFinalPositions(game_name), db.getIdConfiguration(game_name));
     }
 
     /**
@@ -49,13 +49,10 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      */
     public void initDatabase() throws SQLException {
-
         if(db != null)
             db.closeConnection();
 
         db = new Database();
-
-
     }
 
     /**
@@ -175,7 +172,8 @@ public class KlotskiModel {
     public Move nextBestMove() throws IOException, ParseException {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
         state.makeMove(bestMove);
-        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions())); // set the hash configuration after the move
+        // set the hash configuration after the move
+        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
 
         return bestMove;
 

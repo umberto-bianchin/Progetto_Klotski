@@ -84,11 +84,7 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        try {
-            db.saveGame(moves, initialConf, finalConfig, "Database Test");
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        db.saveGame(moves, initialConf, finalConfig, "Database Test");
 
         //Prepare expected results
         Rectangle rectangle1 = new Rectangle(0,0,100,100);
@@ -106,6 +102,9 @@ class DatabaseTest {
 
         //Accessing an invalid index to show there are only the two saved moves
         assertThrows(IndexOutOfBoundsException.class, () -> retrieveMoves.get(2));
+
+        //Getting moves from a game that does not exist to show that the LinkedList is empty
+        assertEquals(0, db.getSavedMoves("Wrong name").size());
 
         //Clean up saved games
         db.deleteAllGames();
@@ -131,11 +130,10 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        try {
-            db.saveGame(moves, initialConf, finalConfig, "Database Test");
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        db.saveGame(moves, initialConf, finalConfig, "Database Test");
+
+        //Test get configuration from a game that does not exist
+        assertThrows(SQLException.class, () -> db.getIdConfiguration("Wrong name"));
 
         assertEquals(initialConf, db.getIdConfiguration("Database Test"));
         assertNotEquals(2, db.getIdConfiguration("Database Test"));
@@ -148,10 +146,9 @@ class DatabaseTest {
      * Test case for the getInitialConfig() method.
      * It verifies the behavior of retrieving the initial config of a game from the database.
      * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetInitialConfig() throws SQLException {
+    void testGetInitialPositions() throws SQLException {
         //Prepare test data
         int initialConf = 0;
         Rectangle[] positions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
@@ -162,8 +159,12 @@ class DatabaseTest {
 
         Rectangle[] initialConfig = db.getInitialPositions(initialConf);
 
-        for(int i=0; i<10; i++)
+        for(int i=0; i<10; i++) {
             assertEquals(positions[i], initialConfig[i]);
+            //Test that the method return an array of 10 null Rectangle if the configuration is wrong
+            assertNull(db.getInitialPositions(4)[i]);
+        }
+
 
     }
 
@@ -174,7 +175,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetFinalConfig() throws SQLException, IllegalAccessException {
+    void testGetFinalPositions() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -186,16 +187,17 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        try {
-            db.saveGame(moves, initialConf, expectedFinalConfig, "Database Test");
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        db.saveGame(moves, initialConf, expectedFinalConfig, "Database Test");
 
         Rectangle[] finalConfig = db.getFinalPositions("Database Test");
 
         for(int i=0; i<2; i++)
             assertEquals(expectedFinalConfig[i], finalConfig[i]);
+
+        for(int i=0; i<10; i++){
+            //Test that the method return an array of 10 null Rectangle if the name is wrong
+            assertNull(db.getFinalPositions("Wrong name")[i]);
+        }
 
         //Clean up saved games
         db.deleteAllGames();
@@ -222,13 +224,9 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        try {
-            db.saveGame(moves, initialConf, finalConfig, "Database Test1");
-            db.saveGame(moves, initialConf, finalConfig, "Database Test2");
-            db.saveGame(moves, initialConf, finalConfig, "Database Test3");
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test3");
 
         Vector<String> savedGames = db.getGameList();
 
@@ -259,12 +257,8 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        try {
-            db.saveGame(moves, initialConf, finalConfig, "Database Test1");
-            db.saveGame(moves, initialConf, finalConfig, "Database Test2");
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
 
         Vector<String> savedGames = db.getGameList();
         assertEquals(2, savedGames.size());
@@ -275,6 +269,9 @@ class DatabaseTest {
         assertEquals("Database Test1", savedGames.get(0));
         //Accessing an invalid index to show there are only one saved game
         assertThrows(IndexOutOfBoundsException.class, () -> savedGames2.get(1));
+
+        //Test that no exception is thrown by deleting a game with wrong name
+        assertDoesNotThrow(()->db.deleteGame("Wrong name"));
 
         //Clean up saved games
         db.deleteAllGames();
@@ -313,5 +310,32 @@ class DatabaseTest {
 
         db.deleteUser("JTest2");
 
+    }
+
+    @Test
+    void testDeleteAll() throws SQLException, IllegalAccessException {
+        //Prepare test data
+        LinkedList<Move> moves = new LinkedList<>();
+        moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
+        moves.add(new Move(new Rectangle(100,100,100,100), new Rectangle(100,200,100,100)));
+        int initialConf = 1;
+        Rectangle[] finalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
+
+
+        //Test unauthorized delete all games attempt
+        assertThrows(IllegalAccessException.class, () -> db.deleteAllGames());
+
+        //Log in and save data
+        db.login("JTest", "JTest");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
+
+        db.deleteAllGames();
+        assertEquals(0, db.getGameList().size());
+    }
+
+    @Test
+    void deleteUser(){
+        // TODO: 15/05/23 delete user test
     }
 }
