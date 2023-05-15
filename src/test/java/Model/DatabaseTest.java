@@ -306,7 +306,7 @@ class DatabaseTest {
         assertFalse(db.registration("JTest", "JTest"));
 
         //Registration with correct credentials
-        assertTrue(db.registration("JTest4", "JTest4"));
+        assertTrue(db.registration("JTest2", "JTest2"));
 
         db.deleteUser("JTest2");
 
