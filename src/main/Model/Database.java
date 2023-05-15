@@ -308,8 +308,12 @@ public class Database {
      * Deletes a user from the database.
      * @param username The username of the user to be deleted (not null)
      */
-    public void deleteUser(String username){
+    public void deleteUser(String username) throws SQLException{
         // TODO: 15/05/23 implement the possibility to delete a user
+        String query = "CALL delete_user('" + username + "')";
+        try (Statement stmt = conn.createStatement()) {
+            stmt.execute(query);
+        }
     }
 }
 
