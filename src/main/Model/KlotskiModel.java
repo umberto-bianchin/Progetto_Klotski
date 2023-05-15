@@ -30,9 +30,10 @@ public class KlotskiModel {
     /**
      * Used when a game is resumed between ones of the already saved
      * @param name_game is the name of the saved game
+     * @throws IllegalAccessException if the player is not logged in to the system
      * @throws SQLException when database raise an Exception (timeout or not existing game)
      */
-    public void resumeState(String name_game) throws SQLException {
+    public void resumeState(String name_game) throws SQLException, IllegalAccessException {
         state = new State(db.getSavedMoves(name_game), db.getInitialConfig(db.getIdConf(name_game)), db.getFinalConfig(name_game), db.getIdConf(name_game));
     }
 
@@ -87,7 +88,7 @@ public class KlotskiModel {
      * @throws RuntimeException when there are no moves to undo
      */
     public Move undo() throws RuntimeException{
-        if(getCounter()==0)
+        if(getCounter() == 0)
             throw new RuntimeException();
 
         return state.undo();
@@ -170,7 +171,7 @@ public class KlotskiModel {
     public Move nextBestMove() throws IOException, ParseException {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
         state.makeMove(bestMove);
-        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
+        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions())); // set the hash configuration after the move
 
         return bestMove;
 

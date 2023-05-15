@@ -17,7 +17,7 @@ public class Database {
 
     public boolean saveGame(LinkedList<Move> moves, int initial_config, Rectangle[] final_config, String game_name) throws SQLException, IllegalAccessException {
 
-        if (id_player == -1)
+        if (!isLogged())
             throw new IllegalAccessException("You must login to save games");
 
         String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
@@ -30,7 +30,6 @@ public class Database {
             query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + "," + initial_config + ",'" + game_name + "');"; //inserisce il game (autoincrementa)
             stmt.execute(query);
         }
-
 
         query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
 
@@ -56,7 +55,11 @@ public class Database {
         }
     }
 
-    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException{
+    public LinkedList<Move> getSavedMoves(String game_name) throws SQLException, IllegalAccessException{
+
+        if (!isLogged())
+            throw new IllegalAccessException("You must login to save games");
+
         LinkedList<Move> moves = new LinkedList<>();
         String query = "SELECT * FROM saved_move WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
 
@@ -80,7 +83,11 @@ public class Database {
     }
 
 
-    public int getIdConf(String game_name) throws SQLException {
+    public int getIdConf(String game_name) throws SQLException, IllegalAccessException {
+
+        if (!isLogged())
+            throw new IllegalAccessException("You must login to save games");
+
         String query = "SELECT ID_CONF FROM games WHERE ID_GAME = (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
 
         try (Statement stmt = conn.createStatement();
@@ -91,17 +98,19 @@ public class Database {
         }
     }
 
-
     public Rectangle[] getInitialConfig(int game_id) throws SQLException {
         String query = "SELECT * FROM initial_state WHERE ID_CONF=" + game_id + ";";
         return getConfiguration(query);
     }
 
-    public Rectangle[] getFinalConfig(String game_name) throws SQLException {
+    public Rectangle[] getFinalConfig(String game_name) throws SQLException, IllegalAccessException {
+
+        if (!isLogged())
+            throw new IllegalAccessException("You must login to save games");
+
         String query = "SELECT * FROM saved_state WHERE ID_GAME IN (SELECT ID_GAME FROM games WHERE name = '" + game_name + "') AND ID_USER = " + id_player + ";";
         return getConfiguration(query);
     }
-
 
     private Rectangle[] getConfiguration(String query) throws SQLException {
 
@@ -123,7 +132,11 @@ public class Database {
         return configuration;
     }
 
-    public Vector<String> getGameList() throws SQLException {
+    public Vector<String> getGameList() throws SQLException, IllegalAccessException {
+
+        if (!isLogged())
+            throw new IllegalAccessException("You must login to save games");
+
         Vector<String> gameList = new Vector<>();
         String query = "SELECT name FROM games WHERE ID_USER=" + id_player + ";";
 
@@ -137,7 +150,10 @@ public class Database {
         return gameList;
     }
 
-    public void deleteGame(String game_name) throws SQLException {
+    public void deleteGame(String game_name) throws SQLException, IllegalAccessException {
+
+        if (!isLogged())
+            throw new IllegalAccessException("You must login to save games");
 
         String query = "CALL delete_game('" + game_name + "')";
 
@@ -201,13 +217,15 @@ public class Database {
 
     public void closeConnection() throws SQLException{
         conn.close();
+        resetIdPlayer();
     }
 
     public boolean isLogged() {
         return id_player != -1;
     }
 
-    public void deleteAllGames() throws SQLException {
+    public void deleteAllGames() throws SQLException, IllegalAccessException {
+
         Vector<String> gameList = getGameList();
         for(String name : gameList)
             deleteGame(name);

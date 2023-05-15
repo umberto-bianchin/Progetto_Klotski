@@ -24,13 +24,14 @@ class SaveCommand implements ActionListener {
         if(e.getSource() != this)
             name = klotskiUI.askGameName();
 
-        if(name == null)
+        if(name == null) // when the askName windows is closed with "X"
             return;
 
         try {
-            klotskiModel.saveGame(name);
 
+            klotskiModel.saveGame(name);
             klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
+
         } catch(IllegalAccessException ex){
 
             if(klotskiUI.showAuthenticationDialog()) {
@@ -38,9 +39,11 @@ class SaveCommand implements ActionListener {
                 actionPerformed(e);
             }
         } catch(IllegalArgumentException ex) {
+
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
             e.setSource(null);
             actionPerformed(e);
+
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
         }

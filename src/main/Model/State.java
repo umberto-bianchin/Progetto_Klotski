@@ -3,6 +3,9 @@ package Model;
 import java.awt.*;
 import java.util.LinkedList;
 
+/**
+ * The State class provides the information on the current game and the method associated to play
+ */
 class State {
 
     LinkedList<Move> moves;
@@ -98,18 +101,25 @@ class State {
         }
     }
 
-
+    /**
+     * Move the selected piece to a location that contains the Point p
+     * @return Final move
+     * @throws RuntimeException when the move is illegal or no piece is selected
+     */
     public Move moveSelectedPiece(Point p) throws RuntimeException{
 
         if(selectedPiece == null)
             throw new RuntimeException("No piece selected");
 
+        // check which available position contain the point p, null if there isn't
         Rectangle possiblePosition = selectedPiece.checkAvailable(p);
         Rectangle window = new Rectangle(0, 0, 400, 500);
 
+        // throws exception when possible position is null, or it isn't contained in the game windows
         if (possiblePosition == null || !window.contains(possiblePosition))
             throw new RuntimeException();
 
+        // throws exception if the possible position intersects with another piece
         for (Piece piece : pieces) {
             if (piece != selectedPiece && piece.intersection(possiblePosition)) {
                 throw new RuntimeException();
@@ -128,24 +138,29 @@ class State {
 
     public boolean getWin(){return win;}
 
+    /**
+     * Undo the last move
+     * @return last move reversed
+     */
     public Move undo(){
 
         Move lastMoveRev = moves.getLast().reverse();
         makeMove(lastMoveRev);
 
-        moves.removeLast();
-        moves.removeLast();
+        moves.removeLast(); // remove the reversed move added
+        moves.removeLast(); // remove the moves wanted to be deleted
 
         return lastMoveRev;
 
     }
 
-    public void makeMove(Move move){
+    /**
+     * Make the specified move
+     */
+    void makeMove(Move move){
 
         setSelectedPiece(move.getInitialPosition().getLocation());
-        win = selectedPiece.move(move.getFinalPosition());
-        selectedPiece = null;
-        moves.add(move);
+        moveSelectedPiece(move.getFinalPosition().getLocation());
 
     }
 

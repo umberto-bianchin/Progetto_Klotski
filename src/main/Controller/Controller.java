@@ -15,6 +15,9 @@ public class Controller {
 
     public Controller(KlotskiUI klotskiUI, KlotskiModel klotskiModel) {
 
+        if(klotskiUI == null || klotskiModel == null)
+            throw new NullPointerException();
+
         this.klotskiUI = klotskiUI;
         this.klotskiModel = klotskiModel;
         initStart();
