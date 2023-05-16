@@ -38,6 +38,7 @@ class SavedGamesListener extends UIController {
 
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
+
         }
 
     }

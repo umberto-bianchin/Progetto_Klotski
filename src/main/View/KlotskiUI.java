@@ -24,8 +24,7 @@ public class KlotskiUI {
         FlatDarculaLaf.setup();
         frame = new JFrame("KLOTSKI's PUZZLE");
 
-        mainPane = new JLabel();
-        mainPane.setIcon(new ImageIcon("./src/images/loading.png"));
+        mainPane = new JLabel(new ImageIcon("./src/images/loading.png"));
         start = new Start();
         authentication = new Authentication(frame);
 
@@ -103,7 +102,6 @@ public class KlotskiUI {
     }
 
     /**
-     *
      * @param selected Block desired to get selected
      */
     public void selectBlock(Component selected) {
@@ -157,7 +155,6 @@ public class KlotskiUI {
     }
 
     /**
-     *
      * @return true if the user choose to Authenticate or false if not
      */
     public boolean showAuthenticationDialog(){
@@ -183,7 +180,6 @@ public class KlotskiUI {
 
     public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
         board.addMouseListener(whiteBoard);
-//        board.addLis(whiteBoard);
         board.addBlockListener(block);
     }
 

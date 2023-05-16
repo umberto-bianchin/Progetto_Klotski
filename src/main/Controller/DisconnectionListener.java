@@ -5,7 +5,6 @@ import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 /**
  * The class is a UI controller that handles the logout of a user
@@ -36,9 +35,6 @@ class DisconnectionListener extends UIController{
             }
 
         }
-
-
-
     }
 
 }

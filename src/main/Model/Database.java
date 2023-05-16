@@ -91,7 +91,7 @@ public class Database {
     /**
      * Retrieves the ID of the game configuration with the given name
      *
-     * @return the ID of the game configuration (0-4)
+     * @return the ID of the game configuration (0-3)
      * @throws SQLException           if a database access error occurs or the game isn't found
      * @throws IllegalAccessException if the user is not logged in
      */
