@@ -24,7 +24,8 @@ public class KlotskiUI {
         FlatDarculaLaf.setup();
         frame = new JFrame("KLOTSKI's PUZZLE");
 
-        mainPane = new JLabel(new ImageIcon("./src/images/loading.png"));
+        mainPane = new JLabel();
+        mainPane.setIcon(new ImageIcon("./src/images/loading.png"));
         start = new Start();
         authentication = new Authentication(frame);
 
