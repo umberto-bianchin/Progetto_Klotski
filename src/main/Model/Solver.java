@@ -20,7 +20,7 @@ public class Solver {
     private static final JSONParser parser = new JSONParser();
 
     //The hash value representing the current configuration of the puzzle
-    private long hashCurrentConf = 0;
+    long hashCurrentConf = 0;
 
     // The JSONArray object storing the list of moves received from the API
     private JSONArray moves;
