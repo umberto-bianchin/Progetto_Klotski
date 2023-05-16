@@ -61,6 +61,10 @@ class DatabaseTest {
         //Try to save a game with the same name
         assertFalse(db.saveGame(moves, initialConf, finalConfig, "Database Test", false));
 
+        //Try to save a resumed game
+        moves.add(new Move(new Rectangle(100,100,100,100), new Rectangle(200,100,100,100)));
+        assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test", true));
+
         //Clean up saved games
         db.deleteAllGames();
     }
@@ -165,8 +169,6 @@ class DatabaseTest {
             //Test that the method return an array of 10 null Rectangle if the configuration is wrong
             assertNull(db.getInitialPositions(4)[i]);
         }
-
-
     }
 
     /**
@@ -281,7 +283,7 @@ class DatabaseTest {
 
     /**
      * Test case for the login() method.
-     * It verifies the behavior of loggin in a user in the database.
+     * It verifies the behavior of logging in a user in the database.
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
@@ -304,13 +306,13 @@ class DatabaseTest {
      */
     @Test
     void testRegistration() throws SQLException, IllegalAccessException {
-        //Try to register with a username already created
+        //Try to register with a username already registered
         assertFalse(db.registration("JTest", "JTest"));
 
         //Registration with correct credentials
         assertTrue(db.registration("JTest2", "JTest2"));
 
-        //Log in to deleting user
+        //Log in to delete user
         db.login("User", "User");
         db.deleteUser();
 

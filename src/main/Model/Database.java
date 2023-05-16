@@ -106,7 +106,6 @@ public class Database {
         }
 
         return moves;
-
     }
 
     /**
@@ -311,7 +310,7 @@ public class Database {
     }
 
     /**
-     * Deletes the logged user from the database and logged out
+     * Deletes the logged user from the database and logs out
      */
     public void deleteUser() throws SQLException, IllegalAccessException {
         if (!isLogged())
