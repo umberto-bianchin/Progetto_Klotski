@@ -11,8 +11,11 @@ import java.awt.event.MouseEvent;
  */
 class SavedGamesListener extends UIController {
 
-    SavedGamesListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+    final SaveCommand save;
+
+    SavedGamesListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, SaveCommand save) {
         super(klotskiModel, klotskiUI);
+        this.save = save;
     }
 
     public void mousePressed(MouseEvent e) {
@@ -25,6 +28,7 @@ class SavedGamesListener extends UIController {
 
                 klotskiModel.resumeState(name.substring(4)); //name is in the form game14
                 klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
+                save.setName(name.substring(4));
 
             } else if (name.startsWith("delete")) {
 

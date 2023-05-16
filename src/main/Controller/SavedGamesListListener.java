@@ -11,14 +11,17 @@ import java.awt.event.MouseEvent;
  */
 class SavedGamesListListener extends UIController {
 
-    SavedGamesListListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+    final SaveCommand save;
+
+    SavedGamesListListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI, SaveCommand save) {
         super(klotskiModel, klotskiUI);
+        this.save = save;
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         try {
-            klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), new SavedGamesListener(klotskiModel, klotskiUI));
+            klotskiUI.showSavedGames(klotskiModel.getSavedGameList(), new SavedGamesListener(klotskiModel, klotskiUI, save));
         } catch (Exception ex) {
             klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
         }

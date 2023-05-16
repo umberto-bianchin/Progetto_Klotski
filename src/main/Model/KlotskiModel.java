@@ -49,10 +49,13 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      */
     public void initDatabase() throws SQLException {
+
         if(db != null)
             db.closeConnection();
 
         db = new Database();
+
+
     }
 
     /**
@@ -132,16 +135,14 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalArgumentException when tha name is invalid (blank or already used)
      */
-    public int saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
+    public void saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
+
         if (name.isBlank())
             throw new IllegalArgumentException("You can't save match with blank names");
 
-        int tmp = db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name);
-
-        if (tmp ==-1)
+        if (!db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name))
             throw new IllegalArgumentException("You can't save more than one match with the same name");
 
-        return tmp;
     }
 
     /**
@@ -176,10 +177,12 @@ public class KlotskiModel {
         db.deleteAllGames();
     }
 
-    // TODO: 15/05/23 comment
+
+
     public void delUser() throws SQLException, IllegalAccessException {
         db.deleteUser();
     }
+
 
     /**
      * @throws IOException if an error occurred with the POST request
@@ -200,10 +203,6 @@ public class KlotskiModel {
             db.closeConnection();
         } catch (SQLException | NullPointerException ignored) {}
         // catch NullPointerException if the initial connection was unsuccessful (db == null)
-    }
-
-    public String getName(){
-        return db.getName();
     }
 
 }

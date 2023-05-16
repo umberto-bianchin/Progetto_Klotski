@@ -50,10 +50,12 @@ public class Controller {
             }
         };
 
+        SaveCommand saveCommand = new SaveCommand(klotskiModel, klotskiUI);
+
         klotskiUI.addStartListener(exit, new ConfigurationListener(klotskiModel, klotskiUI));
-        klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new DisconnectionListener(klotskiModel, klotskiUI), new SavedGamesListListener(klotskiModel, klotskiUI));
+        klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new DisconnectionListener(klotskiModel, klotskiUI), new SavedGamesListListener(klotskiModel, klotskiUI, saveCommand));
         klotskiUI.addGameBoardListeners(new BoardListener(klotskiModel, klotskiUI), new BlockListener(klotskiModel, klotskiUI));
-        klotskiUI.addButtonsListeners(new RestartCommand(klotskiModel, klotskiUI), new SaveCommand(klotskiModel, klotskiUI), new NextCommand(klotskiModel, klotskiUI), new UndoCommand(klotskiModel, klotskiUI), new HomeCommand(klotskiModel, klotskiUI));
+        klotskiUI.addButtonsListeners(new RestartCommand(klotskiModel, klotskiUI), saveCommand, new NextCommand(klotskiModel, klotskiUI), new UndoCommand(klotskiModel, klotskiUI), new HomeCommand(klotskiModel, klotskiUI, saveCommand));
 
     }
 

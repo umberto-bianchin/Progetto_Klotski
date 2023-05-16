@@ -5,11 +5,13 @@ import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
+/**
+ * The class is a UI controller that handles the process of saving games
+ */
 class SaveCommand extends UIController {
 
-    String name = "";
+    String name = null;
 
     SaveCommand(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
         super(klotskiModel, klotskiUI);
@@ -17,40 +19,36 @@ class SaveCommand extends UIController {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        name = klotskiModel.getName();
-        if(e.getSource() != this && name==null) {
+
+        if(name == null && e.getSource() != this) //not ask always the new game name, because it could already know (explained later in the code)
             name = klotskiUI.askGameName();
-        }
-        if(name == null) { // when the askName windows is closed with "X"
+
+        if(name == null) // when the askName windows is closed with "X"
             return;
-        }
-        try{
-            int tmp = klotskiModel.saveGame(name);
-            if(tmp==0){
-                klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
-            } else if (tmp==1) {
-                try {
-                    klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
 
-                } catch(IllegalArgumentException ex) {
+        try {
+            klotskiModel.saveGame(name);
+            klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
 
-                    klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
-                    e.setSource(null);
-                    mousePressed(e);
+        } catch(IllegalAccessException ex){ // when the player isn't authenticated
 
-                } catch (Exception ex) {
-                    klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }catch(IllegalAccessException ex){
-            if(klotskiUI.showAuthenticationDialog()) {
-                e.setSource(this);
+            if(klotskiUI.showAuthenticationDialog()) { //ask if the player want to authenticate if true:
+                e.setSource(this); //so the name isn't asked again, but used the one already typed
                 mousePressed(e);
             }
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
+        } catch(IllegalArgumentException ex) {  //blank names or more than one
 
+            klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
+            e.setSource(null); // null otherwise it could skip the askGame
+            mousePressed(e); // re-ask how to save the game
+
+        } catch (Exception ex) {
+            klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
 }
