@@ -56,9 +56,10 @@ class DatabaseTest {
         //Log in and save operations
         db.login("JTest", "JTest");
 
-        assertEquals(1,db.saveGame(moves, initialConf, finalConfig, "Database Test"));
+        assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test"));
+
         //Try to save a game with the same name
-        assertEquals(-1,db.saveGame(moves, initialConf, finalConfig, "Database Test"));
+        assertFalse(db.saveGame(moves, initialConf, finalConfig, "Database Test"));
 
         //Clean up saved games
         db.deleteAllGames();
@@ -267,6 +268,7 @@ class DatabaseTest {
         Vector<String> savedGames2 = db.getGameList();
 
         assertEquals("Database Test1", savedGames.get(0));
+
         //Accessing an invalid index to show there are only one saved game
         assertThrows(IndexOutOfBoundsException.class, () -> savedGames2.get(1));
 

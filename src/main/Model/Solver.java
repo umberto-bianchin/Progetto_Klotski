@@ -18,8 +18,12 @@ import java.util.Arrays;
 public class Solver {
 
     private static final JSONParser parser = new JSONParser();
-    private long hashCurrentConf = 0; //The hash value representing the current configuration of the puzzle
-    private JSONArray moves; // The JSONArray object storing the list of moves received from the API
+
+    //The hash value representing the current configuration of the puzzle
+    private long hashCurrentConf = 0;
+
+    // The JSONArray object storing the list of moves received from the API
+    private JSONArray moves;
     private int index_moves = 0;
 
     private static final int BOARD_SIZE_WIDTH = 5;
@@ -88,7 +92,9 @@ public class Solver {
 
         if (Arrays.hashCode(config) != hashCurrentConf) {
             String response = sendPostRequest(jsonString(config));
-            moves = (JSONArray) parser.parse(response); // parse the responded array of moves to get to the end
+
+            // parse the responded array of moves to get to the end
+            moves = (JSONArray) parser.parse(response);
             index_moves = 0;
         }
 
