@@ -31,6 +31,7 @@ class SaveCommand extends UIController {
         try {
             klotskiModel.saveGame(name, resumed);
             klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
+            resumed = true;
 
         } catch (IllegalAccessException ex) { // when the player isn't authenticated
 
