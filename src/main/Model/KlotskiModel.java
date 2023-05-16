@@ -135,12 +135,12 @@ public class KlotskiModel {
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalArgumentException when tha name is invalid (blank or already used)
      */
-    public void saveGame(String name) throws IllegalArgumentException, IllegalAccessException, SQLException {
+    public void saveGame(String name, boolean resumed) throws IllegalArgumentException, IllegalAccessException, SQLException {
 
         if (name.isBlank())
             throw new IllegalArgumentException("You can't save match with blank names");
 
-        if (!db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name))
+        if (!db.saveGame(state.getMoves(), state.getIdConfiguration(), state.getCurrentPositions(), name, resumed))
             throw new IllegalArgumentException("You can't save more than one match with the same name");
 
     }

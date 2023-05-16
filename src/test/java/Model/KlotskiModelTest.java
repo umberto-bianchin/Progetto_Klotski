@@ -70,7 +70,7 @@ class KlotskiModelTest {
 
         //Log in and save data
         klotskiModel.db.login("JTest", "JTest");
-        klotskiModel.db.saveGame(moves, initialConf, finalPos, "Model Test");
+        klotskiModel.db.saveGame(moves, initialConf, finalPos, "Model Test", false);
 
         klotskiModel.resumeState("Model Test");
 
@@ -121,10 +121,10 @@ class KlotskiModelTest {
         //Log in and init state
         klotskiModel.db.login("JTest", "JTest");
         klotskiModel.initState(initialConf);
-        klotskiModel.db.saveGame(moves, initialConf, finalPos, "Model Test");
+        klotskiModel.db.saveGame(moves, initialConf, finalPos, "Model Test", false);
 
-        assertThrows(IllegalArgumentException.class, () -> klotskiModel.saveGame(""));
-        assertThrows(IllegalArgumentException.class, () -> klotskiModel.saveGame("Model Test"));
+        assertThrows(IllegalArgumentException.class, () -> klotskiModel.saveGame("", false));
+        assertThrows(IllegalArgumentException.class, () -> klotskiModel.saveGame("Model Test", false));
 
         klotskiModel.db.deleteAllGames();
     }

@@ -32,14 +32,13 @@ public class Database {
      * @throws SQLException if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in
      */
-    public boolean saveGame(LinkedList<Move> moves, int game_id, Rectangle[] final_positions, String game_name) throws SQLException, IllegalAccessException {
+    public boolean saveGame(LinkedList<Move> moves, int game_id, Rectangle[] final_positions, String game_name, boolean resumed) throws SQLException, IllegalAccessException {
 
         if (!isLogged())
             throw new IllegalAccessException("You must login to save games");
 
-        if(getGameList().contains(game_name))
+        if(resumed)
             deleteGame(game_name);
-
 
         String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
 

@@ -51,15 +51,15 @@ class DatabaseTest {
         Rectangle[] finalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
 
         //Test unauthorized save attempt
-        assertThrows(IllegalAccessException.class, () -> db.saveGame(moves, initialConf, finalConfig, "Save Test"));
+        assertThrows(IllegalAccessException.class, () -> db.saveGame(moves, initialConf, finalConfig, "Save Test", false));
 
         //Log in and save operations
         db.login("JTest", "JTest");
 
-        assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test"));
+        assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test", false));
 
         //Try to save a game with the same name
-        assertFalse(db.saveGame(moves, initialConf, finalConfig, "Database Test"));
+        assertFalse(db.saveGame(moves, initialConf, finalConfig, "Database Test", false));
 
         //Clean up saved games
         db.deleteAllGames();
@@ -85,7 +85,7 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test", false);
 
         //Prepare expected results
         Rectangle rectangle1 = new Rectangle(0,0,100,100);
@@ -131,7 +131,7 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test", false);
 
         //Test get configuration from a game that does not exist
         assertThrows(SQLException.class, () -> db.getIdConfiguration("Wrong name"));
@@ -188,7 +188,7 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, expectedFinalConfig, "Database Test");
+        db.saveGame(moves, initialConf, expectedFinalConfig, "Database Test", false);
 
         Rectangle[] finalConfig = db.getFinalPositions("Database Test");
 
@@ -225,9 +225,9 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test3");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1", false);
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
+        db.saveGame(moves, initialConf, finalConfig, "Database Test3", false);
 
         Vector<String> savedGames = db.getGameList();
 
@@ -258,8 +258,8 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1", false);
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
 
         Vector<String> savedGames = db.getGameList();
         assertEquals(2, savedGames.size());
@@ -337,8 +337,8 @@ class DatabaseTest {
 
         //Log in and save data
         db.login("JTest", "JTest");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test1");
-        db.saveGame(moves, initialConf, finalConfig, "Database Test2");
+        db.saveGame(moves, initialConf, finalConfig, "Database Test1", false);
+        db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
 
         db.deleteAllGames();
         assertEquals(0, db.getGameList().size());
