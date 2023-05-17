@@ -2,29 +2,38 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 
+/**
+ * The Block class represents a custom JLabel used to display and interact with klotski pieces
+ */
+public class Block extends JLabel {
 
-class Block extends JLabel{
-
-    public void setBlockAppearance(Rectangle position){
+    /**
+     * Sets the appearance of the block at the specified position
+     * @param position The Rectangle  representing the position and size of the block
+     */
+    public void setBlockAppearance(Rectangle position) {
         setImage(position);
         setBounds(position);
     }
 
-    private void setImage(Rectangle initial_position) {
-        setIcon(new ImageIcon("./src/images/" + initial_position.width + "x" + initial_position.height + ".png"));
+    private void setImage(Rectangle position) {
+        setIcon(new ImageIcon(getImagePath(position)));
     }
 
-    public void setBorder(boolean on){
-        if (on)
+    private static String getImagePath(Rectangle position) {
+        return "./src/images/" + position.width + "x" + position.height + ".png";
+    }
+
+    /**
+     * Sets the border of the block based on the specified condition
+     * @param enableBorder A boolean value indicating whether the border should be enabled or disabled
+     */
+    public void setBorderEnable(boolean enableBorder) {
+        if (enableBorder)
             setBorder(BorderFactory.createLineBorder(Color.BLUE));
         else
             setBorder(null);
-    }
-
-    public void addListener(MouseAdapter listener){
-        this.addMouseListener(listener);
     }
 
 }

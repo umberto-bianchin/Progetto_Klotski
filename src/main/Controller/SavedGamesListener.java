@@ -28,7 +28,7 @@ class SavedGamesListener extends UIController {
 
                 klotskiModel.resumeState(name.substring(4)); //name is in the form game14
                 klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
-                save.setName(name.substring(4));
+                save.setName(name.substring(4)); // update the name in the save listener
 
             } else if (name.startsWith("delete")) {
 

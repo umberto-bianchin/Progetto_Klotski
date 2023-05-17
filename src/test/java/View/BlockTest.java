@@ -40,9 +40,9 @@ class BlockTest {
      */
     @Test
     void testSetBorder() {
-        block.setBorder(true);
+        block.setBorderEnable(true);
         assertNotNull(block.getBorder());
-        block.setBorder(false);
+        block.setBorderEnable(false);
         assertNull(block.getBorder());
     }
 }

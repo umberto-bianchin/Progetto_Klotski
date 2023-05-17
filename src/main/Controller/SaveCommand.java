@@ -22,7 +22,8 @@ class SaveCommand extends UIController {
     @Override
     public void mousePressed(MouseEvent e) {
 
-        if (name == null && e.getSource() != this) //not ask always the new game name, because it could already know (explained later in the code)
+        //not ask always the new game name, because it could already know (if game resumed or the name was already typed but a minor exception occurred)
+        if (name == null )
             name = klotskiUI.askGameName();
 
         if (name == null) // when the askName windows is closed with "X"
@@ -31,18 +32,17 @@ class SaveCommand extends UIController {
         try {
             klotskiModel.saveGame(name, resumed);
             klotskiUI.showMessage("Successfully saved the game", "Save", JOptionPane.INFORMATION_MESSAGE);
+            //meanwhile the user is playing inside this game every saving will use the same name already typed
             resumed = true;
 
         } catch (IllegalAccessException ex) { // when the player isn't authenticated
 
             if (klotskiUI.showAuthenticationDialog()) { //ask if the player want to authenticate if true:
-                e.setSource(this); //so the name isn't asked again, but used the one already typed
-                mousePressed(e);
+                mousePressed(e); // the name will not be re-ask because name != null
             }
         } catch (IllegalArgumentException ex) {  //blank names or more than one
 
             klotskiUI.showMessage(ex.getMessage(), "Save", JOptionPane.ERROR_MESSAGE);
-            e.setSource(null); // null otherwise it could skip the askGame
             setName(null); //re-ask the game name
             mousePressed(e); // re-ask how to save the game
 
@@ -51,6 +51,9 @@ class SaveCommand extends UIController {
         }
     }
 
+    /**
+     * @param name current name of the game, null if the user isn't playing (home screen)
+     */
     public void setName(String name) {
         this.name = name;
         resumed = name != null;

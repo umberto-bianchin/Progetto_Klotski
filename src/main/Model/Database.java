@@ -28,6 +28,7 @@ public class Database {
      * @param game_id The initial configuration of the game (0-3)
      * @param final_positions The final configuration of the game
      * @param game_name The name of the game
+     * @param resumed if the game has been already saved
      * @return true if the game is successfully saved, false otherwise
      * @throws SQLException if a database access error occurs
      * @throws IllegalAccessException if the user is not logged in

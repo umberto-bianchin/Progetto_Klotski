@@ -5,6 +5,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 
+/**
+ * The Authentication class represents a custom JPanel used for handling authentication
+ * and user interface components related to authentication (log_out/delete user and showing saved games)
+ */
 class Authentication extends JPanel{
 
     private final JButton sign_up = new JButton(new ImageIcon("./src/images/signup.png"));
@@ -14,6 +18,9 @@ class Authentication extends JPanel{
     private final JButton saved_games = new JButton(new ImageIcon("./src/images/savedGames.png"));
     private static MouseAdapter authListener;
 
+    /**
+     * @param frame The JFrame parents of the Authentication JPanel
+     */
     public Authentication(JFrame frame){
         setOpaque(false);
         setBounds(0,530,550,70);
@@ -33,23 +40,32 @@ class Authentication extends JPanel{
 
     }
 
+    /**
+     * Shows the authentication dialog with the specified JFrame as a parent and authentication type
+     * @param frame The JFrame to associate the authentication dialog with
+     * @param type The authentication type: "Sign up" or "Log in"
+     */
     public void showAuthenticationDialog(JFrame frame, String type){
-
         AuthenticationDialog auth = new AuthenticationDialog(frame, type, authListener);
         auth.setVisible(true);
-
     }
 
-
+    /**
+     * Initializes the authentication UI by adding sign-up and log-in buttons
+     */
     public void initAuthentication(){
         removeAll();
-
         add(sign_up);
         add(log_in);
         repaint();
         revalidate();
     }
 
+    /**
+     * Initializes the user interface after successful authentication by adding the user's name
+     * log-out button, delete user button, and saved games button
+     * @param user The name of the authenticated user
+     */
     public void initUser(String user){
         removeAll();
 
@@ -59,7 +75,6 @@ class Authentication extends JPanel{
 
         log_out.setContentAreaFilled(false);
         log_out.setName("logOut");
-
 
         del_user.setContentAreaFilled(false);
         del_user.setName("delUser");
@@ -74,12 +89,16 @@ class Authentication extends JPanel{
         revalidate();
     }
 
+    /**
+     * Adds the authentication listeners to the associated components of the Authentication JPanel
+     * @param authListener The authentication listener to handle authentication events (log_in/sign_up)
+     * @param logOutListener The log-out listener to handle log-out events
+     * @param savedListener The listener to handle events related to saved games
+     */
     public void addAuthenticationListeners(MouseAdapter authListener, MouseAdapter logOutListener, MouseAdapter savedListener) {
         Authentication.authListener = authListener;
         log_out.addMouseListener(logOutListener);
         del_user.addMouseListener(logOutListener);
         saved_games.addMouseListener(savedListener);
     }
-
 }
-

@@ -55,7 +55,6 @@ public class KlotskiModel {
 
         db = new Database();
 
-
     }
 
     /**

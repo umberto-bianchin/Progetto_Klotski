@@ -49,7 +49,6 @@ public class Controller {
                 klotskiModel.closeDatabaseConnection();
             }
         };
-
         SaveCommand saveCommand = new SaveCommand(klotskiModel, klotskiUI);
 
         klotskiUI.addStartListener(exit, new ConfigurationListener(klotskiModel, klotskiUI));

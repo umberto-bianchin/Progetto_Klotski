@@ -64,11 +64,11 @@ class Board extends JPanel {
      */
     public void highlightSelected(Block selected) {
         if (selectedBlock != null)
-            selectedBlock.setBorder(false);
+            selectedBlock.setBorderEnable(false);
 
         selectedBlock = selected;
         if (selectedBlock != null)
-            selectedBlock.setBorder(true);
+            selectedBlock.setBorderEnable(true);
     }
 
     /**
@@ -102,7 +102,7 @@ class Board extends JPanel {
      */
     public void addBlockListener(MouseAdapter listener) {
         for (Block block : blocks) {
-            block.addListener(listener);
+            block.addMouseListener(listener);
         }
     }
 }

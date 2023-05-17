@@ -19,7 +19,9 @@ class HomeCommand extends UIController{
     @Override
     public void mousePressed(MouseEvent e) {
         klotskiUI.initStart();
+        //update the current name inside the save listener
         save.setName(null);
+
     }
 
 }
