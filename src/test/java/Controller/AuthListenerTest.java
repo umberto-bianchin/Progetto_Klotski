@@ -5,7 +5,6 @@ import View.KlotskiUI;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
