@@ -118,7 +118,7 @@ public class KlotskiModel {
     public void registration(String username, String password) throws IllegalArgumentException, RuntimeException, SQLException {
 
         if (username == null || password == null || username.isEmpty() || password.isEmpty())
-            throw new IllegalArgumentException("Can't register players with black username or password");
+            throw new IllegalArgumentException("Can't register players with blank username or password");
 
         if (!db.registration(username, password))
             throw new RuntimeException("Can't register another player with the same username");
