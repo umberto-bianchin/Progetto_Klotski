@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
@@ -20,7 +19,6 @@ class AuthListenerTest {
     void testMousePressedAuth() throws AWTException, SQLException {
         //Prepare data test
         KlotskiModel model = new KlotskiModel();
-        Robot robot = new Robot();
         model.initDatabase();
         final String[] errorMessage = new String[1];
 
