@@ -16,7 +16,7 @@ class AuthListenerTest {
 
 
     @Test
-    void testMousePressedAuth() throws AWTException, SQLException {
+    void testMousePressedAuth() throws SQLException {
         //Prepare data test
         KlotskiModel model = new KlotskiModel();
         model.initDatabase();
