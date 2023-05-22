@@ -54,7 +54,6 @@ public class KlotskiModel {
             db.closeConnection();
 
         db = new Database();
-
     }
 
     /**
