@@ -20,6 +20,8 @@ class RestartCommandTest {
      * Test case for the mousePressed() method of RestartCommand class.
      * It verifies the behavior of restarting a game
      * @throws SQLException if there is an error in the database operations.
+     * @throws IOException if there is an error in the solver.
+     * @throws ParseException if there is an error in the solver.
      */
     @Test
     void testMousePressedRestart() throws SQLException, IOException, ParseException {
@@ -47,8 +49,11 @@ class RestartCommandTest {
         JButton button = new JButton();
         MouseEvent event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
 
+        //Assert the counter is zero
         restart.mousePressed(event);
         assertEquals(0, model.getCounter());
+
+        //Assert the current configuration is equal to the initial configuration
         for(int i=0; i<10; i++){
             assertEquals(model.getCurrentPositions()[i].getX(), positions[i].getX());
             assertEquals(model.getCurrentPositions()[i].getY(), positions[i].getY());
