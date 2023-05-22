@@ -12,8 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AuthListenerTest {
 
-
-
+    /**
+     * Test case for the mousePressed() method of AuthListener class.
+     * It verifies the behavior of pressing an authentication button.
+     * @throws SQLException if there is an error in the database operations.
+     */
     @Test
     void testMousePressedAuth() throws SQLException {
         //Prepare data test

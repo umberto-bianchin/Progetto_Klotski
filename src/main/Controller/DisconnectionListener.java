@@ -28,10 +28,11 @@ class DisconnectionListener extends UIController{
         } else if (name.equals("delUser")){
 
             try {
-                klotskiModel.delUser(); //delete user and logout
+                //delete user and logout
+                klotskiModel.delUser();
                 klotskiUI.logout();
             } catch (Exception ex) {
-                klotskiUI.showMessage(ex.getMessage(), "Saved Games", JOptionPane.ERROR_MESSAGE);
+                klotskiUI.showMessage(ex.getMessage(), "Authentication", JOptionPane.ERROR_MESSAGE);
             }
 
         }

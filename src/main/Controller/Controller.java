@@ -13,7 +13,7 @@ public class Controller {
 
 
     /**
-     * Initialize the object and check the argument if null. Display the game UI
+     * Initialize the object and check if the argument are null. Display the game UI
      */
     public Controller(KlotskiUI klotskiUI, KlotskiModel klotskiModel) {
 
