@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AuthListenerTest {
+    String errorMessage;
 
     /**
      * Test case for the mousePressed() method of AuthListener class.
@@ -22,13 +23,12 @@ class AuthListenerTest {
         //Prepare data test
         KlotskiModel model = new KlotskiModel();
         model.initDatabase();
-        final String[] errorMessage = new String[1];
 
         // showMessage method override in KlotskiUI class to set the state variable
         KlotskiUI view = new KlotskiUI() {
             @Override
             public void showMessage(String message, String title, int messageType) {
-                errorMessage[0] = message;
+                errorMessage = message;
             }
         };
         AuthListener auth = new AuthListener(model, view);
@@ -42,17 +42,17 @@ class AuthListenerTest {
 
         auth.mousePressed(event);
         // Verify that the state variable contains the correct error message
-        assertEquals("Invalid username or password", errorMessage[0]);
+        assertEquals("Invalid username or password", errorMessage);
 
         //Try to sign up with invalid credentials and with a username already used
         button.putClientProperty("username", "");
         button.setText("Sign up");
         auth.mousePressed(event);
-        assertEquals("Can't register players with blank username or password", errorMessage[0]);
+        assertEquals("Can't register players with blank username or password", errorMessage);
 
         button.putClientProperty("username", "JTest");
         auth.mousePressed(event);
-        assertEquals("Can't register another player with the same username", errorMessage[0]);
+        assertEquals("Can't register another player with the same username", errorMessage);
 
         //Log in with correct credentials
         button.putClientProperty("username", "JTest");
