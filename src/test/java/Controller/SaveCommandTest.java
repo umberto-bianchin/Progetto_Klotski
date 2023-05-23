@@ -12,6 +12,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for SaveCommand.
+ */
 public class SaveCommandTest {
 
     private static KlotskiModel model;
@@ -23,16 +26,16 @@ public class SaveCommandTest {
 
     /**
      * Set up method executed before all test.
-     * Initializes the variable needed for the test.
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
      * @throws SQLException if there is an error in establishing the database connection.
      */
     @BeforeAll
     public static void setUp() throws SQLException {
-        //Prepare data test
+        //Prepare data for the test
         model = new KlotskiModel();
         model.initDatabase();
 
-        // askGameName, showMessage and showAuthenticationDialog methods override in KlotskiUI class to set the state variables
+        // Override askGameName, showMessage, and showAuthenticationDialog methods in KlotskiUI class to capture error messages
         view = new KlotskiUI() {
             @Override
             public String askGameName() {
@@ -63,8 +66,8 @@ public class SaveCommandTest {
     }
 
     /**
-     * Tear down method executed after each test
-     * Close the database connection
+     * Tear down method executed after all tests
+     * Closes the database connection
      */
     @AfterAll
     public static void tearDown(){
@@ -72,14 +75,14 @@ public class SaveCommandTest {
     }
 
     /**
-     * Test case for the mousePressed() method of DisconnectionListener class.
-     * It verifies the behavior of pressing a button with disconnection Listener.
+     * Test case for the mousePressed() method of SaveCommand class.
+     * It verifies the behavior of saving a game.
      * @throws SQLException if there is an error in the database operations.
      * @throws IllegalAccessException if the player is not logged in to the system
      */
     @Test
     public void testMousePressedSaveCommand() throws SQLException, IllegalAccessException {
-        //Saving correctly the game
+        //Saving the game correctly
         SaveCommand save = new SaveCommand(model, view);
         JButton button = new JButton();
         MouseEvent event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
@@ -88,7 +91,7 @@ public class SaveCommandTest {
         assertEquals("Successfully saved the game", correctlySaved);
         model.deleteAll();
 
-        //Try to save without being authenticated
+        //Trying to save without being authenticated
         model.logout();
         view.logout();
         model.initState(0);

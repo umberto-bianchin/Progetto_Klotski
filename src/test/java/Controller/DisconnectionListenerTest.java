@@ -2,8 +2,8 @@ package Controller;
 
 import Model.KlotskiModel;
 import View.KlotskiUI;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -12,24 +12,27 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for DisconnectionListener.
+ */
 public class DisconnectionListenerTest {
-    private static KlotskiModel model;
-    private static KlotskiUI view;
-    private static DisconnectionListener disconnection;
-    private static JButton button;
-    private static String[] errorMessage;
+    private KlotskiModel model;
+    private KlotskiUI view;
+    private DisconnectionListener disconnection;
+    private JButton button;
+    private String[] errorMessage;
 
     /**
-     * Set up method executed before all test.
-     * Initializes the variable needed for the test.
+     * Set up method executed before each test.
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
      * @throws SQLException if there is an error in establishing the database connection.
      */
-    @BeforeAll
-    public static void setUp() throws SQLException {
+    @BeforeEach
+    public void setUp() throws SQLException {
         model = new KlotskiModel();
         errorMessage = new String[1];
 
-        // showMessage method override in KlotskiUI class to set the state variable
+        // showMessage method override in KlotskiUI class to capture error messages
         view = new KlotskiUI() {
             @Override
             public void showMessage(String message, String title, int messageType) {
@@ -47,16 +50,16 @@ public class DisconnectionListenerTest {
 
     /**
      * Tear down method executed after each test
-     * Close the database connection
+     * Closes the database connection
      */
-    @AfterAll
-    public static void tearDown(){
+    @AfterEach
+    public void tearDown(){
         model.closeDatabaseConnection();
     }
 
     /**
      * Test case for the mousePressed() method of DisconnectionListener class.
-     * It verifies the behavior of pressing a button with disconnection Listener.
+     * It verifies the behavior of pressing a button with DisconnectionListener.
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
@@ -67,7 +70,7 @@ public class DisconnectionListenerTest {
 
         disconnection.mousePressed(event);
 
-        //Try to get the list of saved games without being authenticated
+        // Verify that attempting to get the list of saved games without being authenticated throws an IllegalAccessException
         assertThrows(IllegalAccessException.class, model::getSavedGameList);
 
         button.setName("delUser");
@@ -75,10 +78,10 @@ public class DisconnectionListenerTest {
         view.initUser("JTest2");
         disconnection.mousePressed(event);
 
-        //Try to log in with credentials just deleted
+        // Verify that attempting to log in with just deleted credentials throws a RuntimeException
         assertThrows(RuntimeException.class, () -> model.login("JTest2", "JTest2"));
 
-        //Try to delete a user without being authenticated
+        // Verify that attempting to delete a user without being authenticated sets the correct error message
         disconnection.mousePressed(event);
         assertEquals("You must login", errorMessage[0]);
     }

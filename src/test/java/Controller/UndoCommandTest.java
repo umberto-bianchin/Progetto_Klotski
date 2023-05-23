@@ -16,6 +16,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for UndoCommand.
+ */
 public class UndoCommandTest {
     private static KlotskiModel model;
     private static KlotskiUI view;
@@ -28,7 +31,7 @@ public class UndoCommandTest {
 
     /**
      * Set up method executed before all test.
-     * Initializes the variable needed for the test.
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
      * @throws SQLException if there is an error in establishing the database connection.
      */
     @BeforeAll
@@ -45,8 +48,8 @@ public class UndoCommandTest {
     }
 
     /**
-     * Tear down method executed after each test
-     * Close the database connection
+     * Tear down method executed after all tests.
+     * Closes the database connection.
      */
     @AfterAll
     public static void tearDown(){
@@ -54,8 +57,8 @@ public class UndoCommandTest {
     }
 
     /**
-     * Test case for the mousePressed() method of RestartCommand class.
-     * It verifies the behavior of restarting a game
+     * Test case for the mousePressed() method of UndoCommand class.
+     * It verifies the behavior of undoing a move
      * @throws IOException if there is an error in the solver.
      * @throws ParseException if there is an error in the solver.
      */
@@ -70,11 +73,11 @@ public class UndoCommandTest {
         JButton button = new JButton();
         MouseEvent event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
 
-        //Assert the counter is decreased by one
+        //Assert that the counter is decreased by one
         undo.mousePressed(event);
         assertEquals(1, model.getCounter());
 
-        //Assert the counter is decreased by one
+        //Assert that the counter is decreased by one
         undo.mousePressed(event);
         assertEquals(0, model.getCounter());
 

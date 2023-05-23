@@ -14,6 +14,9 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for RestartCommand.
+ */
 public class RestartCommandTest {
 
     private static KlotskiModel model;
@@ -26,8 +29,8 @@ public class RestartCommandTest {
             new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
     /**
-     * Set up method executed before all test.
-     * Initializes the variable needed for the test.
+     * Set up method executed before all tests.
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
      * @throws SQLException if there is an error in establishing the database connection.
      */
     @BeforeAll
@@ -44,8 +47,8 @@ public class RestartCommandTest {
     }
 
     /**
-     * Tear down method executed after each test
-     * Close the database connection
+     * Tear down method executed after all tests
+     * Closes the database connection
      */
     @AfterAll
     public static void tearDown(){
@@ -69,7 +72,7 @@ public class RestartCommandTest {
         JButton button = new JButton();
         MouseEvent event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
 
-        //Assert the counter is zero
+        //Assert the counter is zero after restarting a game
         restart.mousePressed(event);
         assertEquals(0, model.getCounter());
 
@@ -80,6 +83,5 @@ public class RestartCommandTest {
             assertEquals(model.getCurrentPositions()[i].getWidth(), positions[i].getWidth());
             assertEquals(model.getCurrentPositions()[i].getHeight(), positions[i].getHeight());
         }
-
     }
 }
