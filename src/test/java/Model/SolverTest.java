@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SolverTest {
+public class SolverTest {
 
     private Solver solver;
 
@@ -18,7 +18,7 @@ class SolverTest {
      * Creates a new instance of the Solver class.
      */
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         solver = new Solver();
     }
 
@@ -28,7 +28,7 @@ class SolverTest {
      * @throws ParseException when the received JSON is invalid
      */
     @Test
-    void testNextBestMove() throws IOException, ParseException {
+    public void testNextBestMove() throws IOException, ParseException {
         // Define the test configuration
         Rectangle[] initialPos = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
                 new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
@@ -48,7 +48,7 @@ class SolverTest {
      * It verifies the behavior of setting the configuration hash of a solver.
      */
     @Test
-    void testSetConfigurationHash() {
+    public void testSetConfigurationHash() {
         long hash = 1234L;
         solver.setConfigurationHash(hash);
         assertEquals(hash, solver.hashCurrentConf);

@@ -73,13 +73,13 @@ class BoardTest {
     @Test
     void testSelectBlock() {
         //Prepare test data
-        Block block1 = new Block();
-        block1.setBounds(new Rectangle(0,0,100,100));
-        board.blocks[0] = block1;
+        Block block = new Block();
+        block.setBounds(new Rectangle(0,0,100,100));
+        board.blocks[0] = block;
 
         //Select block simulating a click on the screen
         board.selectBlock(new Point(25,40));
-        assertEquals(block1, board.selectedBlock);
+        assertEquals(block, board.selectedBlock);
 
         board.selectBlock(null);
         assertNull(board.selectedBlock);
@@ -101,7 +101,6 @@ class BoardTest {
 
         for(int i=0; i<10; i++)
             assertEquals(positions[i], board.blocks[i].getBounds());
-
     }
 
 }

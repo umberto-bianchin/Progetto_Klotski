@@ -8,20 +8,21 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class StateTest {
+public class StateTest {
 
     private State state;
-    Rectangle[] initialPos = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
+    private static final Rectangle[] initialPos = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
+            new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
             new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-            new Rectangle(100,300,100,100), new Rectangle(200,300,100,100), new Rectangle(0,400,100,100),
-            new Rectangle(300,400,100,100)};
+            new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
+            new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
     /**
      * Set up method executed before each test.
      * Creates a new instance of the State class.
      */
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         state = new State(initialPos,0);
     }
 
@@ -30,7 +31,7 @@ class StateTest {
      * It verifies the behavior of getting the current pieces positions.
      */
     @Test
-    void testGetCurrentPositions() {
+    public void testGetCurrentPositions() {
         Rectangle[] positions = state.getCurrentPositions();
 
         for(int i=0; i<10; i++)
@@ -42,7 +43,7 @@ class StateTest {
      * It verifies the behavior of setting the selected pieces.
      */
     @Test
-    void testSetSelectedPiece() {
+    public void testSetSelectedPiece() {
         state.setSelectedPiece(null);
         assertNull(state.selectedPiece);
 
@@ -57,10 +58,10 @@ class StateTest {
      * It verifies the behavior of moving the selected piece.
      */
     @Test
-    void testMoveSelectedPiece() {
+    public void testMoveSelectedPiece() {
         state.setSelectedPiece(null);
 
-        //Try to execute moveSelectedPiece with the selectedPiece == null
+        //Try to execute moveSelectedPiece with selectedPiece == null
         assertThrows(RuntimeException.class, ()->state.moveSelectedPiece(null));
 
         //Prepare test data
@@ -91,7 +92,7 @@ class StateTest {
      * It verifies the behavior of undoing a move.
      */
     @Test
-    void testUndo() {
+    public void testUndo() {
         //Prepare test data
         state.setSelectedPiece(new Point(0,400));
         state.moveSelectedPiece(new Point(100, 400));
@@ -105,7 +106,6 @@ class StateTest {
 
         assertEquals(0, state.moves.size());
         assertEquals(Arrays.hashCode(initialPos), Arrays.hashCode(positions));
-
     }
 
     /**
@@ -113,7 +113,7 @@ class StateTest {
      * It verifies the behavior of making a move.
      */
     @Test
-    void testMakeMove() {
+    public void testMakeMove() {
         //Prepare test data
         Move move= new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
         Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
@@ -127,6 +127,5 @@ class StateTest {
         assertEquals(Arrays.hashCode(expectedPositions), Arrays.hashCode(state.getCurrentPositions()));
         // Check that is added only one move
         assertEquals(1, state.getMoves().size());
-
     }
 }

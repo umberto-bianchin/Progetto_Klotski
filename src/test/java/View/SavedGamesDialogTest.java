@@ -17,9 +17,6 @@ class SavedGamesDialogTest {
         assertEquals(5, dialog.panel.getComponentCount());
         assertEquals("gameFirst game", dialog.panel.getComponent(1).getName());
         assertEquals("gameSecond game", dialog.panel.getComponent(3).getName());
-
-
-
     }
 
 

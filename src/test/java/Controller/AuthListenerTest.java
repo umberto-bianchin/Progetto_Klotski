@@ -2,6 +2,8 @@ package Controller;
 
 import Model.KlotskiModel;
 import View.KlotskiUI;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -10,18 +12,20 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AuthListenerTest {
-    String errorMessage;
+public class AuthListenerTest {
+    private static KlotskiModel model;
+    private static AuthListener auth;
+    private static JButton button;
+    private static String errorMessage;
 
     /**
-     * Test case for the mousePressed() method of AuthListener class.
-     * It verifies the behavior of pressing an authentication button.
-     * @throws SQLException if there is an error in the database operations.
+     * Set up method executed before all test.
+     * Initializes the variable needed for the test.
+     * @throws SQLException if there is an error in establishing the database connection.
      */
-    @Test
-    void testMousePressedAuth() throws SQLException {
-        //Prepare data test
-        KlotskiModel model = new KlotskiModel();
+    @BeforeAll
+    public static void setUp() throws SQLException {
+        model = new KlotskiModel();
         model.initDatabase();
 
         // showMessage method override in KlotskiUI class to set the state variable
@@ -31,9 +35,25 @@ class AuthListenerTest {
                 errorMessage = message;
             }
         };
-        AuthListener auth = new AuthListener(model, view);
-        JButton button = new JButton();
+        auth = new AuthListener(model, view);
+        button = new JButton();
+    }
 
+    /**
+     * Tear down method executed after each test
+     * Close the database connection
+     */
+    @AfterAll
+    public static void tearDown(){
+        model.closeDatabaseConnection();
+    }
+
+    /**
+     * Test case for the mousePressed() method of AuthListener class.
+     * It verifies the behavior of pressing an authentication button.
+     */
+    @Test
+    public void testMousePressedAuth() {
         //Try to log in with invalid credentials
         button.putClientProperty("username", "Wrong Username");
         button.putClientProperty("password", "JTest");

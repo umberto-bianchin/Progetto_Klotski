@@ -42,6 +42,7 @@ class BlockTest {
     void testSetBorder() {
         block.setBorderEnable(true);
         assertNotNull(block.getBorder());
+
         block.setBorderEnable(false);
         assertNull(block.getBorder());
     }

@@ -16,7 +16,7 @@ class PieceTest {
      * Creates a new instance of the Piece class with an initial position.
      */
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         piece = new Piece(new Rectangle(0,0,100,100));
     }
 
@@ -25,7 +25,7 @@ class PieceTest {
      * It verifies the behavior of moving a piece.
      */
     @Test
-    void testMove() {
+    public void testMove() {
         Rectangle newPosition = new Rectangle(100, 0, 100, 100);
         piece.move(newPosition);
 
@@ -37,7 +37,7 @@ class PieceTest {
      * It verifies the behavior of checking an available move of a piece.
      */
     @Test
-    void testCheckAvailable() {
+    public void testCheckAvailable() {
         Point available = new Point(100, 0);
         Rectangle expectedAvailableMove = new Rectangle(100, 0, 100, 100);
         assertEquals(expectedAvailableMove, piece.checkAvailable(available));

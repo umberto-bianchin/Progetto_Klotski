@@ -11,7 +11,7 @@ import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DatabaseTest {
+public class DatabaseTest {
 
     private Database db;
 
@@ -21,7 +21,7 @@ class DatabaseTest {
      * @throws SQLException if there is an error in establishing the database connection.
      */
     @BeforeEach
-    void setUp() throws SQLException {
+    public void setUp() throws SQLException {
         db = new Database();
     }
 
@@ -31,7 +31,7 @@ class DatabaseTest {
      * @throws SQLException if there is an error in closing the database connection.
      */
     @AfterEach
-    void tearDown() throws SQLException {
+    public void tearDown() throws SQLException {
         db.closeConnection();
     }
 
@@ -42,7 +42,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testSaveGame() throws SQLException, IllegalAccessException {
+    public void testSaveGame() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -76,7 +76,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetSavedMoves() throws SQLException, IllegalAccessException {
+    public void testGetSavedMoves() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -113,7 +113,6 @@ class DatabaseTest {
 
         //Clean up saved games
         db.deleteAllGames();
-
     }
 
     /**
@@ -123,7 +122,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetIdConf() throws SQLException, IllegalAccessException {
+    public void testGetIdConf() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -153,13 +152,14 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void testGetInitialPositions() throws SQLException {
+    public void testGetInitialPositions() throws SQLException {
         //Prepare test data
         int initialConf = 0;
-        Rectangle[] positions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
+        Rectangle[] positions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
+                new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
                 new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-                new Rectangle(100,300,100,100), new Rectangle(200,300,100,100), new Rectangle(0,400,100,100),
-                new Rectangle(300,400,100,100)};
+                new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
+                new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
 
         Rectangle[] initialConfig = db.getInitialPositions(initialConf);
@@ -178,7 +178,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetFinalPositions() throws SQLException, IllegalAccessException {
+    public void testGetFinalPositions() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -204,7 +204,6 @@ class DatabaseTest {
 
         //Clean up saved games
         db.deleteAllGames();
-
     }
 
     /**
@@ -214,7 +213,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testGetGameList() throws SQLException, IllegalAccessException {
+    public void testGetGameList() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -248,7 +247,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testDeleteGame() throws SQLException, IllegalAccessException {
+    public void testDeleteGame() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -287,7 +286,7 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void testLogin() throws SQLException {
+    public void testLogin() throws SQLException {
         //Try to log in with wrong password
         assertFalse(db.login("JTest", "WrongPassword"));
 
@@ -305,7 +304,7 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void testRegistration() throws SQLException, IllegalAccessException {
+    public void testRegistration() throws SQLException, IllegalAccessException {
         //Try to register with a username already registered
         assertFalse(db.registration("JTest", "JTest"));
 
@@ -325,7 +324,7 @@ class DatabaseTest {
      * @throws IllegalAccessException if there is an unauthorized database attempt.
      */
     @Test
-    void testDeleteAllGames() throws SQLException, IllegalAccessException {
+    public void testDeleteAllGames() throws SQLException, IllegalAccessException {
         //Prepare test data
         LinkedList<Move> moves = new LinkedList<>();
         moves.add(new Move(new Rectangle(0,0,100,100), new Rectangle(100,0,100,100)));
@@ -352,7 +351,7 @@ class DatabaseTest {
      * @throws SQLException if there is an error in the database operations.
      */
     @Test
-    void deleteUser() throws SQLException, IllegalAccessException {
+    public void deleteUser() throws SQLException, IllegalAccessException {
         db.registration("User", "User");
         assertTrue(db.login("User", "User"));
 

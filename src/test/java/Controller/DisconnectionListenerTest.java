@@ -2,6 +2,8 @@ package Controller;
 
 import Model.KlotskiModel;
 import View.KlotskiUI;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
@@ -10,21 +12,25 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DisconnectionListenerTest {
+public class DisconnectionListenerTest {
+    private static KlotskiModel model;
+    private static KlotskiUI view;
+    private static DisconnectionListener disconnection;
+    private static JButton button;
+    private static String[] errorMessage;
 
     /**
-     * Test case for the mousePressed() method of DisconnectionListener class.
-     * It verifies the behavior of pressing a button with disconnection Listener.
-     * @throws SQLException if there is an error in the database operations.
+     * Set up method executed before all test.
+     * Initializes the variable needed for the test.
+     * @throws SQLException if there is an error in establishing the database connection.
      */
-    @Test
-    void testMousePressedDisconnection() throws SQLException {
-        //Prepare data test
-        KlotskiModel model = new KlotskiModel();
-        final String[] errorMessage = new String[1];
+    @BeforeAll
+    public static void setUp() throws SQLException {
+        model = new KlotskiModel();
+        errorMessage = new String[1];
 
         // showMessage method override in KlotskiUI class to set the state variable
-        KlotskiUI view = new KlotskiUI() {
+        view = new KlotskiUI() {
             @Override
             public void showMessage(String message, String title, int messageType) {
                 errorMessage[0] = message;
@@ -35,8 +41,26 @@ class DisconnectionListenerTest {
         model.login("JTest", "JTest");
         view.initUser("JTest");
 
-        DisconnectionListener disconnection = new DisconnectionListener(model, view);
-        JButton button = new JButton();
+        disconnection = new DisconnectionListener(model, view);
+        button = new JButton();
+    }
+
+    /**
+     * Tear down method executed after each test
+     * Close the database connection
+     */
+    @AfterAll
+    public static void tearDown(){
+        model.closeDatabaseConnection();
+    }
+
+    /**
+     * Test case for the mousePressed() method of DisconnectionListener class.
+     * It verifies the behavior of pressing a button with disconnection Listener.
+     * @throws SQLException if there is an error in the database operations.
+     */
+    @Test
+    public void testMousePressedDisconnection() throws SQLException {
         button.setName("logOut");
 
         MouseEvent event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);

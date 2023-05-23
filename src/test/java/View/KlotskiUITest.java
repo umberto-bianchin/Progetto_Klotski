@@ -15,6 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class KlotskiUITest {
 
     private KlotskiUI klotskiUI;
+    //Test data
+    private static final Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
+            new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
+            new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
+            new Rectangle(300,400,100,100)};
 
     /**
      * Set up method executed before each test.
@@ -44,12 +49,6 @@ class KlotskiUITest {
      */
     @Test
     void testInitGame() {
-        //Prepare test data
-        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
-                new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
-                new Rectangle(300,400,100,100)};
-
         klotskiUI.initGame(positions, 0);
 
         assertNotNull(klotskiUI.buttons);
@@ -62,12 +61,6 @@ class KlotskiUITest {
      */
     @Test
     void testRestart() {
-        //Prepare test data
-        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
-                new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
-                new Rectangle(300,400,100,100)};
-
         klotskiUI.initGame(positions, 3);
         klotskiUI.board.selectedBlock = new Block();
         klotskiUI.restart(positions);
@@ -82,14 +75,11 @@ class KlotskiUITest {
      */
     @Test
     void testMakeMove() {
-        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
-                new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
-                new Rectangle(300,400,100,100)};
         klotskiUI.initGame(positions, 0);
         Move move = new Move(positions[2], new Rectangle(100, 400, 100, 100));
         klotskiUI.makeMove(move, 1);
         Block block = klotskiUI.board.blocks[2];
+
         assertEquals(move.getFinalPosition(), block.getBounds());
     }
 
