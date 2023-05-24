@@ -29,7 +29,7 @@ public class AuthListener extends UIController{
                 klotskiModel.login(username, password);
             } else if (type.equals("Sign up")) {
                 klotskiModel.registration(username, password);
-            }
+            } else {return;}
 
             klotskiUI.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
             klotskiUI.initUser(username);

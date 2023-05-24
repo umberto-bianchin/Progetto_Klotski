@@ -38,7 +38,7 @@ class SaveCommand extends UIController {
         } catch (IllegalAccessException ex) { // when the player isn't authenticated
 
             if (klotskiUI.showAuthenticationDialog()) { //ask if the player want to authenticate if true:
-                mousePressed(e); // the name will not be re-ask because name != null
+                mousePressed(e); // the saved name will not be re-ask because name != null
             }
         } catch (IllegalArgumentException ex) {  //blank names or more than one
 

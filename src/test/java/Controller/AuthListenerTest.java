@@ -2,10 +2,7 @@ package Controller;
 
 import Model.KlotskiModel;
 import View.KlotskiUI;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -14,22 +11,22 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for AuthListener.
+ * Test class for AuthListener
  */
 public class AuthListenerTest {
-    private KlotskiModel model;
-    private AuthListener auth;
-    private JButton button;
-    private MouseEvent event;
-    private String errorMessage;
+    private static KlotskiModel model;
+    private static AuthListener auth;
+    private static JButton button;
+    private static MouseEvent event;
+    private static String errorMessage;
 
     /**
-     * Set up method executed before each test.
-     * Initializes the variable needed for the tests and sets up the KlotskiModel and KlotskiUI instances.
-     * @throws SQLException if there is an error in establishing the database connection.
+     * Set up method executed before each test
+     * Initializes the variable needed for the tests and sets up the KlotskiModel and KlotskiUI instances
+     * @throws SQLException if there is an error in establishing the database connection
      */
-    @BeforeEach
-    public void setUp() throws SQLException {
+    @BeforeAll
+    public static void initAll() throws SQLException {
         model = new KlotskiModel();
         model.initDatabase();
 
@@ -47,22 +44,21 @@ public class AuthListenerTest {
     }
 
     /**
-     * Tear down method executed after each test
-     * Closes the database connection
+     * Closes the database connection after the AuthListenerTest
      */
-    @AfterEach
-    public void tearDown(){
+    @AfterAll
+    public static void tearDownAll(){
         model.closeDatabaseConnection();
     }
 
     /**
-     * Nested class for tests related to mousePressed() method in AuthListener.
+     * Nested class for tests related to mousePressed() method in AuthListener
      */
     @Nested
     class MousePressedAuthTests {
         /**
-         * Test case for the mousePressed() method with invalid login credentials.
-         * It verifies the behavior of pressing the login button with invalid credentials.
+         * Test case for the mousePressed() method with invalid login credentials
+         * It verifies the behavior of pressing the login button with invalid credentials
          */
         @Test
         public void testInvalidLoginCredentials(){
@@ -75,8 +71,8 @@ public class AuthListenerTest {
         }
 
         /**
-         * Test case for the mousePressed() method with invalid signup credentials.
-         * It verifies the behavior of pressing the signup button with invalid credentials.
+         * Test case for the mousePressed() method with invalid signup credentials
+         * It verifies the behavior of pressing the signup button with invalid credentials
          */
         @Test
         public void testInvalidSignUpCredentials(){
@@ -94,8 +90,8 @@ public class AuthListenerTest {
         }
 
         /**
-         * Test case for the mousePressed() method with valid login credentials.
-         * It verifies the behavior of pressing the login button with valid credentials.
+         * Test case for the mousePressed() method with valid login credentials
+         * It verifies the behavior of pressing the login button with valid credentials
          */
         @Test
         public void testValidLoginCredentials() {

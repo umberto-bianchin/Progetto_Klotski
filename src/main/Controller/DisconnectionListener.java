@@ -25,7 +25,7 @@ class DisconnectionListener extends UIController{
             klotskiModel.logout();
             klotskiUI.logout();
 
-        } else if (name.equals("delUser")){
+        } else if (name.equals("delUser")) {
 
             try {
                 //delete user and logout
