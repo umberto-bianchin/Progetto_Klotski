@@ -1,24 +1,24 @@
 package Model;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Database
+ */
 public class DatabaseTest {
 
     private Database db;
 
     /**
-     * Set up method executed before each test.
-     * Creates a new instance of the Database class.
-     * @throws SQLException if there is an error in establishing the database connection.
+     * Set up method executed before each test
+     * Creates a new instance of the Database class
+     * @throws SQLException if there is an error in establishing the database connection
      */
     @BeforeEach
     public void setUp() throws SQLException {
@@ -36,10 +36,10 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the saveGame() method.
-     * It verifies the behavior of saving a game in the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the saveGame() method
+     * It verifies the behavior of saving a game in the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testSaveGame() throws SQLException, IllegalAccessException {
@@ -58,10 +58,10 @@ public class DatabaseTest {
 
         assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test", false));
 
-        //Try to save a game with the same name
+        //Trying to save a game with the same name
         assertFalse(db.saveGame(moves, initialConf, finalConfig, "Database Test", false));
 
-        //Try to save a resumed game
+        //Trying to save a resumed game
         moves.add(new Move(new Rectangle(100,100,100,100), new Rectangle(200,100,100,100)));
         assertTrue(db.saveGame(moves, initialConf, finalConfig, "Database Test", true));
 
@@ -70,10 +70,10 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the getSavedMoves() method.
-     * It verifies the behavior of getting saved moves from the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the getSavedMoves() method
+     * It verifies the behavior of getting saved moves from the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testGetSavedMoves() throws SQLException, IllegalAccessException {
@@ -97,16 +97,14 @@ public class DatabaseTest {
         Rectangle rectangle3 = new Rectangle(100,100,100,100);
         Rectangle rectangle4 = new Rectangle(100,200,100,100);
 
-        LinkedList<Move> retrieveMoves = db.getSavedMoves("Database Test");
-
         //Verify the retrieved moves
-        assertEquals(rectangle1, retrieveMoves.get(0).getInitialPosition());
-        assertEquals(rectangle2, retrieveMoves.get(0).getFinalPosition());
-        assertEquals(rectangle3, retrieveMoves.get(1).getInitialPosition());
-        assertEquals(rectangle4, retrieveMoves.get(1).getFinalPosition());
+        assertEquals(rectangle1, db.getSavedMoves("Database Test").get(0).getInitialPosition());
+        assertEquals(rectangle2, db.getSavedMoves("Database Test").get(0).getFinalPosition());
+        assertEquals(rectangle3, db.getSavedMoves("Database Test").get(1).getInitialPosition());
+        assertEquals(rectangle4, db.getSavedMoves("Database Test").get(1).getFinalPosition());
 
-        //Accessing an invalid index to show there are only the two saved moves
-        assertThrows(IndexOutOfBoundsException.class, () -> retrieveMoves.get(2));
+        //Asserting that there are two saved moves
+        assertEquals(2, db.getSavedMoves("Database Test").size());
 
         //Getting moves from a game that does not exist to show that the LinkedList is empty
         assertEquals(0, db.getSavedMoves("Wrong name").size());
@@ -116,10 +114,10 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the getIdConf() method.
-     * It verifies the behavior of retrieving the id conf of a game from the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the getIdConf() method
+     * It verifies the behavior of retrieving the id conf of a game from the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testGetIdConf() throws SQLException, IllegalAccessException {
@@ -147,9 +145,9 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the getInitialConfig() method.
-     * It verifies the behavior of retrieving the initial config of a game from the database.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the getInitialConfig() method
+     * It verifies the behavior of retrieving the initial config of a game from the database
+     * @throws SQLException if there is an error in the database operations
      */
     @Test
     public void testGetInitialPositions() throws SQLException {
@@ -161,21 +159,18 @@ public class DatabaseTest {
                 new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
                 new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
-
-        Rectangle[] initialConfig = db.getInitialPositions(initialConf);
-
         for(int i=0; i<10; i++) {
-            assertEquals(positions[i], initialConfig[i]);
+            assertEquals(positions[i], db.getInitialPositions(initialConf)[i]);
             //Test that the method return an array of 10 null Rectangle if the configuration is wrong
             assertNull(db.getInitialPositions(4)[i]);
         }
     }
 
     /**
-     * Test case for the getFinalConfig() method.
-     * It verifies the behavior of retrieving the final config of a game from the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the getFinalConfig() method
+     * It verifies the behavior of retrieving the final config of a game from the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testGetFinalPositions() throws SQLException, IllegalAccessException {
@@ -192,13 +187,12 @@ public class DatabaseTest {
         db.login("JTest", "JTest");
         db.saveGame(moves, initialConf, expectedFinalConfig, "Database Test", false);
 
-        Rectangle[] finalConfig = db.getFinalPositions("Database Test");
 
         for(int i=0; i<2; i++)
-            assertEquals(expectedFinalConfig[i], finalConfig[i]);
+            assertEquals(expectedFinalConfig[i], db.getFinalPositions("Database Test")[i]);
 
         for(int i=0; i<10; i++){
-            //Test that the method return an array of 10 null Rectangle if the name is wrong
+            //Asserting that the method return an array of 10 null Rectangle if the name is wrong
             assertNull(db.getFinalPositions("Wrong name")[i]);
         }
 
@@ -207,10 +201,10 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the getGameList() method.
-     * It verifies the behavior of retrieving the list of saved games from the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the getGameList() method
+     * It verifies the behavior of retrieving the list of saved games from the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testGetGameList() throws SQLException, IllegalAccessException {
@@ -230,10 +224,8 @@ public class DatabaseTest {
         db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
         db.saveGame(moves, initialConf, finalConfig, "Database Test3", false);
 
-        Vector<String> savedGames = db.getGameList();
-
         for(int i=0; i<3; i++){
-            assertEquals(expectedSavedGames[i], savedGames.get(i));
+            assertEquals(expectedSavedGames[i], db.getGameList().get(i));
         }
 
         //Clean up saved games
@@ -241,10 +233,10 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the getGameList() method.
-     * It verifies the behavior of retrieving the list of saved games from the database.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the getGameList() method
+     * It verifies the behavior of retrieving the list of saved games from the database
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testDeleteGame() throws SQLException, IllegalAccessException {
@@ -262,18 +254,17 @@ public class DatabaseTest {
         db.saveGame(moves, initialConf, finalConfig, "Database Test1", false);
         db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
 
-        Vector<String> savedGames = db.getGameList();
-        assertEquals(2, savedGames.size());
+        //Asserting that there are two games saved in the database
+        assertEquals(2, db.getGameList().size());
 
         db.deleteGame("Database Test2");
-        Vector<String> savedGames2 = db.getGameList();
 
-        assertEquals("Database Test1", savedGames.get(0));
+        //Asserting that there is only one game saved in the database
+        assertEquals("Database Test1", db.getGameList().get(0));
 
-        //Accessing an invalid index to show there are only one saved game
-        assertThrows(IndexOutOfBoundsException.class, () -> savedGames2.get(1));
+        assertEquals(1, db.getGameList().size());
 
-        //Test that no exception is thrown by deleting a game with wrong name
+        //Asserting that no exception is thrown by deleting a game with wrong name
         assertDoesNotThrow(()->db.deleteGame("Wrong name"));
 
         //Clean up saved games
@@ -281,9 +272,9 @@ public class DatabaseTest {
     }
 
     /**
-     * Test case for the login() method.
-     * It verifies the behavior of logging in a user in the database.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the login() method
+     * It verifies the behavior of logging in a user in the database
+     * @throws SQLException if there is an error in the database operations
      */
     @Test
     public void testLogin() throws SQLException {
@@ -295,13 +286,12 @@ public class DatabaseTest {
 
         //Log in with correct credentials
         assertTrue(db.login("JTest", "JTest"));
-
     }
 
     /**
-     * Test case for the registration() method.
-     * It verifies the behavior of registering a user in the database.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the registration() method
+     * It verifies the behavior of registering a user in the database
+     * @throws SQLException if there is an error in the database operations
      */
     @Test
     public void testRegistration() throws SQLException, IllegalAccessException {
@@ -314,14 +304,13 @@ public class DatabaseTest {
         //Log in to delete user
         db.login("User", "User");
         db.deleteUser();
-
     }
 
     /**
-     * Test case for the deleteAllGames() method.
-     * It verifies the behavior of deleting all the saved games of a user.
-     * @throws SQLException if there is an error in the database operations.
-     * @throws IllegalAccessException if there is an unauthorized database attempt.
+     * Test case for the deleteAllGames() method
+     * It verifies the behavior of deleting all the saved games of a user
+     * @throws SQLException if there is an error in the database operations
+     * @throws IllegalAccessException if there is an unauthorized database attempt
      */
     @Test
     public void testDeleteAllGames() throws SQLException, IllegalAccessException {
@@ -332,7 +321,6 @@ public class DatabaseTest {
         int initialConf = 1;
         Rectangle[] finalConfig = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
 
-
         //Test unauthorized delete all games attempt
         assertThrows(IllegalAccessException.class, () -> db.deleteAllGames());
 
@@ -340,24 +328,27 @@ public class DatabaseTest {
         db.login("JTest", "JTest");
         db.saveGame(moves, initialConf, finalConfig, "Database Test1", false);
         db.saveGame(moves, initialConf, finalConfig, "Database Test2", false);
+        assertEquals(2, db.getGameList().size());
 
         db.deleteAllGames();
         assertEquals(0, db.getGameList().size());
     }
 
     /**
-     * Test case for the deleteUser() method.
-     * It verifies the behavior of deleting all the saved games of a user.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the deleteUser() method
+     * It verifies the behavior of deleting a user
+     * @throws SQLException if there is an error in the database operations
      */
     @Test
     public void deleteUser() throws SQLException, IllegalAccessException {
         db.registration("User", "User");
+
         assertTrue(db.login("User", "User"));
 
         db.login("User", "User");
         db.deleteUser();
-        assertFalse(db.login("User", "User"));
 
+        assertFalse(db.login("User", "User"));
     }
+
 }

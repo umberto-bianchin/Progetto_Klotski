@@ -7,26 +7,29 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BlockTest {
+/**
+ * Test class for Block
+ */
+public class BlockTest {
 
     private Block block;
 
     /**
-     * Set up method executed before each test.
-     * Creates a new instance of the Block class.
+     * Set up method executed before each test
+     * Sets up the Block instance
      */
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         block = new Block();
     }
 
     /**
-     * Test case for the setBlockAppearance() method.
-     * It verifies the behavior of setting the appearance of a block.
+     * Test case for the setBlockAppearance() method
+     * It verifies the behavior of setting the appearance of a block
      */
     @Test
-    void testSetBlockAppearance() {
-        //Prepare test data
+    public void testSetBlockAppearance() {
+        //Prepare data test
         Rectangle position = new Rectangle(100,100,200,200);
 
         block.setBlockAppearance(position);
@@ -35,15 +38,16 @@ class BlockTest {
     }
 
     /**
-     * Test case for the setBorder() method.
-     * It verifies the behavior of setting the border of a block.
+     * Test case for the setBorder() method
+     * It verifies the behavior of setting the border of a block
      */
     @Test
-    void testSetBorder() {
+    public void testSetBorder() {
         block.setBorderEnable(true);
         assertNotNull(block.getBorder());
 
         block.setBorderEnable(false);
         assertNull(block.getBorder());
     }
+
 }

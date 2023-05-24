@@ -6,11 +6,14 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Move
+ */
 public class MoveTest {
 
     /**
-     * Test case for the reverse() method.
-     * It verifies the behavior of reversing the initial and final positions of a move.
+     * Test case for the reverse() method
+     * It verifies the behavior of reversing the initial and final positions of a move
      */
     @Test
     public void testReverse() {
@@ -21,4 +24,5 @@ public class MoveTest {
         assertEquals(move.getInitialPosition(), reverse.getFinalPosition());
         assertEquals(move.getFinalPosition(), reverse.getInitialPosition());
     }
+
 }

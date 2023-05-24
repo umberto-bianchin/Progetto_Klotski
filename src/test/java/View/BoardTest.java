@@ -7,35 +7,38 @@ import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoardTest {
+/**
+ * Test class for Board
+ */
+public class BoardTest {
 
     private Board board;
 
     /**
-     * Set up method executed before each test.
-     * Creates a new instance of the Board class.
+     * Set up method executed before each test
+     * Sets up the Board instance
      */
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         board = new Board();
     }
 
     /**
-     * Test case for the setDisplayedCounter() method.
-     * It verifies the behavior of setting the moves counter.
+     * Test case for the setDisplayedCounter() method
+     * It verifies the behavior of setting the moves counter
      */
     @Test
-    void testSetDisplayedCounter() {
+    public void testSetDisplayedCounter() {
         board.setDisplayedCounter(5);
         assertEquals("Moves: 5", board.displayedCounter.getText());
     }
 
     /**
-     * Test case for the moveSelectedBlock() method.
-     * It verifies the behavior of moving a block.
+     * Test case for the moveSelectedBlock() method
+     * It verifies the behavior of moving a block
      */
     @Test
-    void testMoveSelectedBlock() {
+    public void testMoveSelectedBlock() {
         Block block = new Block();
         block.setBounds(new Rectangle(0, 0, 100, 100));
         board.selectedBlock = block;
@@ -49,11 +52,11 @@ class BoardTest {
     }
 
     /**
-     * Test case for the highlightSelected() method.
-     * It verifies the behavior of highlighting a block.
+     * Test case for the highlightSelected() method
+     * It verifies the behavior of highlighting a block
      */
     @Test
-    void testHighlightSelected() {
+    public void testHighlightSelected() {
         Block block1 = new Block();
         Block block2 = new Block();
 
@@ -63,21 +66,20 @@ class BoardTest {
         board.highlightSelected(block2);
         assertNull(block1.getBorder());
         assertNotNull(block2.getBorder());
-
     }
 
     /**
-     * Test case for the selectBlock() method.
-     * It verifies the behavior of selecting a block.
+     * Test case for the selectBlock() method
+     * It verifies the behavior of selecting a block
      */
     @Test
-    void testSelectBlock() {
-        //Prepare test data
+    public void testSelectBlock() {
+        //Prepare data test
         Block block = new Block();
         block.setBounds(new Rectangle(0,0,100,100));
         board.blocks[0] = block;
 
-        //Select block simulating a click on the screen
+        //Selecting a block simulating a click on the screen
         board.selectBlock(new Point(25,40));
         assertEquals(block, board.selectedBlock);
 
@@ -86,16 +88,17 @@ class BoardTest {
     }
 
     /**
-     * Test case for the setPositions() method.
-     * It verifies the behavior of setting the positions of the board blocks.
+     * Test case for the setPositions() method
+     * It verifies the behavior of setting the positions of the board blocks
      */
     @Test
-    void testSetPositions() {
-        //Prepare test data
-        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200), new Rectangle(0,400,100,100),
-                new Rectangle(100,0,200,200), new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200), new Rectangle(300,200,100,200),
-                new Rectangle(300,400,100,100)};
+    public void testSetPositions() {
+        //Prepare data test
+        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200),
+                new Rectangle(0,400,100,100), new Rectangle(100,0,200,200),
+                new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
+                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200),
+                new Rectangle(300,200,100,200), new Rectangle(300,400,100,100)};
 
         board.setPositions(positions);
 

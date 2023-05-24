@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for UndoCommand.
+ * Test class for UndoCommand
  */
 public class UndoCommandTest {
     private static KlotskiModel model;
@@ -30,9 +30,9 @@ public class UndoCommandTest {
             new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
     /**
-     * Set up method executed before all test.
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
-     * @throws SQLException if there is an error in establishing the database connection.
+     * Set up method executed before all test
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
+     * @throws SQLException if there is an error in establishing the database connection
      */
     @BeforeAll
     public static void setUp() throws SQLException {
@@ -48,8 +48,8 @@ public class UndoCommandTest {
     }
 
     /**
-     * Tear down method executed after all tests.
-     * Closes the database connection.
+     * Tear down method executed after all tests
+     * Closes the database connection
      */
     @AfterAll
     public static void tearDown(){
@@ -57,10 +57,10 @@ public class UndoCommandTest {
     }
 
     /**
-     * Test case for the mousePressed() method of UndoCommand class.
+     * Test case for the mousePressed() method of UndoCommand class
      * It verifies the behavior of undoing a move
-     * @throws IOException if there is an error in the solver.
-     * @throws ParseException if there is an error in the solver.
+     * @throws IOException if there is an error in the solver
+     * @throws ParseException if there is an error in the solver
      */
     @Test
     public void testMousePressedUndo() throws IOException, ParseException {
@@ -89,4 +89,5 @@ public class UndoCommandTest {
             assertEquals(model.getCurrentPositions()[i].getHeight(), positions[i].getHeight());
         }
     }
+
 }

@@ -101,4 +101,5 @@ public class AuthListenerTest {
             assertDoesNotThrow(() -> auth.mousePressed(event));
         }
     }
+
 }

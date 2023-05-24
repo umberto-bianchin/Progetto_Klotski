@@ -8,6 +8,9 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for State
+ */
 public class StateTest {
 
     private State state;
@@ -18,8 +21,8 @@ public class StateTest {
             new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
     /**
-     * Set up method executed before each test.
-     * Creates a new instance of the State class.
+     * Set up method executed before each test
+     * Creates a new instance of the State class
      */
     @BeforeEach
     public void setUp() {
@@ -27,58 +30,54 @@ public class StateTest {
     }
 
     /**
-     * Test case for the getCurrentPositions() method.
-     * It verifies the behavior of getting the current pieces positions.
+     * Test case for the getCurrentPositions() method
+     * It verifies the behavior of getting the current pieces positions
      */
     @Test
     public void testGetCurrentPositions() {
-        Rectangle[] positions = state.getCurrentPositions();
-
         for(int i=0; i<10; i++)
-            assertEquals(initialPos[i], positions[i]);
+            assertEquals(initialPos[i], state.getCurrentPositions()[i]);
     }
 
     /**
-     * Test case for the setSelectedPiece() method.
-     * It verifies the behavior of setting the selected pieces.
+     * Test case for the setSelectedPiece() method
+     * It verifies the behavior of setting the selected pieces
      */
     @Test
     public void testSetSelectedPiece() {
         state.setSelectedPiece(null);
         assertNull(state.selectedPiece);
 
-        Point point = new Point(50, 20);
-        state.setSelectedPiece(point);
-
+        state.setSelectedPiece(new Point(50, 20));
         assertEquals(initialPos[1], state.selectedPiece.getPosition());
     }
 
     /**
-     * Test case for the moveSelectedPiece() method.
-     * It verifies the behavior of moving the selected piece.
+     * Test case for the moveSelectedPiece() method
+     * It verifies the behavior of moving the selected piece
      */
     @Test
     public void testMoveSelectedPiece() {
         state.setSelectedPiece(null);
 
-        //Try to execute moveSelectedPiece with selectedPiece == null
+        //Trying to execute moveSelectedPiece with selectedPiece == null
         assertThrows(RuntimeException.class, ()->state.moveSelectedPiece(null));
 
-        //Prepare test data
+        //Prepare data test
         Point point = new Point(20,80);
         Point finalPoint = new Point(0, 350);
         state.setSelectedPiece(point);
 
-        //Try to move a piece without available moves
+        //Trying to move a piece without available moves
         state.setSelectedPiece(point);
         assertThrows(RuntimeException.class, ()->state.moveSelectedPiece(finalPoint));
 
-        //Try to move a piece in a position that intersects another piece
+        //Trying to move a piece in a position that intersects another piece
         point.move(20, 420);
         state.setSelectedPiece(point);
         assertThrows(RuntimeException.class, ()->state.moveSelectedPiece(finalPoint));
 
-        //Move the piece in a correct position
+        //Moving the piece in a correct position
         finalPoint.move(120, 430);
         Move expectedMove= new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
         Move move = state.moveSelectedPiece(finalPoint);
@@ -88,12 +87,12 @@ public class StateTest {
     }
 
     /**
-     * Test case for the undo() method.
-     * It verifies the behavior of undoing a move.
+     * Test case for the undo() method
+     * It verifies the behavior of undoing a move
      */
     @Test
     public void testUndo() {
-        //Prepare test data
+        //Prepare data test
         state.setSelectedPiece(new Point(0,400));
         state.moveSelectedPiece(new Point(100, 400));
 
@@ -109,23 +108,25 @@ public class StateTest {
     }
 
     /**
-     * Test case for the makeMove() method.
-     * It verifies the behavior of making a move.
+     * Test case for the makeMove() method
+     * It verifies the behavior of making a move
      */
     @Test
     public void testMakeMove() {
         //Prepare test data
         Move move= new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
-        Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200), new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
+        Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
+                new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
                 new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-                new Rectangle(100,300,100,100), new Rectangle(200,300,100,100), new Rectangle(100,400,100,100),
-                new Rectangle(300,400,100,100)};
+                new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
+                new Rectangle(100,400,100,100), new Rectangle(300,400,100,100)};
 
         state.makeMove(move);
 
-        // Check if the expectedPositions are equals to the effective positions
+        //Asserting that the expectedPositions are equals to the effective positions
         assertEquals(Arrays.hashCode(expectedPositions), Arrays.hashCode(state.getCurrentPositions()));
-        // Check that is added only one move
+        //Asserting that is added only one move
         assertEquals(1, state.getMoves().size());
     }
+
 }

@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for SaveCommand.
+ * Test class for SaveCommand
  */
 public class SaveCommandTest {
 
@@ -25,9 +25,9 @@ public class SaveCommandTest {
     private static String blankName;
 
     /**
-     * Set up method executed before all test.
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
-     * @throws SQLException if there is an error in establishing the database connection.
+     * Set up method executed before all test
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
+     * @throws SQLException if there is an error in establishing the database connection
      */
     @BeforeAll
     public static void setUp() throws SQLException {
@@ -75,9 +75,9 @@ public class SaveCommandTest {
     }
 
     /**
-     * Test case for the mousePressed() method of SaveCommand class.
-     * It verifies the behavior of saving a game.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the mousePressed() method of SaveCommand class
+     * It verifies the behavior of saving a game
+     * @throws SQLException if there is an error in the database operations
      * @throws IllegalAccessException if the player is not logged in to the system
      */
     @Test
@@ -99,4 +99,5 @@ public class SaveCommandTest {
         save.mousePressed(event);
         assertEquals("Dialog displayed correctly", notLogged);
     }
+
 }

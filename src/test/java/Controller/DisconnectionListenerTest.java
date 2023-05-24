@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for DisconnectionListener.
+ * Test class for DisconnectionListener
  */
 public class DisconnectionListenerTest {
     private KlotskiModel model;
@@ -23,9 +23,9 @@ public class DisconnectionListenerTest {
     private String[] errorMessage;
 
     /**
-     * Set up method executed before each test.
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances.
-     * @throws SQLException if there is an error in establishing the database connection.
+     * Set up method executed before each test
+     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
+     * @throws SQLException if there is an error in establishing the database connection
      */
     @BeforeEach
     public void setUp() throws SQLException {
@@ -58,9 +58,9 @@ public class DisconnectionListenerTest {
     }
 
     /**
-     * Test case for the mousePressed() method of DisconnectionListener class.
-     * It verifies the behavior of pressing a button with DisconnectionListener.
-     * @throws SQLException if there is an error in the database operations.
+     * Test case for the mousePressed() method of DisconnectionListener class
+     * It verifies the behavior of pressing a button with DisconnectionListener
+     * @throws SQLException if there is an error in the database operations
      */
     @Test
     public void testMousePressedDisconnection() throws SQLException {
@@ -85,4 +85,5 @@ public class DisconnectionListenerTest {
         disconnection.mousePressed(event);
         assertEquals("You must login", errorMessage[0]);
     }
+
 }

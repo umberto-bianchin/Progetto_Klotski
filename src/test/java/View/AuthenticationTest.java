@@ -7,41 +7,40 @@ import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AuthenticationTest {
+/**
+ * Test class for Authentication
+ */
+public class AuthenticationTest {
     private Authentication auth;
 
     /**
-     * Set up method executed before each test.
-     * Creates a new instance of the Authentication class.
-     * Creates a new instance of the JFrame class.
+     * Set up method executed before each test
+     * Sets up the Authentication instance and creates a new instance of the JFrame class
      */
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         JFrame frame = new JFrame();
         auth = new Authentication(frame);
     }
 
     /**
-     * Test case for the initAuthentication() method.
-     * It verifies the behavior of initializing the authentication buttons of the UI.
+     * Test case for the initAuthentication() method
+     * It verifies the behavior of initializing the authentication buttons of the UI
      */
     @Test
-    void testInitAuthentication() {
+    public void testInitAuthentication() {
         auth.initAuthentication();
-        JButton[] buttons = new JButton[2];
-        for (int i = 0; i < 2; i++) {
-            buttons[i] = (JButton) auth.getComponent(i);
-        }
-        assertEquals("Sign up", buttons[0].getClientProperty("name"));
-        assertEquals("Log in", buttons[1].getClientProperty("name"));
+
+        assertEquals("Sign up", ((JButton) auth.getComponent(0)).getClientProperty("name"));
+        assertEquals("Log in", ((JButton) auth.getComponent(1)).getClientProperty("name"));
     }
 
     /**
-     * Test case for the initUser() method.
-     * It verifies the behavior of initializing the user.
+     * Test case for the initUser() method
+     * It verifies the behavior of initializing the user
      */
     @Test
-    void testInitUser() {
+    public void testInitUser() {
         auth.initUser("test");
 
         assertEquals(4, auth.getComponentCount());
@@ -51,4 +50,5 @@ class AuthenticationTest {
         assertTrue(auth.getComponent(2) instanceof JButton);
         assertTrue(auth.getComponent(3) instanceof JButton);
     }
+
 }
