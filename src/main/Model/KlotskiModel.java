@@ -54,6 +54,7 @@ public class KlotskiModel {
             db.closeConnection();
 
         db = new Database();
+
     }
 
     /**
@@ -167,7 +168,7 @@ public class KlotskiModel {
     }
 
     /**
-     * Delete the game with that name, if not found the database call doesn't do anything
+     * Delete all the games of the logged user
      * @throws SQLException when database raise an Exception (timeout)
      * @throws IllegalAccessException  when the player isn't logged into the database
      */

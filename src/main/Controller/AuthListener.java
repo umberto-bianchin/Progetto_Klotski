@@ -11,8 +11,7 @@ import java.util.Locale;
  * The class is a UI controller that handles authentication actions (logging in and signing up) in the Klotski game.
  */
 public class AuthListener extends UIController{
-
-
+    
     public AuthListener(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
         super(klotskiModel, klotskiUI);
     }

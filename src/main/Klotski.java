@@ -4,7 +4,7 @@ import View.KlotskiUI;
 
 public class Klotski {
     public Klotski(){
-        Controller controller = new Controller(new KlotskiUI(), new KlotskiModel());
+        Controller controller = new Controller(new KlotskiModel(), new KlotskiUI());
     }
 
 }

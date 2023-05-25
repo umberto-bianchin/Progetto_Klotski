@@ -1,54 +1,20 @@
 package Controller;
 
-import Model.KlotskiModel;
-import View.KlotskiUI;
 import org.junit.jupiter.api.*;
-
-import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test class for AuthListener
  */
-public class AuthListenerTest {
-    private static KlotskiModel model;
-    private static AuthListener auth;
-    private static JButton button;
-    private static MouseEvent event;
-    private static String errorMessage;
+public class AuthListenerTest extends KlotskiControllerTest {
 
     /**
-     * Set up method executed before each test
-     * Initializes the variable needed for the tests and sets up the KlotskiModel and KlotskiUI instances
-     * @throws SQLException if there is an error in establishing the database connection
+     * Set up initAuthListener, putting the required password
      */
     @BeforeAll
-    public static void initAll() throws SQLException {
-        model = new KlotskiModel();
-        model.initDatabase();
-
-        // showMessage method override in KlotskiUI class to capture error messages
-        KlotskiUI view = new KlotskiUI() {
-            @Override
-            public void showMessage(String message, String title, int messageType) {
-                errorMessage = message;
-            }
-        };
-        auth = new AuthListener(model, view);
-        button = new JButton();
+    public static void initAuthListener() {
         button.putClientProperty("password", "JTest");
-        event = new MouseEvent(button, MouseEvent.MOUSE_PRESSED, 0, 0, 0, 0, 1, false);
-    }
-
-    /**
-     * Closes the database connection after the AuthListenerTest
-     */
-    @AfterAll
-    public static void tearDownAll(){
-        model.closeDatabaseConnection();
     }
 
     /**
@@ -62,12 +28,10 @@ public class AuthListenerTest {
          */
         @Test
         public void testInvalidLoginCredentials(){
-            button.putClientProperty("username", "Wrong Username");
-            button.setText("Log in");
 
-            auth.mousePressed(event);
+            buttonPress("Wrong Username", "Log in");
             // Verify that the state variable contains the correct error message
-            assertEquals("Invalid username or password", errorMessage);
+            assertEquals("Invalid username or password", message);
         }
 
         /**
@@ -76,17 +40,12 @@ public class AuthListenerTest {
          */
         @Test
         public void testInvalidSignUpCredentials(){
-            button.putClientProperty("username", "");
-            button.setText("Sign up");
 
-            auth.mousePressed(event);
+            buttonPress("", "Sign up");
+            assertEquals("Can't register players with blank username or password", message);
 
-            assertEquals("Can't register players with blank username or password", errorMessage);
-
-            button.putClientProperty("username", "JTest");
-            auth.mousePressed(event);
-
-            assertEquals("Can't register another player with the same username", errorMessage);
+            buttonPress("JTest", "Sign up");
+            assertEquals("Can't register another player with the same username", message);
         }
 
         /**
@@ -95,11 +54,26 @@ public class AuthListenerTest {
          */
         @Test
         public void testValidLoginCredentials() {
-            button.putClientProperty("username", "JTest");
-            button.setText("Log in");
-
-            assertDoesNotThrow(() -> auth.mousePressed(event));
+            buttonPress("JTest", "Log in");
+            assertDoesNotThrow(() -> testedController.mousePressed(event));
         }
+
+        /**
+         * Set Up the button with the following text and username property
+         * @param type authentication type access such as "Sign up" or "Log in"
+         */
+        private void buttonPress(String username, String type){
+            button.putClientProperty("username", username);
+            button.setText(type);
+            testedController.mousePressed(event);
+
+        }
+    }
+
+
+    @Override
+    protected UIController getTestedController() {
+        return new AuthListener(model, view);
     }
 
 }

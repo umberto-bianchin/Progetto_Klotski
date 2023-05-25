@@ -7,22 +7,20 @@ import javax.swing.*;
 import java.awt.event.*;
 
 
-public class Controller {
-    private final KlotskiUI klotskiUI;
-    private final KlotskiModel klotskiModel;
+public class Controller extends UIController{
 
 
     /**
      * Initialize the object and check if the argument are null. Display the game UI
      */
-    public Controller(KlotskiUI klotskiUI, KlotskiModel klotskiModel) {
-
-        if(klotskiUI == null || klotskiModel == null)
-            throw new NullPointerException();
-
-        this.klotskiUI = klotskiUI;
-        this.klotskiModel = klotskiModel;
+    public Controller(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+        super(klotskiModel, klotskiUI);
         initStart();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        klotskiModel.closeDatabaseConnection();
     }
 
     /**
@@ -46,7 +44,7 @@ public class Controller {
     private void addListener() {
         WindowAdapter exit = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                klotskiModel.closeDatabaseConnection();
+                mousePressed(null);
             }
         };
         SaveCommand saveCommand = new SaveCommand(klotskiModel, klotskiUI);

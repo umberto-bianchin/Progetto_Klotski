@@ -9,9 +9,9 @@ import java.util.Vector;
 
 public class KlotskiUI {
 
+    JFrame frame;
     Board board;
     Buttons buttons;
-    JFrame frame;
     JLabel mainPane;
     Start start;
     Authentication authentication;
