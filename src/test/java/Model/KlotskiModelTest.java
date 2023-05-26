@@ -1,19 +1,22 @@
 package Model;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Test class for KlotskiModel
  */
 public class KlotskiModelTest {
 
-    private KlotskiModel klotskiModel;
+    private static KlotskiModel klotskiModel;
     private static final Rectangle[] initialPos = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
             new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
             new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
@@ -26,22 +29,20 @@ public class KlotskiModelTest {
             new Rectangle(100,400,100,100), new Rectangle(300,400,100,100)};
 
     /**
-     * Set up method executed before each test
      * Creates a new instance of the KlotskiModel class and Database class
      * @throws SQLException if there is an error in establishing the database connection
      */
-    @BeforeEach
-    public void setUp() throws SQLException {
+    @BeforeAll
+    public static void setUp() throws SQLException {
         klotskiModel = new KlotskiModel();
         klotskiModel.initDatabase();
     }
 
     /**
-     * Tear down method executed after each test
-     * Close the database connection
+     * Close the database connection after the test
      */
-    @AfterEach
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         klotskiModel.closeDatabaseConnection();
     }
 
@@ -49,10 +50,10 @@ public class KlotskiModelTest {
      * Test case for the initState() method
      * It verifies the behavior of initializing a new state
      */
-    @Test
-    public void testInitState() {
-        assertThrows(IllegalArgumentException.class, () -> klotskiModel.initState(4));
-        assertThrows(IllegalArgumentException.class, () -> klotskiModel.initState(-1));
+    @ParameterizedTest
+    @ValueSource(strings = {"-1", "5"})
+    public void testInitState(int conf) {
+        assertThrows(IllegalArgumentException.class, () -> klotskiModel.initState(conf));
     }
 
     /**
@@ -68,16 +69,17 @@ public class KlotskiModelTest {
         moves.add(new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100)));
         int initialConf = 0;
 
-        //Test unauthorized call attempt
+        //Test unauthorized call attempt when not logged
         assertThrows(IllegalAccessException.class, () -> klotskiModel.db.getSavedMoves("Save Test"));
 
         //Log in and save data
         klotskiModel.db.login("JTest", "JTest");
         klotskiModel.db.saveGame(moves, initialConf, finalPos, "Model Test", false);
-
         klotskiModel.resumeState("Model Test");
 
         assertEquals(1, klotskiModel.state.getMoves().size());
+
+
         for(int i=0; i<10; i++){
             assertEquals(initialPos[i], klotskiModel.state.initial_positions[i]);
             assertEquals(finalPos[i], klotskiModel.state.pieces[i].getPosition());

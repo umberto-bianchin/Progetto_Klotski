@@ -5,7 +5,6 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Vector;
 
 public class KlotskiModel {
@@ -191,7 +190,7 @@ public class KlotskiModel {
         Move bestMove = solver.nextBestMove(state.getCurrentPositions());
         state.makeMove(bestMove);
         // set the hash configuration after the move
-        solver.setConfigurationHash(Arrays.hashCode(state.getCurrentPositions()));
+        solver.updateCurrentPositions(state.getCurrentPositions());
 
         return bestMove;
 

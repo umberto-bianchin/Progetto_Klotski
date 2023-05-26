@@ -5,7 +5,6 @@ import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
-import java.util.Locale;
 
 /**
  * The class is a UI controller that handles authentication actions (logging in and signing up) in the Klotski game.
@@ -30,7 +29,7 @@ public class AuthListener extends UIController{
                 klotskiModel.registration(username, password);
             } else {return;}
 
-            klotskiUI.showMessage("Hi " + username + "! You have successfully " + type.toLowerCase(Locale.ROOT), type, JOptionPane.INFORMATION_MESSAGE);
+            klotskiUI.showMessage("Hi " + username + "! " + type + " successfully", type, JOptionPane.INFORMATION_MESSAGE);
             klotskiUI.initUser(username);
 
         }  catch (Exception ex) {

@@ -20,7 +20,7 @@ public class Solver {
     private static final JSONParser parser = new JSONParser();
 
     //The hash value representing the current configuration of the puzzle
-    long hashCurrentConf = 0;
+    long hashCurrentPos = 0;
 
     // The JSONArray object storing the list of moves received from the API
     private JSONArray moves;
@@ -81,24 +81,14 @@ public class Solver {
 
     }
 
+
     /**
-     * Retrieves the next best move to make based on the current configuration of the puzzle
-     * @param config The array of Rectangle objects representing the current configuration of the puzzle
-     * @return The Move object representing the next best move to make
-     * @throws IOException If an I/O error occurs while making the API request
-     * @throws ParseException when the received JSON is invalid
+     * Retrive a move, represented by a JSON object
+     * @return move
+     * @throws IOException when the received direction is illegal
      */
-    public Move nextBestMove(Rectangle[] config) throws IOException, ParseException {
+    private Move getMoveFromJSON(JSONObject json, Rectangle[] config) throws IOException {
 
-        if (Arrays.hashCode(config) != hashCurrentConf) {
-            String response = sendPostRequest(jsonString(config));
-
-            // parse the responded array of moves to get to the end
-            moves = (JSONArray) parser.parse(response);
-            index_moves = 0;
-        }
-
-        JSONObject json = (JSONObject) moves.get(index_moves++);
         Rectangle[] positions = new Rectangle[2];
 
         int blockIdx = ((Long) json.get("blockIdx")).intValue();
@@ -115,14 +105,45 @@ public class Solver {
         }
 
         return new Move(positions[0], positions[1]);
+
     }
 
+
     /**
-     * Set the hash code of the current configuration, optionally to be called after the best move, in order to save
-     * time and not make a new API request, but retrieve the second move of the array
+     * Retrieves the next best move to make based on the current configuration of the puzzle
+     * @param config The array of Rectangle objects representing the current configuration of the puzzle
+     * @return The Move object representing the next best move to make
+     * @throws IOException If an I/O error occurs while making the API request
+     * @throws ParseException when the received JSON is invalid
      */
-    public void setConfigurationHash(long hash) {
-        hashCurrentConf = hash;
+    public Move nextBestMove(Rectangle[] config) throws IOException, ParseException {
+
+        if (Arrays.hashCode(config) != hashCurrentPos) {
+            String response = sendPostRequest(jsonString(config));
+
+            // parse the responded array of moves to get to the end
+            moves = (JSONArray) parser.parse(response);
+            index_moves = 0;
+        }
+
+        if(moves == null)
+            throw new IllegalArgumentException("Invalid configuration");
+
+        JSONObject json = (JSONObject) moves.get(index_moves++);
+        return getMoveFromJSON(json, config);
+
+    }
+
+
+
+
+
+    /**
+     * Save the current configuration, can be called after the best move, in order to save
+     * time and not make a new API request, but retrieving the next move from the solution found
+     */
+    public void updateCurrentPositions(Rectangle[] positions) {
+        hashCurrentPos = Arrays.hashCode(positions);
     }
 
 }
