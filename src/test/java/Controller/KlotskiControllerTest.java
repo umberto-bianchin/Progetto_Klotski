@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
+/**
+ * The KlotskiControllerTest class is an abstract class that serves as a base for controllers test
+ */
 abstract public class KlotskiControllerTest {
 
     protected static final KlotskiModel model = new KlotskiModel();

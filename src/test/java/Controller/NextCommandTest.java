@@ -8,6 +8,9 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for NextCommand
+ */
 class NextCommandTest extends KlotskiControllerTest {
 
     /**
