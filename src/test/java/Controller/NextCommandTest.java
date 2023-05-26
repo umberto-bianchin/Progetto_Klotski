@@ -33,7 +33,6 @@ class NextCommandTest extends KlotskiControllerTest {
 
     }
 
-
     @Override
     protected UIController getTestedController() {
         return new NextCommand(model, view);

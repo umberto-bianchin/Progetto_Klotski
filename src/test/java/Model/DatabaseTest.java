@@ -3,9 +3,9 @@ package Model;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-
 import java.awt.*;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +17,14 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DatabaseTest {
 
     //Data test
-    private final LinkedList<Move> moves = new LinkedList<>(List.of(new Move(new Rectangle(0, 0, 100, 100), new Rectangle(100, 0, 100, 100))));
-    private static final Rectangle[] finalPositions = {new Rectangle(100, 0, 100, 100), new Rectangle(100, 200, 100, 100)};
+    private final LinkedList<Move> moves = new LinkedList<>(List.of(new Move(new Rectangle(100,300,100,100), new Rectangle(100,400,100,100))));
+
+    private static final Rectangle[] finalPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
+            new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
+            new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
+            new Rectangle(100,400,100,100), new Rectangle(200,300,100,100),
+            new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
+
     private static Database db;
 
     /**
@@ -63,6 +69,8 @@ public class DatabaseTest {
 
         //Logging in and save operations
         db.login("JTest", "JTest");
+
+        assertThrows(IllegalArgumentException.class, () -> db.saveGame(moves, 1, Arrays.copyOfRange(finalPositions,0,5), "Save Test", false));
 
         assertTrue(db.saveGame(moves, 1, finalPositions, "Database Test", false));
 
@@ -164,8 +172,7 @@ public class DatabaseTest {
         db.login("JTest", "JTest");
         db.saveGame(moves, 1, finalPositions, "Database Test", false);
 
-        // TODO: 26/05/23 acua
-        //assertArrayEquals(finalPositions, db.getFinalPositions("Database Test"));
+        assertArrayEquals(finalPositions, db.getFinalPositions("Database Test"));
 
         //Asserting that the method return an array of 10 null Rectangle if the name is wrong
         assertArrayEquals(new Rectangle[10], db.getFinalPositions("Wrong name"));

@@ -26,7 +26,7 @@ public class Database {
     /**
      * @param moves The list of moves made in the game
      * @param game_id The initial configuration of the game (0-3)
-     * @param final_positions The final configuration of the game
+     * @param final_positions The final configuration of the game, array[10]
      * @param game_name The name of the game
      * @param resumed if the game has been already saved
      * @return true if the game is successfully saved, false otherwise
@@ -38,21 +38,23 @@ public class Database {
         if (!isLogged())
             throw new IllegalAccessException("You must login to save games");
 
+        if(final_positions.length != 10)
+            throw new IllegalArgumentException("Wrong final_positions argument");
+
         if(resumed)
             deleteGame(game_name);
 
-        String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
+        if (!addGameName(game_id, game_name)) return false;
 
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            if (rs.next())
-                return false;
+        addMatchInformation(moves, final_positions);
+        return true;
+    }
 
-            query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + "," + game_id + ",'" + game_name + "');"; //inserisce il game (autoincrementa)
-            stmt.execute(query);
-        }
-
-        query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
+    /**
+     * Add the match information to the database (Moves and Final positions)
+     */
+    private void addMatchInformation(LinkedList<Move> moves, Rectangle[] final_positions) throws SQLException {
+        String query = "SELECT ID_GAME FROM games WHERE ID_USER = " + id_player + " ORDER BY ID_GAME DESC LIMIT 1;"; //prende l'id del game inserito
 
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
@@ -72,8 +74,25 @@ public class Database {
                 stmt.execute(query);
             }
 
-            return true;
         }
+    }
+
+    /**
+     * Check if the game name already exist in the user history or add it
+     * @return true if correctly added, false otherwise
+     */
+    private boolean addGameName(int game_id, String game_name) throws SQLException {
+        String query = "SELECT ID_GAME FROM games WHERE name = '" + game_name + "' AND ID_USER =" + id_player + ";";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next())
+                return false;
+
+            query = "INSERT INTO games (ID_USER,ID_CONF, name) VALUES (" + id_player + "," + game_id + ",'" + game_name + "');"; //inserisce il game (autoincrementa)
+            stmt.execute(query);
+        }
+        return true;
     }
 
     /**
