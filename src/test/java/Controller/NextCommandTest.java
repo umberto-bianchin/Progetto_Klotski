@@ -10,28 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NextCommandTest extends KlotskiControllerTest {
 
-    private static Rectangle[] positions;
-
-    /**
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
-     * @throws SQLException if there is an error in establishing the database connection
-     */
-    private void setUp(int configuration) throws SQLException {
-
-        model.initState(configuration);
-        view.initGame(model.getCurrentPositions(), model.getCounter());
-        positions = model.getCurrentPositions();
-
-    }
-
     /**
      * @param configuration int between 0-3 to test the Solver
+     * @throws SQLException if occur a database error
      */
     @ParameterizedTest
     @ValueSource(ints = {0,1,2,3})
     void testMousePressedUndoNext(int configuration) throws SQLException {
 
-        setUp(configuration);
+        Rectangle[] positions = startGame(configuration);
 
         testedController.mousePressed(event);
         assertFalse(Arrays.equals(positions, model.getCurrentPositions()));

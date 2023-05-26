@@ -16,7 +16,7 @@ public class KlotskiModel {
 
     /**
      * Used when is opened a new game, ask the database for the necessary information to create a new State
-     * @param id_configuration is the number of the desired configuration (1-4)
+     * @param id_configuration is the number of the desired configuration (0-3)
      * @throws SQLException when database raise an Exception (timeout)
      */
     public void initState(int id_configuration) throws SQLException {

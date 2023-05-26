@@ -23,7 +23,7 @@ class ConfigurationListener extends UIController {
             klotskiModel.initState(num_config);
             klotskiUI.initGame(klotskiModel.getCurrentPositions(), klotskiModel.getCounter());
         }
-        catch (SQLException ex){
+        catch (SQLException | IllegalArgumentException ex){
             klotskiUI.showMessage(ex.getMessage(), "Game Selector", JOptionPane.ERROR_MESSAGE);
         }
     }

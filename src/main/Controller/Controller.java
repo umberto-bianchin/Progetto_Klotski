@@ -5,6 +5,7 @@ import View.KlotskiUI;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 
 public class Controller extends UIController{
@@ -32,7 +33,7 @@ public class Controller extends UIController{
         try{
             klotskiModel.initDatabase();
             klotskiUI.initStart();
-        } catch(Exception e){
+        } catch(SQLException e){
             klotskiUI.showMessage("Server SQL error", "Start", JOptionPane.ERROR_MESSAGE); }
 
         addListener();

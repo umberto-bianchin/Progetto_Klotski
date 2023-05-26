@@ -1,8 +1,8 @@
 package Controller;
 
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,30 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class UndoCommandTest extends KlotskiControllerTest {
 
-    private static Rectangle[] positions;
-
-    /**
-     * Set up method executed before all test
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
-     * @throws SQLException if there is an error in establishing the database connection
-     */
-    @BeforeAll
-    public static void setUp() throws SQLException {
-
-        model.initState(0);
-        view.initGame(model.getCurrentPositions(), model.getCounter());
-        positions = model.getCurrentPositions();
-
-    }
 
     /**
      * Test case for the mousePressed() method of UndoCommand class
      * It verifies the behavior of undoing a move
      * @throws IOException if there is an error in the solver
      * @throws ParseException if there is an error in the solver
+     * @throws SQLException if occur a database error
      */
-    @Test
-    public void testMousePressedUndo() throws IOException, ParseException {
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2,3})
+    public void testMousePressedUndo(int configuration) throws IOException, ParseException, SQLException {
+
+        Rectangle[] positions = startGame(configuration);
+
         //Make two moves to test the undo button
         view.makeMove(model.nextBestMove(), model.getCounter());
         view.makeMove(model.nextBestMove(), model.getCounter());

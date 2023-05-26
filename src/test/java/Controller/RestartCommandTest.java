@@ -1,7 +1,8 @@
 package Controller;
 
 import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,28 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class RestartCommandTest extends KlotskiControllerTest {
 
-    private static Rectangle[] positions;
-
-    /**
-     * Set up method executed before all tests
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
-     * @throws SQLException if there is an error in establishing the database connection
-     */
-    @BeforeAll
-    public static void setUp() throws SQLException {
-        model.initState(0);
-        view.initGame(model.getCurrentPositions(), model.getCounter());
-        positions = model.getCurrentPositions();
-    }
-
     /**
      * Test case for the mousePressed() method of RestartCommand class
      * It verifies the behavior of restarting a game
      * @throws IOException if there is an error in the solver
      * @throws ParseException if there is an error in the solver
+     * @throws SQLException if occur a database error
      */
-    @Test
-    public void testMousePressedRestart() throws IOException, ParseException {
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2,3})
+    public void testMousePressedRestart(int configuration) throws IOException, ParseException, SQLException {
+
+        Rectangle[] positions = startGame(configuration);
+
         //Make two moves to test the restart button
         view.makeMove(model.nextBestMove(), model.getCounter());
         view.makeMove(model.nextBestMove(), model.getCounter());

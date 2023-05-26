@@ -1,8 +1,8 @@
 package Controller;
 
 import View.KlotskiUI;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,16 +16,6 @@ public class SaveCommandTest extends KlotskiControllerTest {
     private static String correctlySaved;
     private static String notLogged;
 
-    /**
-     * Set up method executed before all test
-     * Initializes the necessary variables and sets up the KlotskiModel and KlotskiUI instances
-     * @throws SQLException if there is an error in establishing the database connection
-     */
-    @BeforeEach
-    public void setUp() throws SQLException {
-        model.initState(0);
-        view.initGame(model.getCurrentPositions(), model.getCounter());
-    }
 
     /**
      * Test case for the mousePressed() method of SaveCommand class
@@ -33,8 +23,11 @@ public class SaveCommandTest extends KlotskiControllerTest {
      * @throws SQLException if there is an error in the database operations
      * @throws IllegalAccessException if the player is not logged in to the system
      */
-    @Test
-    public void testMousePressedSaveCommand() throws SQLException, IllegalAccessException {
+    @ParameterizedTest
+    @ValueSource(ints = {0,1,2,3})
+    public void testMousePressedSaveCommand(int configuration) throws SQLException, IllegalAccessException {
+
+        startGame(configuration);
 
         //Trying to save without being authenticated
         testedController.mousePressed(event);

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
@@ -40,6 +41,17 @@ abstract public class KlotskiControllerTest {
     @BeforeEach
     public void initController() {
         testedController = getTestedController();
+    }
+
+    /**
+     * Start the Game based on the specified configuration
+     * @return the Initial Positions of the Pieces
+     * @throws SQLException if a database error occur
+     */
+    public Rectangle[] startGame(int configuration) throws SQLException {
+        model.initState(configuration);
+        view.initGame(model.getCurrentPositions(), model.getCounter());
+        return model.getCurrentPositions();
     }
 
     /**
