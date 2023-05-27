@@ -116,7 +116,7 @@ public class KlotskiModel {
      */
     public void registration(String username, String password) throws IllegalArgumentException, RuntimeException, SQLException {
 
-        if (username == null || password == null || username.isEmpty() || password.isEmpty())
+        if (username == null || password == null || username.isBlank() || password.isBlank())
             throw new IllegalArgumentException("Can't register players with blank username or password");
 
         if (!db.registration(username, password))
@@ -174,7 +174,6 @@ public class KlotskiModel {
     public void deleteAll() throws SQLException, IllegalAccessException {
         db.deleteAllGames();
     }
-
 
 
     public void delUser() throws SQLException, IllegalAccessException {

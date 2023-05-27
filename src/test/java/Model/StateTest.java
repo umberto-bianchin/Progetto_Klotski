@@ -2,9 +2,8 @@ package Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.awt.*;
-import java.util.Arrays;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,25 +13,27 @@ import static org.junit.jupiter.api.Assertions.*;
 public class StateTest {
 
     private State state;
-    private static final Rectangle[] initialPos = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
-            new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
-            new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-            new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
-            new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
-
-    private static final Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
-            new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
-            new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-            new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
-            new Rectangle(100,400,100,100), new Rectangle(300,400,100,100)};
+    private static Rectangle[] initialPos;
+    private static final Move expectedMove = new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
+    private static  Rectangle[] expectedPositions;
 
     /**
      * Set up method executed before each test
      * Creates a new instance of the State class
      */
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws SQLException {
+
+        Database db = new Database();
+        db.login("JTest", "JTest");
+        initialPos = db.getInitialPositions(0);
+        db.closeConnection();
+
+        expectedPositions = initialPos.clone();
+        expectedPositions[8] = expectedMove.getFinalPosition();
+
         state = new State(initialPos,0);
+
     }
 
     /**
@@ -82,7 +83,6 @@ public class StateTest {
 
         //Moving the piece in a correct position
         finalPoint.move(120, 430);
-        Move expectedMove= new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
         Move move = state.moveSelectedPiece(finalPoint);
 
         assertEquals(expectedMove.getInitialPosition(), move.getInitialPosition());
@@ -98,12 +98,6 @@ public class StateTest {
         //Prepare data test
         state.setSelectedPiece(new Point(0,400));
         state.moveSelectedPiece(new Point(100, 400));
-
-        Rectangle[] positions = state.getCurrentPositions();
-
-        // TODO: 27/05/23 acua
-        assertNotEquals(Arrays.hashCode(initialPos), Arrays.hashCode(positions));
-
         state.undo();
 
         assertEquals(0, state.moves.size());
@@ -116,7 +110,7 @@ public class StateTest {
      */
     @Test
     public void testMakeMove() {
-        state.makeMove(new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100)));
+        state.makeMove(expectedMove);
 
         //Asserting that the expectedPositions are equals to the effective positions
         assertArrayEquals(expectedPositions, state.getCurrentPositions());

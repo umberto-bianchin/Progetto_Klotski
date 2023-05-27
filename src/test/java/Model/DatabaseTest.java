@@ -289,6 +289,8 @@ public class DatabaseTest {
         db.registration("User", "User");
         db.deleteUser();
 
+        //when user is not logged
+        assertThrows(IllegalAccessException.class, () -> db.deleteUser());
         assertFalse(db.login("User", "User"));
     }
 
