@@ -17,7 +17,7 @@ public class MoveTest {
      */
     @Test
     public void testReverse() {
-        //Prepare test data
+        //Prepare data test
         Move move = new Move(new Rectangle(0, 0, 100, 100), new Rectangle(100,0,100,100));
         Move reverse = move.reverse();
 

@@ -29,10 +29,8 @@ class PieceTest {
      */
     @Test
     public void testMove() {
-        Rectangle newPosition = new Rectangle(100, 0, 100, 100);
-        piece.move(newPosition);
-
-        assertEquals(newPosition, piece.getPosition());
+        piece.move(new Rectangle(100, 0, 100, 100));
+        assertEquals(new Rectangle(100, 0, 100, 100), piece.getPosition());
     }
 
     /**

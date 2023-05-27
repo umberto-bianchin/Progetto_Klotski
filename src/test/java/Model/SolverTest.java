@@ -35,7 +35,6 @@ public class SolverTest {
 
     @Nested
     class NextBestMoveTest{
-
         /**
          * Test case for the nextBestMove() method
          * @throws IOException if an I/O error occurs while making the API request
@@ -53,23 +52,16 @@ public class SolverTest {
 
         }
 
-
         /**
          * Test case for the nextBestMove() method with wrong initial positions
          */
         @Test
         public void testNextBestMoveWrongPos() {
-
-            //add a rectangle to the initial position
+            //Adding a rectangle to the initial position
             Rectangle[] invalidPositions = Arrays.copyOf(initialPos, initialPos.length + 1);
             invalidPositions[invalidPositions.length - 1] = new Rectangle(0,400,100,100);
             assertThrows(IllegalArgumentException.class, () -> solver.nextBestMove(invalidPositions));
         }
 
     }
-
-
-
-
-
 }

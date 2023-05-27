@@ -20,6 +20,12 @@ public class StateTest {
             new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
             new Rectangle(0,400,100,100), new Rectangle(300,400,100,100)};
 
+    private static final Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
+            new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
+            new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
+            new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
+            new Rectangle(100,400,100,100), new Rectangle(300,400,100,100)};
+
     /**
      * Set up method executed before each test
      * Creates a new instance of the State class
@@ -35,8 +41,7 @@ public class StateTest {
      */
     @Test
     public void testGetCurrentPositions() {
-        for(int i=0; i<10; i++)
-            assertEquals(initialPos[i], state.getCurrentPositions()[i]);
+        assertArrayEquals(initialPos, state.getCurrentPositions());
     }
 
     /**
@@ -58,8 +63,6 @@ public class StateTest {
      */
     @Test
     public void testMoveSelectedPiece() {
-        state.setSelectedPiece(null);
-
         //Trying to execute moveSelectedPiece with selectedPiece == null
         assertThrows(RuntimeException.class, ()->state.moveSelectedPiece(null));
 
@@ -98,13 +101,13 @@ public class StateTest {
 
         Rectangle[] positions = state.getCurrentPositions();
 
+        // TODO: 27/05/23 acua
         assertNotEquals(Arrays.hashCode(initialPos), Arrays.hashCode(positions));
 
         state.undo();
-        positions = state.getCurrentPositions();
 
         assertEquals(0, state.moves.size());
-        assertEquals(Arrays.hashCode(initialPos), Arrays.hashCode(positions));
+        assertArrayEquals(initialPos, state.getCurrentPositions());
     }
 
     /**
@@ -113,18 +116,10 @@ public class StateTest {
      */
     @Test
     public void testMakeMove() {
-        //Prepare test data
-        Move move= new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100));
-        Rectangle[] expectedPositions = {new Rectangle(100,0,200,200),new Rectangle(0,0,100,200),
-                new Rectangle(300,0,100,200), new Rectangle(0,200,100,200),
-                new Rectangle(300,200,100,200), new Rectangle(100,200,200,100),
-                new Rectangle(100,300,100,100), new Rectangle(200,300,100,100),
-                new Rectangle(100,400,100,100), new Rectangle(300,400,100,100)};
-
-        state.makeMove(move);
+        state.makeMove(new Move(new Rectangle(0,400,100,100), new Rectangle(100,400,100,100)));
 
         //Asserting that the expectedPositions are equals to the effective positions
-        assertEquals(Arrays.hashCode(expectedPositions), Arrays.hashCode(state.getCurrentPositions()));
+        assertArrayEquals(expectedPositions, state.getCurrentPositions());
         //Asserting that is added only one move
         assertEquals(1, state.getMoves().size());
     }
