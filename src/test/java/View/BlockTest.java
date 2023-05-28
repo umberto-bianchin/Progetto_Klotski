@@ -31,9 +31,7 @@ public class BlockTest {
     public void testSetBlockAppearance() {
         //Prepare data test
         Rectangle position = new Rectangle(100,100,200,200);
-
         block.setBlockAppearance(position);
-
         assertEquals(position, block.getBounds());
     }
 

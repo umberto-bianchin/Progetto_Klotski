@@ -42,13 +42,13 @@ public class AuthenticationTest {
      * It verifies the behavior of initializing the user
      */
     @ParameterizedTest
-    @ValueSource(ints = {0, 1, 2})
+    @ValueSource(ints = {1, 2, 3})
     public void testInitUser(int number) {
         auth.initUser("test");
 
         assertEquals(4, auth.getComponentCount());
         assertEquals("test", ((JLabel)auth.getComponent(0)).getText());
-        assertTrue(auth.getComponent(number+1) instanceof JButton);
+        assertTrue(auth.getComponent(number) instanceof JButton);
     }
 
 }

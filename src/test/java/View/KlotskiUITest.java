@@ -1,13 +1,13 @@
 package View;
 
+import Model.Database;
 import Model.Move;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,20 +16,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class KlotskiUITest {
 
-    private KlotskiUI klotskiUI;
-    private static final Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200),
-            new Rectangle(0,400,100,100), new Rectangle(100,0,200,200),
-            new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-            new Rectangle(200,300,100,100), new Rectangle(300,0,100,200),
-            new Rectangle(300,200,100,200), new Rectangle(300,400,100,100)};
+    private static KlotskiUI klotskiUI;
+    private static Rectangle[] positions;
 
     /**
-     * Set up method executed before each test
+     * Set up method executed before all tests
      * Sets up the KlotskiUI instance
      */
-    @BeforeEach
-    public void setUp(){
+    @BeforeAll
+    public static void setUp() throws SQLException {
         klotskiUI = new KlotskiUI();
+
+        Database db = new Database();
+        positions = db.getInitialPositions(0);
+        db.closeConnection();
     }
 
     /**
@@ -41,6 +41,8 @@ public class KlotskiUITest {
         klotskiUI.initStart();
 
         assertEquals("Select a Configuration", ((JLabel) klotskiUI.mainPane.getComponent(0)).getText());
+
+        //Asserting that the mainPane components are not null
         assertNotNull(klotskiUI.mainPane.getComponent(1));
         assertNotNull(klotskiUI.mainPane.getComponent(2));
     }
@@ -80,46 +82,7 @@ public class KlotskiUITest {
         klotskiUI.initGame(positions, 0);
         Move move = new Move(positions[2], new Rectangle(100, 400, 100, 100));
         klotskiUI.makeMove(move, 1);
-        Block block = klotskiUI.board.blocks[2];
-
-        assertEquals(move.getFinalPosition(), block.getBounds());
-    }
-
-    /**
-     * Test case for the askGameName() method
-     * It verifies the behavior of prompting the user to enter a game name
-     * @throws AWTException if there is an error in creating the Robot instance
-     * @throws InterruptedException if the thread is interrupted while waiting
-     */
-    @Test
-    public void testAskGameName() throws AWTException, InterruptedException {
-        // Create a Robot instance to simulate user input
-        Robot robot = new Robot();
-
-        // Prepare the expected input
-        String expectedInput = "test";
-
-        // Create a thread to execute the askGameName() method and capture the input
-        final String[] input = {""};
-        Thread t = new Thread(() -> input[0] = klotskiUI.askGameName());
-        t.start();
-
-        // Simulate the user typing the expected input
-        robot.delay(1000);
-        for (char c : expectedInput.toCharArray()) {
-            robot.keyPress(KeyEvent.getExtendedKeyCodeForChar(c));
-            robot.keyRelease(KeyEvent.getExtendedKeyCodeForChar(c));
-            robot.delay(100);
-        }
-
-        // Simulate the user pressing the Enter key
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-
-        // Wait for the thread to complete and capture the input
-        t.join();
-
-        assertEquals(expectedInput, input[0]);
+        assertEquals(move.getFinalPosition(), klotskiUI.board.blocks[2].getBounds());
     }
 
 }

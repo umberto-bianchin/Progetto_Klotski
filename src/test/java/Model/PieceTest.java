@@ -43,8 +43,6 @@ class PieceTest {
     @CsvSource({"-20,80,-100,0", "70,-24,0,-100", "40,190,0,100", "190,65,100,0"})
     public void testCheckAvailable(int x, int y, int pos_x, int pos_y) {
         assertEquals(new Rectangle(pos_x, pos_y, 100, 100), piece.checkAvailable(new Point(x, y)));
-
-
     }
 
     /**
@@ -67,7 +65,5 @@ class PieceTest {
         assertNull(piece.checkAvailable(new Point(x, y)));
 
     }
-
-
 
 }

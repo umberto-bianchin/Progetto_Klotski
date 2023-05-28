@@ -1,9 +1,10 @@
 package View;
 
+import Model.Database;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.awt.*;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,10 +44,9 @@ public class BoardTest {
         block.setBounds(new Rectangle(0, 0, 100, 100));
         board.selectedBlock = block;
 
-        Rectangle newPos = new Rectangle(100, 0, 100, 100);
-        board.moveSelectedBlock(newPos, 1);
+        board.moveSelectedBlock(new Rectangle(100, 0, 100, 100), 1);
 
-        assertEquals(newPos, block.getBounds());
+        assertEquals(new Rectangle(100, 0, 100, 100), block.getBounds());
         assertEquals("Moves: 1", board.displayedCounter.getText());
         assertNull(board.selectedBlock);
     }
@@ -74,14 +74,11 @@ public class BoardTest {
      */
     @Test
     public void testSelectBlock() {
-        //Prepare data test
-        Block block = new Block();
-        block.setBounds(new Rectangle(0,0,100,100));
-        board.blocks[0] = block;
+        board.blocks[0].setBounds(new Rectangle(0,0,100,100));
 
         //Selecting a block simulating a click on the screen
         board.selectBlock(new Point(25,40));
-        assertEquals(block, board.selectedBlock);
+        assertEquals(board.blocks[0], board.selectedBlock);
 
         board.selectBlock(null);
         assertNull(board.selectedBlock);
@@ -92,18 +89,15 @@ public class BoardTest {
      * It verifies the behavior of setting the positions of the board blocks
      */
     @Test
-    public void testSetPositions() {
+    public void testSetPositions() throws SQLException {
         //Prepare data test
-        Rectangle[] positions = {new Rectangle(0,0,100,200), new Rectangle(0,200,100,200),
-                new Rectangle(0,400,100,100), new Rectangle(100,0,200,200),
-                new Rectangle(100,200,200,100), new Rectangle(100,300,100,100),
-                new Rectangle(200,300,100,100), new Rectangle(300,0,100,200),
-                new Rectangle(300,200,100,200), new Rectangle(300,400,100,100)};
-
-        board.setPositions(positions);
+        Database db = new Database();
+        Rectangle[] initialPos = db.getInitialPositions(0);
+        board.setPositions(initialPos);
+        db.closeConnection();
 
         for(int i=0; i<10; i++)
-            assertEquals(positions[i], board.blocks[i].getBounds());
+            assertEquals(initialPos[i], board.blocks[i].getBounds());
     }
 
 }

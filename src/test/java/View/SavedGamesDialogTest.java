@@ -1,6 +1,7 @@
 package View;
 
 import org.junit.jupiter.api.Test;
+import java.util.Arrays;
 import java.util.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for SavedGamesDialog
  */
 public class SavedGamesDialogTest {
-    private final Vector<String> games = new Vector<>();
 
     /**
      * Test case for the SavedGamesDialog class
@@ -17,9 +17,7 @@ public class SavedGamesDialogTest {
      */
     @Test
     public void testSavedGamesDialog(){
-        games.add("First game");
-        games.add("Second game");
-        SavedGamesDialog dialog = new SavedGamesDialog(null, null, games);
+        SavedGamesDialog dialog = new SavedGamesDialog(null, null, new Vector<>(Arrays.asList("First game", "Second game")));
 
         assertEquals(5, dialog.panel.getComponentCount());
         assertEquals("gameFirst game", dialog.panel.getComponent(1).getName());

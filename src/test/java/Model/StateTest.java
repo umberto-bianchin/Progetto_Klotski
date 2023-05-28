@@ -25,7 +25,6 @@ public class StateTest {
     public void setUp() throws SQLException {
 
         Database db = new Database();
-        db.login("JTest", "JTest");
         initialPos = db.getInitialPositions(0);
         db.closeConnection();
 
@@ -33,7 +32,6 @@ public class StateTest {
         expectedPositions[8] = expectedMove.getFinalPosition();
 
         state = new State(initialPos,0);
-
     }
 
     /**

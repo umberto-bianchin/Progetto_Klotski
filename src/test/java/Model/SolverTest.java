@@ -62,6 +62,6 @@ public class SolverTest {
             invalidPositions[invalidPositions.length - 1] = new Rectangle(0,400,100,100);
             assertThrows(IllegalArgumentException.class, () -> solver.nextBestMove(invalidPositions));
         }
-
     }
+
 }
