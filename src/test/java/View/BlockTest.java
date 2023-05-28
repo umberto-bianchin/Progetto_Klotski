@@ -1,6 +1,6 @@
 package View;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class BlockTest {
 
-    private Block block;
+    private static Block block;
 
     /**
-     * Set up method executed before each test
+     * Set up method executed before all tests
      * Sets up the Block instance
      */
-    @BeforeEach
-    public void setUp(){
+    @BeforeAll
+    public static void setUp(){
         block = new Block();
     }
 
