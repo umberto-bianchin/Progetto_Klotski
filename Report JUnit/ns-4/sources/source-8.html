@@ -1,0 +1,140 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Start</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">View</a>
+</div>
+
+<h1>Coverage Summary for Class: Start (View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Start</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package View;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.MouseAdapter;
+&nbsp;
+&nbsp;/**
+&nbsp; * The Start class represents a panel displaying a set of buttons for game configuration (initial blocks position)
+&nbsp; */
+&nbsp;class Start extends JPanel {
+&nbsp;
+<b class="fc">&nbsp;    private final JButton[] buttons = new JButton[4];</b>
+&nbsp;
+<b class="fc">&nbsp;    public Start() {</b>
+<b class="fc">&nbsp;        setLayout(new GridLayout(2, 2));</b>
+<b class="fc">&nbsp;        setOpaque(false);</b>
+<b class="fc">&nbsp;        setBounds(75, 80, 400, 440);</b>
+&nbsp;
+<b class="fc">&nbsp;        for (int i = 0; i &lt; 4; i++) {</b>
+&nbsp;
+<b class="fc">&nbsp;            buttons[i] = new JButton(new ImageIcon(&quot;./src/images/miniatura&quot; + i + &quot;.png&quot;));</b>
+<b class="fc">&nbsp;            buttons[i].setName(String.valueOf(i));</b>
+<b class="fc">&nbsp;            buttons[i].setContentAreaFilled(false);</b>
+&nbsp;
+<b class="fc">&nbsp;            add(buttons[i]);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Adds a configuration listener to the buttons
+&nbsp;     * @param listener The MouseAdapter for configuration events
+&nbsp;     */
+&nbsp;    public void addConfigurationListener(MouseAdapter listener) {
+<b class="fc">&nbsp;        for (JButton button : buttons)</b>
+<b class="fc">&nbsp;            button.addMouseListener(listener);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-06-01 13:29</div>
+</div>
+</body>
+</html>

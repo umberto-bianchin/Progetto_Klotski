@@ -1,0 +1,304 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > KlotskiUI</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">View</a>
+</div>
+
+<h1>Coverage Summary for Class: KlotskiUI (View)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">KlotskiUI</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    68,8%
+  </span>
+  <span class="absValue">
+    (11/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    77%
+  </span>
+  <span class="absValue">
+    (47/61)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package View;
+&nbsp;
+&nbsp;import Model.Move;
+&nbsp;import com.formdev.flatlaf.FlatDarculaLaf;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.*;
+&nbsp;import java.util.Vector;
+&nbsp;
+&nbsp;public class KlotskiUI {
+&nbsp;
+&nbsp;    JFrame frame;
+&nbsp;    Board board;
+&nbsp;    Buttons buttons;
+&nbsp;    JLabel mainPane;
+&nbsp;    Start start;
+&nbsp;    Authentication authentication;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Create the frame and the mainPane, display the credit screen. Create but not show the Auth and Configuration panel
+&nbsp;     */
+<b class="fc">&nbsp;    public KlotskiUI() {</b>
+&nbsp;
+<b class="fc">&nbsp;        FlatDarculaLaf.setup();</b>
+<b class="fc">&nbsp;        frame = new JFrame(&quot;KLOTSKI&#39;s PUZZLE&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        mainPane = new JLabel();</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(&quot;./src/images/loading.png&quot;));</b>
+<b class="fc">&nbsp;        start = new Start();</b>
+<b class="fc">&nbsp;        authentication = new Authentication(frame);</b>
+&nbsp;
+<b class="fc">&nbsp;        frame.add(mainPane);</b>
+&nbsp;
+<b class="fc">&nbsp;        buttons = new Buttons();</b>
+<b class="fc">&nbsp;        board = new Board();</b>
+&nbsp;
+<b class="fc">&nbsp;        frame.pack();</b>
+<b class="fc">&nbsp;        frame.setLocationRelativeTo(null);</b>
+<b class="fc">&nbsp;        frame.setVisible(true);</b>
+<b class="fc">&nbsp;        frame.setSize(new Dimension(550, 620));</b>
+<b class="fc">&nbsp;        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</b>
+<b class="fc">&nbsp;        frame.setResizable(false);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Display the configuration chooser and the Auth panel
+&nbsp;     */
+&nbsp;    public void initStart() {
+&nbsp;
+<b class="fc">&nbsp;        mainPane.removeAll();</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(&quot;./src/images/background.png&quot;));</b>
+&nbsp;
+<b class="fc">&nbsp;        JLabel title_text = new JLabel(&quot;Select a Configuration&quot;, SwingConstants.CENTER);</b>
+<b class="fc">&nbsp;        title_text.setFont(new Font(&quot;Agency FB&quot;, Font.BOLD, 38));</b>
+<b class="fc">&nbsp;        title_text.setForeground(Color.white);</b>
+<b class="fc">&nbsp;        title_text.setBounds(0, 20, 550, 50);</b>
+&nbsp;
+<b class="fc">&nbsp;        mainPane.add(title_text);</b>
+<b class="fc">&nbsp;        mainPane.add(start);</b>
+<b class="fc">&nbsp;        mainPane.add(authentication);</b>
+<b class="fc">&nbsp;        mainPane.revalidate();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Display Blocks and Buttons needed for the Game
+&nbsp;     * @param position Blocks positions
+&nbsp;     * @param counter moves counter
+&nbsp;     */
+&nbsp;    public void initGame(Rectangle[] position, int counter) {
+&nbsp;
+<b class="fc">&nbsp;        mainPane.removeAll();</b>
+<b class="fc">&nbsp;        String os = System.getProperty(&quot;os.name&quot;).toLowerCase();</b>
+<b class="fc">&nbsp;        String imagePath = os.contains(&quot;win&quot;) ? &quot;./src/images/background2win.png&quot; : &quot;./src/images/background2mac.png&quot;;</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(imagePath));</b>
+&nbsp;
+<b class="fc">&nbsp;        board.setDisplayedCounter(counter);</b>
+<b class="fc">&nbsp;        board.setPositions(position);</b>
+&nbsp;
+<b class="fc">&nbsp;        mainPane.add(buttons);</b>
+<b class="fc">&nbsp;        mainPane.add(board);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Restart the UI to the specified positions
+&nbsp;     * @param initialPositions initial Blocks positions
+&nbsp;     */
+&nbsp;    public void restart(Rectangle[] initialPositions) {
+<b class="fc">&nbsp;        board.setPositions(initialPositions);</b>
+<b class="fc">&nbsp;        board.highlightSelected(null);</b>
+<b class="fc">&nbsp;        board.setDisplayedCounter(0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Make the specified move
+&nbsp;     * @param counter moves counter
+&nbsp;     */
+&nbsp;    public void makeMove(Move lastMove, int counter) {
+<b class="fc">&nbsp;        board.selectBlock(lastMove.getInitialPosition().getLocation());</b>
+<b class="fc">&nbsp;        board.moveSelectedBlock(lastMove.getFinalPosition(), counter);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @param selected Block desired to get selected
+&nbsp;     */
+&nbsp;    public void selectBlock(Component selected) {
+<b class="nc">&nbsp;        board.highlightSelected((Block) selected);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Display the player name, in the authentication pane
+&nbsp;     * @param user string with the username of the logged player
+&nbsp;     */
+&nbsp;    public void initUser(String user){
+<b class="fc">&nbsp;        authentication.initUser(user);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void logout() {
+<b class="fc">&nbsp;        authentication.initAuthentication();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @param savedGamesNames string representing the saved games of the logged user
+&nbsp;     * @param listener that handle the click in the button with a saved game
+&nbsp;     */
+&nbsp;    public void showSavedGames(Vector&lt;String&gt; savedGamesNames, MouseAdapter listener) {
+<b class="nc">&nbsp;        SavedGamesDialog savedGames = new SavedGamesDialog(frame, listener, savedGamesNames);</b>
+<b class="nc">&nbsp;        savedGames.setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Input dialog asking the desired game name to save the match
+&nbsp;     * @return null if closed, or a string with the typed name
+&nbsp;     */
+&nbsp;    public String askGameName() {
+<b class="nc">&nbsp;        return JOptionPane.showInputDialog(frame, &quot;Choose the game name: &quot;, &quot;Save&quot;, JOptionPane.QUESTION_MESSAGE);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @param message Desired message to display
+&nbsp;     * @param title title of the pop-up windows
+&nbsp;     * @param type type of message to be displayed - ERROR_MESSAGE, INFORMATION_MESSAGE, WARNING_MESSAGE, QUESTION_MESSAGE, or PLAIN_MESSAGE (0-4)
+&nbsp;     */
+&nbsp;    public void showMessage(String message, String title, int type){
+<b class="nc">&nbsp;        if(message == null || message.isBlank())</b>
+&nbsp;            return;
+&nbsp;
+<b class="nc">&nbsp;        if(message.contains(&quot;SQL&quot;)) {</b>
+<b class="nc">&nbsp;            JOptionPane.showMessageDialog(mainPane, &quot;Database error, retry later&quot;, title, type);</b>
+&nbsp;            return;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        JOptionPane.showMessageDialog(mainPane, message, title, type);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @return true if the user choose to Authenticate or false if not
+&nbsp;     */
+&nbsp;    public boolean showAuthenticationDialog(){
+&nbsp;
+<b class="nc">&nbsp;        Object[] options = {&quot;Log in&quot;, &quot;Sign up&quot;, &quot;Back&quot;};</b>
+&nbsp;
+<b class="nc">&nbsp;        int n = JOptionPane.showOptionDialog(frame,</b>
+&nbsp;                &quot;You can&#39;t save a game without being authenticated &quot;,
+&nbsp;                &quot;Error Saving Match&quot;,
+&nbsp;                JOptionPane.YES_NO_CANCEL_OPTION,
+&nbsp;                JOptionPane.WARNING_MESSAGE,
+&nbsp;                null,
+&nbsp;                options,
+&nbsp;                options[2]);
+&nbsp;
+&nbsp;        // 2 -&gt; Back, -1 -&gt; closed windows
+<b class="nc">&nbsp;        if(n == 2 || n == -1)</b>
+<b class="nc">&nbsp;            return false;</b>
+&nbsp;
+<b class="nc">&nbsp;        authentication.showAuthenticationDialog(frame, (String) options[n]);</b>
+<b class="nc">&nbsp;        return true;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addGameBoardListeners(MouseAdapter whiteBoard, MouseAdapter block){
+<b class="fc">&nbsp;        board.addMouseListener(whiteBoard);</b>
+<b class="fc">&nbsp;        board.addBlockListener(block);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addStartListener(WindowAdapter close, MouseAdapter configuration) {
+<b class="fc">&nbsp;        frame.addWindowListener(close);</b>
+<b class="fc">&nbsp;        start.addConfigurationListener(configuration);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addButtonsListeners(MouseAdapter restart, MouseAdapter save, MouseAdapter next, MouseAdapter undo, MouseAdapter home) {
+<b class="fc">&nbsp;        buttons.addButtonListener(restart, save, next, undo, home);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void addAuthenticationListeners(MouseAdapter auth, MouseAdapter logOut, MouseAdapter saved){
+<b class="fc">&nbsp;        authentication.addAuthenticationListeners(auth, logOut, saved);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-06-01 13:29</div>
+</div>
+</body>
+</html>

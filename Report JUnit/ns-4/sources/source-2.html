@@ -1,0 +1,224 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AuthenticationDialog</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">View</a>
+</div>
+
+<h1>Coverage Summary for Class: AuthenticationDialog (View)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AuthenticationDialog</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/35)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AuthenticationDialog$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/40)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package View;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.MouseAdapter;
+&nbsp;import java.awt.event.MouseEvent;
+&nbsp;
+&nbsp;/**
+&nbsp; * The AuthenticationDialog class represents a custom JDialog used for displaying an authentication dialog
+&nbsp; */
+&nbsp;public class AuthenticationDialog extends JDialog {
+&nbsp;
+<b class="nc">&nbsp;    private final JTextField usernameField = new JTextField(20);</b>
+<b class="nc">&nbsp;    private final JPasswordField passwordField = new JPasswordField(20);</b>
+<b class="nc">&nbsp;    GridBagConstraints cs = new GridBagConstraints();</b>
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs an AuthenticationDialog object with the specified parent frame, title, and listener
+&nbsp;     * @param parent The parent frame associated with the dialog
+&nbsp;     * @param title The title of the JDialog
+&nbsp;     * @param listener The listener to handle mouse events for the confirm button
+&nbsp;     */
+&nbsp;    public AuthenticationDialog(Frame parent, String title, MouseAdapter listener) {
+<b class="nc">&nbsp;        super(parent, title, true);</b>
+&nbsp;
+<b class="nc">&nbsp;        JPanel panel = createPanel();</b>
+<b class="nc">&nbsp;        createFields(panel);</b>
+<b class="nc">&nbsp;        createButtons(panel, listener);</b>
+&nbsp;
+<b class="nc">&nbsp;        add(panel);</b>
+<b class="nc">&nbsp;        pack();</b>
+<b class="nc">&nbsp;        setResizable(false);</b>
+<b class="nc">&nbsp;        setLocationRelativeTo(parent);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private JPanel createPanel() {
+<b class="nc">&nbsp;        JPanel panel = new JPanel(new GridBagLayout());</b>
+<b class="nc">&nbsp;        cs.fill = GridBagConstraints.HORIZONTAL;</b>
+<b class="nc">&nbsp;        return panel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates the username and password fields and adds them to the panel.
+&nbsp;     * @param panel The panel to which the fields will be added.
+&nbsp;     */
+&nbsp;    private void createFields(JPanel panel) {
+&nbsp;
+<b class="nc">&nbsp;        JLabel user = new JLabel(&quot;  Username: &quot;);</b>
+<b class="nc">&nbsp;        panel.add(user, cs);</b>
+&nbsp;
+<b class="nc">&nbsp;        JLabel pass = new JLabel(&quot;  Password: &quot;);</b>
+<b class="nc">&nbsp;        cs.gridy = 1;</b>
+<b class="nc">&nbsp;        panel.add(pass, cs);</b>
+&nbsp;
+<b class="nc">&nbsp;        cs.gridx = 1;</b>
+<b class="nc">&nbsp;        cs.gridy = 0;</b>
+<b class="nc">&nbsp;        cs.gridwidth = 2;</b>
+<b class="nc">&nbsp;        panel.add(usernameField, cs);</b>
+&nbsp;
+<b class="nc">&nbsp;        cs.gridy = 1;</b>
+<b class="nc">&nbsp;        panel.add(passwordField, cs);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Creates the confirm and cancel buttons and adds them to the panel.
+&nbsp;     * @param panel The panel to which the buttons will be added.
+&nbsp;     * @param listener The listener to handle mouse events for the confirm button.
+&nbsp;     */
+&nbsp;    private void createButtons(JPanel panel, MouseAdapter listener) {
+&nbsp;
+<b class="nc">&nbsp;        JButton cancelButton = new JButton(&quot;Cancel&quot;);</b>
+<b class="nc">&nbsp;        cancelButton.addActionListener(e -&gt; dispose());</b>
+<b class="nc">&nbsp;        cs.gridy = 2;</b>
+<b class="nc">&nbsp;        cs.gridwidth = 1;</b>
+<b class="nc">&nbsp;        panel.add(cancelButton, cs);</b>
+&nbsp;
+<b class="nc">&nbsp;        JButton confirmButton = new JButton();</b>
+<b class="nc">&nbsp;        confirmButton.setText(getTitle());</b>
+<b class="nc">&nbsp;        cs.gridx = 2;</b>
+<b class="nc">&nbsp;        panel.add(confirmButton, cs);</b>
+&nbsp;
+<b class="nc">&nbsp;        confirmButton.addMouseListener(new MouseAdapter() {</b>
+&nbsp;            @Override
+&nbsp;            public void mousePressed(MouseEvent e) {
+<b class="nc">&nbsp;                confirmButton.putClientProperty(&quot;username&quot;, usernameField.getText().trim());</b>
+<b class="nc">&nbsp;                confirmButton.putClientProperty(&quot;password&quot;, new String(passwordField.getPassword()));</b>
+<b class="nc">&nbsp;                dispose();</b>
+<b class="nc">&nbsp;                listener.mousePressed(e);</b>
+&nbsp;            }
+&nbsp;        });
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-06-01 13:29</div>
+</div>
+</body>
+</html>

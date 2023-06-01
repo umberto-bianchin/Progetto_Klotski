@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Solver</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Model</a>
+</div>
+
+<h1>Coverage Summary for Class: Solver (Model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Solver</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96,2%
+  </span>
+  <span class="absValue">
+    (51/53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Model;
+&nbsp;
+&nbsp;import org.json.simple.JSONArray;
+&nbsp;import org.json.simple.JSONObject;
+&nbsp;import org.json.simple.parser.JSONParser;
+&nbsp;import org.json.simple.parser.ParseException;
+&nbsp;
+&nbsp;import java.awt.*;
+&nbsp;import java.io.*;
+&nbsp;import java.net.HttpURLConnection;
+&nbsp;import java.net.URL;
+&nbsp;import java.nio.charset.StandardCharsets;
+&nbsp;import java.util.Arrays;
+&nbsp;
+&nbsp;/**
+&nbsp; * The Solver class provides functionality for solving a puzzle game by making an API request to an AWS lambda
+&nbsp; */
+<b class="fc">&nbsp;public class Solver {</b>
+&nbsp;
+<b class="fc">&nbsp;    private static final JSONParser parser = new JSONParser();</b>
+&nbsp;
+&nbsp;    //The hash value representing the current configuration of the puzzle
+<b class="fc">&nbsp;    long hashCurrentPos = 0;</b>
+&nbsp;
+&nbsp;    // The JSONArray object storing the list of moves received from the API
+&nbsp;    private JSONArray moves;
+<b class="fc">&nbsp;    private int index_moves = 0;</b>
+&nbsp;
+&nbsp;    private static final int BOARD_SIZE_WIDTH = 5;
+&nbsp;    private static final int BOARD_SIZE_HEIGHT = 4;
+&nbsp;    private static final int ESCAPE_POINT_X = 3;
+&nbsp;    private static final int ESCAPE_POINT_Y = 1;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Converts the configuration of puzzle blocks to a JSON string
+&nbsp;     * @param config The array of Rectangle representing the positions and shapes of the blocks
+&nbsp;     * @return The JSON string representation of the puzzle configuration
+&nbsp;     */
+&nbsp;    private static String jsonString(Rectangle[] config) {
+<b class="fc">&nbsp;        StringBuilder json = new StringBuilder();</b>
+<b class="fc">&nbsp;        json.append(&quot;{\&quot;blocks\&quot;:[&quot;);</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; config.length; i++) {</b>
+<b class="fc">&nbsp;            json.append(&quot;{\&quot;shape\&quot;:[&quot;)</b>
+<b class="fc">&nbsp;                    .append(config[i].getHeight() / 100).append(&quot;,&quot;)</b>
+<b class="fc">&nbsp;                    .append(config[i].getWidth() / 100).append(&quot;],&quot;)</b>
+<b class="fc">&nbsp;                    .append(&quot;\&quot;position\&quot;:[&quot;)</b>
+<b class="fc">&nbsp;                    .append(config[i].getY() / 100).append(&quot;,&quot;)</b>
+<b class="fc">&nbsp;                    .append(config[i].getX() / 100).append(&quot;]}&quot;);</b>
+<b class="fc">&nbsp;            if (i &lt; config.length - 1)</b>
+<b class="fc">&nbsp;                json.append(&quot;,&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        json.append(&quot;],\&quot;boardSize\&quot;:[&quot;).append(BOARD_SIZE_WIDTH).append(&quot;,&quot;)</b>
+<b class="fc">&nbsp;                .append(BOARD_SIZE_HEIGHT).append(&quot;],\&quot;escapePoint\&quot;:[&quot;).append(ESCAPE_POINT_X).append(&quot;,&quot;)</b>
+<b class="fc">&nbsp;                .append(ESCAPE_POINT_Y).append(&quot;]}&quot;);</b>
+<b class="fc">&nbsp;        return json.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sends a POST request to the solver API with the given JSON payload
+&nbsp;     * @param jsonBody The JSON payload to send in the request
+&nbsp;     * @return The response received from the API as a string
+&nbsp;     * @throws IOException If an I/O error occurs while making the request
+&nbsp;     */
+&nbsp;    private static String sendPostRequest(String jsonBody) throws IOException {
+<b class="fc">&nbsp;        byte[] requestBody = jsonBody.getBytes(StandardCharsets.UTF_8);</b>
+<b class="fc">&nbsp;        URL url = new URL(&quot;https://izrpgveiyi.execute-api.eu-north-1.amazonaws.com/solver&quot;);</b>
+<b class="fc">&nbsp;        HttpURLConnection con = (HttpURLConnection) url.openConnection();</b>
+<b class="fc">&nbsp;        con.setRequestMethod(&quot;POST&quot;);</b>
+<b class="fc">&nbsp;        con.setRequestProperty(&quot;Content-Type&quot;, &quot;application/json&quot;);</b>
+<b class="fc">&nbsp;        con.setDoOutput(true);</b>
+&nbsp;
+<b class="fc">&nbsp;        try (OutputStream out = con.getOutputStream()) {</b>
+<b class="fc">&nbsp;            out.write(requestBody);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        if (con.getResponseCode() != HttpURLConnection.HTTP_OK)</b>
+<b class="nc">&nbsp;            throw new IOException(&quot;Connection error&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));</b>
+<b class="fc">&nbsp;        return bufferedReader.readLine();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrive a move, represented by a JSON object
+&nbsp;     * @return move
+&nbsp;     * @throws IOException when the received direction is illegal
+&nbsp;     */
+&nbsp;    private Move getMoveFromJSON(JSONObject json, Rectangle[] config) throws IOException {
+&nbsp;
+<b class="fc">&nbsp;        Rectangle[] positions = new Rectangle[2];</b>
+&nbsp;
+<b class="fc">&nbsp;        int blockIdx = ((Long) json.get(&quot;blockIdx&quot;)).intValue();</b>
+<b class="fc">&nbsp;        int dirIdx = ((Long) json.get(&quot;dirIdx&quot;)).intValue();</b>
+&nbsp;
+<b class="fc">&nbsp;        positions[0] = new Rectangle(config[blockIdx]);</b>
+<b class="fc">&nbsp;        positions[1] = new Rectangle(config[blockIdx]);</b>
+<b class="fc">&nbsp;        switch (dirIdx) {</b>
+<b class="fc">&nbsp;            case 0 -&gt; positions[1].translate(0, 100);</b>
+<b class="fc">&nbsp;            case 1 -&gt; positions[1].translate(100, 0);</b>
+<b class="fc">&nbsp;            case 2 -&gt; positions[1].translate(0, -100);</b>
+<b class="fc">&nbsp;            case 3 -&gt; positions[1].translate(-100, 0);</b>
+<b class="nc">&nbsp;            default -&gt; throw new IOException();</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        return new Move(positions[0], positions[1]);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the next best move to make based on the current configuration of the puzzle
+&nbsp;     * @param config The array of Rectangle objects representing the current configuration of the puzzle
+&nbsp;     * @return The Move object representing the next best move to make
+&nbsp;     * @throws IOException If an I/O error occurs while making the API request
+&nbsp;     * @throws ParseException when the received JSON is invalid
+&nbsp;     */
+&nbsp;    public Move nextBestMove(Rectangle[] config) throws IOException, ParseException {
+&nbsp;
+<b class="fc">&nbsp;        if (Arrays.hashCode(config) != hashCurrentPos) {</b>
+<b class="fc">&nbsp;            String response = sendPostRequest(jsonString(config));</b>
+&nbsp;
+&nbsp;            // parse the responded array of moves to get to the end
+<b class="fc">&nbsp;            moves = (JSONArray) parser.parse(response);</b>
+<b class="fc">&nbsp;            index_moves = 0;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if(moves == null)</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Invalid configuration&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        JSONObject json = (JSONObject) moves.get(index_moves++);</b>
+<b class="fc">&nbsp;        return getMoveFromJSON(json, config);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Save the current configuration, can be called after the best move, in order to save
+&nbsp;     * time and not make a new API request, but retrieving the next move from the solution found
+&nbsp;     */
+&nbsp;    public void updateCurrentPositions(Rectangle[] positions) {
+<b class="fc">&nbsp;        hashCurrentPos = Arrays.hashCode(positions);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-06-01 13:29</div>
+</div>
+</body>
+</html>
