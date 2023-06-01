@@ -6,7 +6,7 @@ A brief description of what this project does and who it's for
 
 ## Authors
 
-- [@Umbaleit](https://www.github.com/Umbeleit)
+- [@umberto-bianchin](https://www.https://github.com/umberto-bianchin)
 - [@ivanbrillo](https://www.github.com/ivanbrillo)
 - [@ricky0219](https://www.github.com/ricky0219)
 - [@AlessandroCoron](https://www.github.com/AlessandroCoron)
