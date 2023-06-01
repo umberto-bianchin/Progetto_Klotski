@@ -2,3 +2,4 @@
 
 * [KLOTSKI PUZZLE](README.md)
 * [Use cases](use-cases.md)
+* [System test](system-test.md)
