@@ -11,5 +11,6 @@
     <orderEntry type="library" name="junit.jupiter" level="project" />
     <orderEntry type="library" name="mysql-connector-j-8.0.33" level="project" />
     <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="apache.maven.plugins.surefire.plugin" level="project" />
   </component>
 </module>
