@@ -1,0 +1,192 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Controller</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Controller</a>
+</div>
+
+<h1>Coverage Summary for Class: Controller (Controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Controller</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    92,9%
+  </span>
+  <span class="absValue">
+    (13/14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Controller$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    83,3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (14/16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Controller;
+&nbsp;
+&nbsp;import Model.KlotskiModel;
+&nbsp;import View.KlotskiUI;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.event.*;
+&nbsp;import java.sql.SQLException;
+&nbsp;
+&nbsp;
+&nbsp;public class Controller extends UIController{
+&nbsp;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initialize the object and check if the argument are null. Display the game UI
+&nbsp;     */
+&nbsp;    public Controller(KlotskiModel klotskiModel, KlotskiUI klotskiUI) {
+<b class="fc">&nbsp;        super(klotskiModel, klotskiUI);</b>
+<b class="fc">&nbsp;        initStart();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void mousePressed(MouseEvent e) {
+<b class="fc">&nbsp;        klotskiModel.closeDatabaseConnection();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Initialize the Database connection and manage its closure with a WindowAdapter, called when closing the window.
+&nbsp;     * Display the Start screen and add the needed listener
+&nbsp;     */
+&nbsp;    private void initStart(){
+&nbsp;
+&nbsp;        try{
+<b class="fc">&nbsp;            klotskiModel.initDatabase();</b>
+<b class="fc">&nbsp;            klotskiUI.initStart();</b>
+<b class="nc">&nbsp;        } catch(SQLException e){</b>
+<b class="fc">&nbsp;            klotskiUI.showMessage(&quot;Server SQL error&quot;, &quot;Start&quot;, JOptionPane.ERROR_MESSAGE); }</b>
+&nbsp;
+<b class="fc">&nbsp;        addListener();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Add the needed Listener of the UI
+&nbsp;     */
+&nbsp;    private void addListener() {
+<b class="fc">&nbsp;        WindowAdapter exit = new WindowAdapter() {</b>
+&nbsp;            public void windowClosing(WindowEvent e) {
+<b class="nc">&nbsp;                mousePressed(null);</b>
+&nbsp;            }
+&nbsp;        };
+<b class="fc">&nbsp;        SaveCommand saveCommand = new SaveCommand(klotskiModel, klotskiUI);</b>
+&nbsp;
+<b class="fc">&nbsp;        klotskiUI.addStartListener(exit, new ConfigurationListener(klotskiModel, klotskiUI));</b>
+<b class="fc">&nbsp;        klotskiUI.addAuthenticationListeners(new AuthListener(klotskiModel, klotskiUI), new DisconnectionListener(klotskiModel, klotskiUI), new SavedGamesListListener(klotskiModel, klotskiUI, saveCommand));</b>
+<b class="fc">&nbsp;        klotskiUI.addGameBoardListeners(new BoardListener(klotskiModel, klotskiUI), new BlockListener(klotskiModel, klotskiUI));</b>
+<b class="fc">&nbsp;        klotskiUI.addButtonsListeners(new RestartCommand(klotskiModel, klotskiUI), saveCommand, new NextCommand(klotskiModel, klotskiUI), new UndoCommand(klotskiModel, klotskiUI), new HomeCommand(klotskiModel, klotskiUI, saveCommand));</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-06-01 13:29</div>
+</div>
+</body>
+</html>
