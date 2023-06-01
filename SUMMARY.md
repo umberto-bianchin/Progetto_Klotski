@@ -9,3 +9,4 @@
 * [Sequence Diagram](sequence-diagram/README.md)
   * [System Sequence Diagram](sequence-diagram/system-sequence-diagram.md)
   * [Internal Sequence Diagram](sequence-diagram/internal-sequence-diagram.md)
+* [JUnit Report](junit-report.md)
