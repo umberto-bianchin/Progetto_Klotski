@@ -239,6 +239,7 @@ public class Database {
 
     }
 
+
     /**
      * @param username The username of the user (not null)
      * @param password The password of the user (not null)

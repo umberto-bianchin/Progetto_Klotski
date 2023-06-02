@@ -5,6 +5,7 @@ import com.formdev.flatlaf.FlatDarculaLaf;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import java.util.Vector;
 
 public class KlotskiUI {
@@ -25,7 +26,7 @@ public class KlotskiUI {
         frame = new JFrame("KLOTSKI's PUZZLE");
 
         mainPane = new JLabel();
-        mainPane.setIcon(new ImageIcon("./src/images/loading.png"));
+        mainPane.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/loading.png"))));
         start = new Start();
         authentication = new Authentication(frame);
 
@@ -49,7 +50,8 @@ public class KlotskiUI {
     public void initStart() {
 
         mainPane.removeAll();
-        mainPane.setIcon(new ImageIcon("./src/images/background.png"));
+        mainPane.setIcon(new ImageIcon(getClass().getResource("/images/background.png")));
+
 
         JLabel title_text = new JLabel("Select a Configuration", SwingConstants.CENTER);
         title_text.setFont(new Font("Agency FB", Font.BOLD, 38));
@@ -72,8 +74,8 @@ public class KlotskiUI {
 
         mainPane.removeAll();
         String os = System.getProperty("os.name").toLowerCase();
-        String imagePath = os.contains("win") ? "./src/images/background2win.png" : "./src/images/background2mac.png";
-        mainPane.setIcon(new ImageIcon(imagePath));
+        String imagePath = os.contains("win") ? "/images/background2win.png" : "/images/background2mac.png";
+        mainPane.setIcon(new ImageIcon(getClass().getResource(imagePath)));
 
         board.setDisplayedCounter(counter);
         board.setPositions(position);

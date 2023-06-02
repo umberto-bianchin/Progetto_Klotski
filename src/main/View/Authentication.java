@@ -11,11 +11,11 @@ import java.awt.event.MouseAdapter;
  */
 class Authentication extends JPanel{
 
-    private final JButton sign_up = new JButton(new ImageIcon("./src/images/signup.png"));
-    private final JButton log_in = new JButton(new ImageIcon("./src/images/login.png"));
-    private final JButton log_out = new JButton(new ImageIcon("./src/images/logout.png"));
-    private final JButton del_user = new JButton(new ImageIcon("./src/images/deleteUser.png"));
-    private final JButton saved_games = new JButton(new ImageIcon("./src/images/savedGames.png"));
+    private final JButton sign_up = new JButton(new ImageIcon(getClass().getResource("/images/signup.png")));
+    private final JButton log_in = new JButton(new ImageIcon(getClass().getResource("/images/login.png")));
+    private final JButton log_out = new JButton(new ImageIcon(getClass().getResource("/images/logout.png")));
+    private final JButton del_user = new JButton(new ImageIcon(getClass().getResource("/images/deleteUser.png")));
+    private final JButton saved_games = new JButton(new ImageIcon(getClass().getResource("/images/savedGames.png")));
     private static MouseAdapter authListener;
 
     /**

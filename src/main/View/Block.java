@@ -18,11 +18,11 @@ public class Block extends JLabel {
     }
 
     private void setImage(Rectangle position) {
-        setIcon(new ImageIcon(getImagePath(position)));
+        setIcon(new ImageIcon(getClass().getResource(getImagePath(position))));
     }
 
     private static String getImagePath(Rectangle position) {
-        return "./src/images/" + position.width + "x" + position.height + ".png";
+        return "/images/" + position.width + "x" + position.height + ".png";
     }
 
     /**

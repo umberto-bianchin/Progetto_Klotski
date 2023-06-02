@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 import java.util.Vector;
 
 /**
@@ -88,7 +89,7 @@ public class SavedGamesDialog extends JDialog {
         panel.add(gameButton, cs);
 
         JButton deleteButton = createButton("", "delete" + name, 2, number);
-        deleteButton.setIcon(new ImageIcon("./src/images/delete.png"));
+        deleteButton.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/delete.png"))));
         deleteButton.setContentAreaFilled(false);
         cs.weightx = 0;
         panel.add(deleteButton, cs);

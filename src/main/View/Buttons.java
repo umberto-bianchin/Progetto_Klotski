@@ -25,11 +25,11 @@ public class Buttons extends JPanel {
      */
     private void createAndPositionButtons() {
         String[] buttonIcons = {
-                "./src/images/restart.png",
-                "./src/images/save.png",
-                "./src/images/next.png",
-                "./src/images/undo.png",
-                "./src/images/home.png"
+                "/images/restart.png",
+                "/images/save.png",
+                "/images/next.png",
+                "/images/undo.png",
+                "/images/home.png"
         };
 
         int y = 0;
@@ -46,7 +46,7 @@ public class Buttons extends JPanel {
      * @return The created JButton
      */
     private JButton createButton(String iconPath, int y) {
-        JButton button = new JButton(new ImageIcon(iconPath));
+        JButton button = new JButton(new ImageIcon(getClass().getResource(iconPath)));
         button.setBounds(0, y, 100, 100);
         button.setContentAreaFilled(false);
         add(button);

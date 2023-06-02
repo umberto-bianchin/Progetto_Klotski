@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
+import java.util.Objects;
 
 /**
  * The Start class represents a panel displaying a set of buttons for game configuration (initial blocks position)
@@ -18,7 +19,7 @@ class Start extends JPanel {
 
         for (int i = 0; i < 4; i++) {
 
-            buttons[i] = new JButton(new ImageIcon("./src/images/miniatura" + i + ".png"));
+            buttons[i] = new JButton(new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/miniatura" + i + ".png"))));
             buttons[i].setName(String.valueOf(i));
             buttons[i].setContentAreaFilled(false);
 
