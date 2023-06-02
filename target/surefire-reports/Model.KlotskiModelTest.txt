@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: Model.KlotskiModelTest
+-------------------------------------------------------------------------------
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.834 s - in Model.KlotskiModelTest
