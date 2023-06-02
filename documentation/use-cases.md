@@ -1,6 +1,10 @@
-# Use cases
+# Requirements
 
-<figure><img src=".gitbook/assets/Progetto Klotski-Use Case Diagram.jpg" alt=""><figcaption><p>Use cases diagram</p></figcaption></figure>
+## Use Cases Diagram
+
+<figure><img src="../.gitbook/assets/Progetto Klotski-Use Case Diagram.jpg" alt=""><figcaption><p>Use cases diagram</p></figcaption></figure>
+
+## Tabular Use Cases
 
 | Use Case 1: Start game |                                                                                                                                                                                |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -52,29 +56,29 @@
 | Exception              | <p>If at step 2 the player choose an illegal final position:<br>1- The use case end</p>                                                                                                                      |
 | Extension              | <p>After step 3 if the 2x2 blocks is in the escape point<br>1- A win message is sent to the player</p>                                                                                                       |
 
-| Use Case 5: Undo last move |                                                                                                                                  |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Scope                      | Klotski Puzzle                                                                                                                   |
-| Precondition               | The game is in progress                                                                                                          |
-| Primary Actors             | Player                                                                                                                           |
-| Success end condition      | The last move is undone                                                                                                          |
-| Failed end condition       | Nothing happen                                                                                                                   |
-| Trigger                    | Player interaction                                                                                                               |
-| Main Success Scenario      | <p>1) The player selects the undo button<br>2) The last move is undone and erased<br>3) The move counter is decreased by one</p> |
-| Exception                  | <p>If at step 1 there are no moves:<br>1- The use case end</p>                                                                   |
+| Use Case 5: Undo last move |                                                                                                                                   |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Scope                      | Klotski Puzzle                                                                                                                    |
+| Precondition               | The game is in progress                                                                                                           |
+| Primary Actors             | Player                                                                                                                            |
+| Success end condition      | The last move is undone                                                                                                           |
+| Failed end condition       | Nothing happen                                                                                                                    |
+| Trigger                    | Player interaction                                                                                                                |
+| Main Success Scenario      | <p>1) The player selects the undo button<br>2) The last move is undone and erased<br>3) The moves counter is decreased by one</p> |
+| Exception                  | <p>If at step 1 there are no moves:<br>1- The use case end</p>                                                                    |
 
-| Use Case 6: Save game |                                                                                                                                       |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Scope                 | Klotski Puzzle                                                                                                                        |
-| Precondition          | The game is in progress                                                                                                               |
-| Primary Actors        | Player                                                                                                                                |
-| Secondary Actors      | Catalog                                                                                                                               |
-| Success end condition | The current game is saved in catalog                                                                                                  |
-| Failed end condition  | If the operation fails a message is sent to the player                                                                                |
-| Trigger               | Player interaction                                                                                                                    |
-| Main Success Scenario | <p>1) The player enters a name for the game<br>2) The catalog checks if the name is valid<br>3) The game is saved in the database</p> |
-| Extensions            | <p>After the step 2 if the player isn't authenticated:<br>Log in, include use case 2<br>resume execution at step 3</p>                |
-| Exception             | <p>At step 3 If the name is unusable:<br>1- an error box is shown<br>The use case is ended</p>                                        |
+| Use Case 6: Save game |                                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Scope                 | Klotski Puzzle                                                                                                                       |
+| Precondition          | The game is in progress                                                                                                              |
+| Primary Actors        | Player                                                                                                                               |
+| Secondary Actors      | Catalog                                                                                                                              |
+| Success end condition | The current game is saved in catalog                                                                                                 |
+| Failed end condition  | If the operation fails a message is sent to the player                                                                               |
+| Trigger               | Player interaction                                                                                                                   |
+| Main Success Scenario | <p>1) The player enters a name for the game<br>2) The catalog checks if the name is valid<br>3) The game is saved in the catalog</p> |
+| Extensions            | <p>After the step 2 if the player isn't authenticated:<br>Log in, include use case 2<br>resume execution at step 3</p>               |
+| Exception             | <p>At step 3 If the name is unusable:<br>1- an error box is shown<br>The use case is ended</p>                                       |
 
 | Use Case 7: Next Best Move |                                                                                                                                                                      |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -116,7 +120,7 @@
 | Precondition             | User authenticated                                                                                  |
 | Primary Actors           | Player                                                                                              |
 | Secondary Actors         | Catalog                                                                                             |
-| Success end condition    | The player is deleted from the database and logged out from the system                              |
+| Success end condition    | The player is deleted from the catalog and logged out from the system                               |
 | Failed end condition     | If the operation fails a message is sent to the player                                              |
 | Trigger                  | Player interaction                                                                                  |
 | Main Success Scenario    | <p>1) The player is logged out, include use case 9<br>2) The player is deleted from the catalog</p> |
