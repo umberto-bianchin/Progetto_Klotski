@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: Controller.SavedGamesListenerTest
--------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.715 s - in Controller.SavedGamesListenerTest
