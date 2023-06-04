@@ -1,6 +1,6 @@
 # KLOTSKI PUZZLE
 
-A brief description of what this project does and who it's for
+Welcome to the Klotski Puzzle Game repository! This project presents an implementation of the Klotski puzzle through Java SWING GUI. Klotski is a sliding block puzzle where the goal is to rearrange a set of rectangular blocks to achieve a specific configuration.
 
 ## Authors
 
@@ -39,8 +39,12 @@ You can now find the **JAR file** in the directory named **Target** as **Progett
 cd Target
 java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 ```
+4) b) **Maven not installed** If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can type 
+```bash
+/.mvnw package -DskipTests 
+```
+4) c) **Using an IDE**: open the ide and run the project
 
-4) b) **Using Intellij Idea**: open Intellij
 ## Documentation
 
 Open the [documentation](https://umberto-1.gitbook.io/klotski-game/documentation)
