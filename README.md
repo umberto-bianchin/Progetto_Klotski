@@ -21,10 +21,10 @@ You will need Java to be installed on your computer in order to run the project,
 You will also need an internet connection.
 ### Installation
 
-####Follow these steps:
+**Follow these steps**:
 1) Open our  [@GitHub](https://github.com/umberto-bianchin/Progetto_Klotski)
 2) Click on the green button **Code** and then on **Download ZIP**
-<figure><img src=".gitbook/assets/Immaginegit.png" alt=""><figcaption><p>Git screen</p></figcaption></figure>
+<figure><img src=".gitbook/assets/Immaginegit.png" alt=""></figure>
 
 3) Go to the download directory and unzip the file
 
