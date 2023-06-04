@@ -43,7 +43,16 @@ java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 ```bash
 ./mvnw package -DskipTests 
 ```
-4) c) **Using an IDE**: open the ide and run the project
+4) c) **Using Intellij Idea**: open **Intellij Idea**, go to the **File** window, then **Open** and select the project folder. After that, click on the configuration window
+<figure><img src=".gitbook/assets/immagineintellij1.png" alt=""></figure>
+
+Click on **Add new configuration**, then on **Application**
+<figure><img src=".gitbook/assets/Immagineintellij2.jpg" alt=""></figure>
+
+Now select the main class and click on **Ok** on both windows
+<figure><img src=".gitbook/assets/Immagineintellij3.png" alt=""></figure>
+
+Eventually, click on the run button
 
 ## Documentation
 
