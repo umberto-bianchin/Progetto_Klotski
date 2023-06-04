@@ -39,9 +39,9 @@ You can now find the **JAR file** in the directory named **Target** as **Progett
 cd Target
 java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 ```
-4) b) **Maven not installed** If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can type 
+4) b) **Maven not installed**: If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
 ```bash
-/.mvnw package -DskipTests 
+./mvnw package -DskipTests 
 ```
 4) c) **Using an IDE**: open the ide and run the project
 
