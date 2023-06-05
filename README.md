@@ -36,7 +36,7 @@ You will also need an internet connection.
 ```
 You can now find the **JAR file** in the directory named **Target** as **Progetto_Klotski-1.0-jar-with-dependencies.jar**, or you can run it throught cmd with
 ```bash
-cd Target
+cd target
 java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 ```
 4) b) **Maven not installed**: If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
@@ -53,6 +53,10 @@ Now select the main class and click on **Ok** on both windows
 <figure><img src=".gitbook/assets/Immagineintellij3.png" alt=""></figure>
 
 Eventually, click on the run button
+
+### Game rules
+
+You can read the game rules on the Klotski's [Wikipedia](https://en.wikipedia.org/wiki/Klotski) page
 
 ## Documentation
 
