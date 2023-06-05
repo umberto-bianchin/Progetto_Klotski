@@ -94,11 +94,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    private void setImage(Rectangle position) {
-<b class="fc">&nbsp;        setIcon(new ImageIcon(getImagePath(position)));</b>
+<b class="fc">&nbsp;        setIcon(new ImageIcon(getClass().getResource(getImagePath(position))));</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    private static String getImagePath(Rectangle position) {
-<b class="fc">&nbsp;        return &quot;./src/images/&quot; + position.width + &quot;x&quot; + position.height + &quot;.png&quot;;</b>
+<b class="fc">&nbsp;        return &quot;/images/&quot; + position.width + &quot;x&quot; + position.height + &quot;.png&quot;;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
@@ -136,7 +136,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-02 00:03</div>
+    <div style="float:right;">generated on 2023-06-05 14:10</div>
 </div>
 </body>
 </html>

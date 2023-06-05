@@ -101,11 +101,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 &nbsp;    private void createAndPositionButtons() {
 <b class="fc">&nbsp;        String[] buttonIcons = {</b>
-&nbsp;                &quot;./src/images/restart.png&quot;,
-&nbsp;                &quot;./src/images/save.png&quot;,
-&nbsp;                &quot;./src/images/next.png&quot;,
-&nbsp;                &quot;./src/images/undo.png&quot;,
-&nbsp;                &quot;./src/images/home.png&quot;
+&nbsp;                &quot;/images/restart.png&quot;,
+&nbsp;                &quot;/images/save.png&quot;,
+&nbsp;                &quot;/images/next.png&quot;,
+&nbsp;                &quot;/images/undo.png&quot;,
+&nbsp;                &quot;/images/home.png&quot;
 &nbsp;        };
 &nbsp;
 <b class="fc">&nbsp;        int y = 0;</b>
@@ -122,7 +122,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @return The created JButton
 &nbsp;     */
 &nbsp;    private JButton createButton(String iconPath, int y) {
-<b class="fc">&nbsp;        JButton button = new JButton(new ImageIcon(iconPath));</b>
+<b class="fc">&nbsp;        JButton button = new JButton(new ImageIcon(getClass().getResource(iconPath)));</b>
 <b class="fc">&nbsp;        button.setBounds(0, y, 100, 100);</b>
 <b class="fc">&nbsp;        button.setContentAreaFilled(false);</b>
 <b class="fc">&nbsp;        add(button);</b>
@@ -168,7 +168,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-02 00:03</div>
+    <div style="float:right;">generated on 2023-06-05 14:10</div>
 </div>
 </body>
 </html>

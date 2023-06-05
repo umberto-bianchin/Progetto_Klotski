@@ -59,10 +59,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    77%
+    77,4%
   </span>
   <span class="absValue">
-    (47/61)
+    (48/62)
   </span>
 </td>
 </tr>
@@ -77,10 +77,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <code class="sourceCode" id="sourceCode">&nbsp;package View;
 &nbsp;
 &nbsp;import Model.Move;
-&nbsp;import com.formdev.flatlaf.FlatDarculaLaf;
 &nbsp;import javax.swing.*;
 &nbsp;import java.awt.*;
 &nbsp;import java.awt.event.*;
+&nbsp;import java.util.Objects;
 &nbsp;import java.util.Vector;
 &nbsp;
 &nbsp;public class KlotskiUI {
@@ -97,11 +97,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     */
 <b class="fc">&nbsp;    public KlotskiUI() {</b>
 &nbsp;
-<b class="fc">&nbsp;        FlatDarculaLaf.setup();</b>
+&nbsp;        try {
+<b class="fc">&nbsp;            UIManager.setLookAndFeel(&quot;com.formdev.flatlaf.FlatDarkLaf&quot;);</b>
+<b class="fc">&nbsp;        } catch (Exception ignored) {}</b>
 <b class="fc">&nbsp;        frame = new JFrame(&quot;KLOTSKI&#39;s PUZZLE&quot;);</b>
 &nbsp;
 <b class="fc">&nbsp;        mainPane = new JLabel();</b>
-<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(&quot;./src/images/loading.png&quot;));</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(Objects.requireNonNull(getClass().getResource(&quot;/images/loading.png&quot;))));</b>
 <b class="fc">&nbsp;        start = new Start();</b>
 <b class="fc">&nbsp;        authentication = new Authentication(frame);</b>
 &nbsp;
@@ -125,7 +127,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    public void initStart() {
 &nbsp;
 <b class="fc">&nbsp;        mainPane.removeAll();</b>
-<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(&quot;./src/images/background.png&quot;));</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(getClass().getResource(&quot;/images/background.png&quot;)));</b>
+&nbsp;
 &nbsp;
 <b class="fc">&nbsp;        JLabel title_text = new JLabel(&quot;Select a Configuration&quot;, SwingConstants.CENTER);</b>
 <b class="fc">&nbsp;        title_text.setFont(new Font(&quot;Agency FB&quot;, Font.BOLD, 38));</b>
@@ -148,8 +151,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 <b class="fc">&nbsp;        mainPane.removeAll();</b>
 <b class="fc">&nbsp;        String os = System.getProperty(&quot;os.name&quot;).toLowerCase();</b>
-<b class="fc">&nbsp;        String imagePath = os.contains(&quot;win&quot;) ? &quot;./src/images/background2win.png&quot; : &quot;./src/images/background2mac.png&quot;;</b>
-<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(imagePath));</b>
+<b class="fc">&nbsp;        String imagePath = os.contains(&quot;win&quot;) ? &quot;/images/background2win.png&quot; : &quot;/images/background2mac.png&quot;;</b>
+<b class="fc">&nbsp;        mainPane.setIcon(new ImageIcon(getClass().getResource(imagePath)));</b>
 &nbsp;
 <b class="fc">&nbsp;        board.setDisplayedCounter(counter);</b>
 <b class="fc">&nbsp;        board.setPositions(position);</b>
@@ -298,7 +301,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-02 00:03</div>
+    <div style="float:right;">generated on 2023-06-05 14:10</div>
 </div>
 </body>
 </html>

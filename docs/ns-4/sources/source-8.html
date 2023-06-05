@@ -79,6 +79,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javax.swing.*;
 &nbsp;import java.awt.*;
 &nbsp;import java.awt.event.MouseAdapter;
+&nbsp;import java.util.Objects;
 &nbsp;
 &nbsp;/**
 &nbsp; * The Start class represents a panel displaying a set of buttons for game configuration (initial blocks position)
@@ -94,7 +95,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 <b class="fc">&nbsp;        for (int i = 0; i &lt; 4; i++) {</b>
 &nbsp;
-<b class="fc">&nbsp;            buttons[i] = new JButton(new ImageIcon(&quot;./src/images/miniatura&quot; + i + &quot;.png&quot;));</b>
+<b class="fc">&nbsp;            buttons[i] = new JButton(new ImageIcon(Objects.requireNonNull(getClass().getResource(&quot;/images/miniatura&quot; + i + &quot;.png&quot;))));</b>
 <b class="fc">&nbsp;            buttons[i].setName(String.valueOf(i));</b>
 <b class="fc">&nbsp;            buttons[i].setContentAreaFilled(false);</b>
 &nbsp;
@@ -134,7 +135,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-06-02 00:03</div>
+    <div style="float:right;">generated on 2023-06-05 14:10</div>
 </div>
 </body>
 </html>
