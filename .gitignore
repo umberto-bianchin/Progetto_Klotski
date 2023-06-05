@@ -30,4 +30,4 @@ bin/
 .idea/misc.xml
 
 ### Maven ###
-.target
+target/
