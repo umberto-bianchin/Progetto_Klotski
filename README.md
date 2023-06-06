@@ -1,6 +1,8 @@
 # KLOTSKI PUZZLE
 
-Welcome to the Klotski Puzzle Game repository! This project presents an implementation of the Klotski puzzle through Java SWING GUI. Klotski is a sliding block puzzle where the goal is to rearrange a set of rectangular blocks to achieve a specific configuration.
+Welcome to the Klotski game project. This is a classic sliding block puzzle game that challenges you to move a large red block into a particular escape position. 
+The program is written with Java Swing and uses a database and a solver API hosted on AWS. The project includes the game itself, a test suite, and the documentation. 
+The source code is available on GitHub under the MIT License.
 
 ## Authors
 
@@ -70,7 +72,6 @@ Open the [documentation](https://umberto-1.gitbook.io/klotski-game/documentation
 ## Screenshots
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""></figure>
-
 <figure><img src=".gitbook/assets/image (10).png" alt=""></figure>
 
 ## Acknowledgements
