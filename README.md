@@ -72,7 +72,6 @@ Open the [documentation](https://umberto-1.gitbook.io/klotski-game/documentation
 ## Screenshots
 
 <figure><img src=".gitbook/assets/image (2).png" alt=""></figure>
-<figure><img src=".gitbook/assets/image (10).png" alt=""></figure>
 
 ## Acknowledgements
 
