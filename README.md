@@ -12,9 +12,14 @@ Welcome to the Klotski Puzzle Game repository! This project presents an implemen
 
 ## Badges
 
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge\&logo=openjdk\&logoColor=white)](https://www.java.com/en/) [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge\&logo=node.js\&logoColor=white)](https://nodejs.org/en) [![AWS](https://img.shields.io/badge/Amazon\_AWS-232F3E?style=for-the-badge\&logo=amazon-aws\&logoColor=white)](https://aws.amazon.com/)
+[![MIT License](https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge)](https://github.com/umberto-bianchin/Progetto_Klotski/blob/master/LICENSE.md)
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge\&logo=openjdk\&logoColor=white)](https://www.java.com/en/) 
+[![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge\&logo=node.js\&logoColor=white)](https://nodejs.org/en) 
+[![AWS](https://img.shields.io/badge/Amazon\_AWS-232F3E?style=for-the-badge\&logo=amazon-aws\&logoColor=white)](https://aws.amazon.com/)
+[![Maven](https://img.shields.io/badge/MAVEN-3.9.2-BLUE?style=for-the-badge&logo=appveyor)](https://https://maven.apache.org/)
 
-![MIT License](https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge)
+[![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://umberto-1.gitbook.io/klotski-game/documentation)
+
 ## Manual
 ### Requirements
 You will need Java to be installed on your computer in order to run the project, and you have to use JDK 19 or newer versions as it has been developed and tested on that version.
@@ -64,13 +69,14 @@ Open the [documentation](https://umberto-1.gitbook.io/klotski-game/documentation
 
 ## Screenshots
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption><p>Home Screen</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""></figure>
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption><p>Game View</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image (10).png" alt=""></figure>
 
 ## Acknowledgements
 
 * [Klotski Solver](https://github.com/jeantimex/klotski/tree/master)
 * [FlatLaf](https://www.formdev.com/flatlaf/)
 * [GitBook](https://www.gitbook.com/)
+* [Maven](https://maven.apache.org/)
 * JSON simple
