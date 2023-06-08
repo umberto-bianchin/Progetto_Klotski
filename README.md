@@ -76,7 +76,35 @@ Open the [documentation](https://umberto-1.gitbook.io/klotski-game/documentation
 ## Acknowledgements
 
 * [Klotski Solver](https://github.com/jeantimex/klotski/tree/master)
+
+  This excellent NodeJS Klotski solver runs on our AWS Lambda. 
+
+  It is called in Solver class thanks to sendPostRequest() method.
 * [FlatLaf](https://www.formdev.com/flatlaf/)
+
+  The FlatLaf library helps us achieve a modern look compared to Java Swing.
+  
+  Thanks to the setLookAndFeel method we are able to load the look specified by the given class name: FlatDarkLaf (Dark theme)
+
+            UIManager.setLookAndFeel("com.formdev.flatlaf.FlatDarkLaf");
+
 * [GitBook](https://www.gitbook.com/)
+
+  GitBook helped us create clean and organized documentation for this project.
 * [Maven](https://maven.apache.org/)
-* JSON simple
+* [JSON simple](https://code.google.com/archive/p/json-simple/)
+
+  JSON Simple helped us in parsing the response from AWS Lambda into separate JSON objects, enabling us to process the data easily.
+
+              moves = (JSONArray) parser.parse(response);
+              ...
+              JSONObject json = (JSONObject) moves.get(index_moves++);
+  
+* [MySQL Connector](https://www.mysql.com/)
+  We use MySQL Connector to enable interaction and connection to our AWS database, since it provides the required driver. 
+
+        conn = DriverManager.getConnection(dbURL, "admin", "mypassword");
+        ...
+        ResultSet rs = stmt.executeQuery(query);
+
+  
