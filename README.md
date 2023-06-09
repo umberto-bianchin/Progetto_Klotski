@@ -21,6 +21,7 @@ The source code is available on GitHub under the MIT License.
 [![Maven](https://img.shields.io/badge/MAVEN-3.9.2-BLUE?style=for-the-badge&logo=appveyor)](https://https://maven.apache.org/)
 
 [![view - Documentation](https://img.shields.io/badge/view-Documentation-blue?style=for-the-badge)](https://umberto-1.gitbook.io/klotski-game/documentation)
+[![view - javaDoc](https://img.shields.io/badge/view-javaDoc-red?style=for-the-badge)](https://umberto-bianchin.github.io/Progetto_Klotski/javaDoc/)
 
 ## Manual
 ### Requirements
