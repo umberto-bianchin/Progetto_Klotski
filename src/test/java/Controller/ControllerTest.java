@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for Controller
+ */
 public class ControllerTest extends KlotskiControllerTest {
 
     /**

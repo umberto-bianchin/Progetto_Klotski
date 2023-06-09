@@ -7,6 +7,9 @@ import java.awt.event.*;
 import java.util.Objects;
 import java.util.Vector;
 
+/**
+ * Class that handle the interaction with View package (view facade)
+ */
 public class KlotskiUI {
 
     JFrame frame;

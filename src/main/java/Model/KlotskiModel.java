@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Vector;
 
+/**
+ * Class that handle the interaction with Model package (model facade)
+ */
 public class KlotskiModel {
 
     State state;

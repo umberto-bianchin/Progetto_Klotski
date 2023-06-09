@@ -7,7 +7,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 
-
+/**
+ * Controller class initialize Database and the UI View, with the related listener
+ */
 public class Controller extends UIController{
 
 
