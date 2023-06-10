@@ -24,6 +24,8 @@ The source code is available on GitHub under the MIT License.
 [![view - javaDoc](https://img.shields.io/badge/view-javaDoc-red?style=for-the-badge)](https://umberto-bianchin.github.io/Progetto_Klotski/javaDoc/)
 
 ## Manual
+### How we did it
+In order to start writing the code, firstly the Use cases of the project were written down, in facts all the inputs the user can send throught the pressing of the buttons, and the Use case diagram got created. Then the database was designed using AWS and connected thorught MYSQL connector; so created the database diagram, the system sequence diagram and the domain model. The code was developed following a use case at a time, wrote on local machine and tested before being pushed to the GitHub project. During this phase, all the diagrams and documentations were kept updated as some part of the initial architecture has been modified, and also new diagram got implemented, like internal sequence diagram. 
 ### Requirements
 You will need Java to be installed on your computer in order to run the project, and you have to use JDK 19 or newer versions as it has been developed and tested on that version.
 You will also need an internet connection.
@@ -36,7 +38,8 @@ You will also need an internet connection.
 
 3) Go to the download directory and unzip the file
 
-4) a) **Using Maven from cmd**: navigate to the project folder 
+<details>
+<summary> 4) a) **Using Maven from cmd**: navigate to the project folder </summary>
 
 ```bash
   cd Download\Progetto_Klotski-master
@@ -47,10 +50,16 @@ You can now find the **JAR file** in the directory named **Target** as **Progett
 cd target
 java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 ```
+  
+</details>
+
+<details>
 4) b) **Maven not installed**: If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
 ```bash
 ./mvnw package -DskipTests 
 ```
+  
+</details>
 4) c) **Using Intellij Idea**: open **Intellij Idea**, go to the **File** window, then **Open** and select the project folder. After that, click on the configuration window
 <figure><img src=".gitbook/assets/immagineintellij1.png" alt=""></figure>
 
