@@ -39,7 +39,7 @@ You will also need an internet connection.
 3) Go to the download directory and unzip the file
 
 <details>
-<summary> 4) a) **Using Maven from cmd** </summary>
+<summary> 4) a) Using Maven from cmd </summary>
 Navigate to the project folder
 
 ```bash
@@ -55,7 +55,7 @@ java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 </details>
 
 <details>
-<summary> 4) b) **Maven not installed** </summary>
+<summary> 4) b) Maven not installed </summary>
 If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
 ```bash
 ./mvnw package -DskipTests 
@@ -64,7 +64,7 @@ If you don't have maven installed, but the JAVA_HOME system variable already set
 </details>
 
 <details>
-<summary> 4) c) **Using Intellij Idea** </summary>
+<summary> 4) c) Using Intellij Idea</summary>
 Open **Intellij Idea**, go to the **File** window, then **Open** and select the project folder. After that, click on the configuration window
 <figure><img src=".gitbook/assets/immagineintellij1.png" alt=""></figure>
 
@@ -77,6 +77,7 @@ Now select the main class and click on **Ok** on both windows
 Eventually, click on the run button
 
 </details>
+
 ### Game rules
 
 You can read the game rules on the Klotski's [Wikipedia](https://en.wikipedia.org/wiki/Klotski) page
