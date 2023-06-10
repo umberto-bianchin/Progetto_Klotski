@@ -57,6 +57,7 @@ java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 <details>
 <summary> 4) b) Maven not installed </summary>
 If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
+  
 ```bash
 ./mvnw package -DskipTests 
 ```
@@ -65,6 +66,7 @@ If you don't have maven installed, but the JAVA_HOME system variable already set
 
 <details>
 <summary> 4) c) Using Intellij Idea</summary>
+  
 Open **Intellij Idea**, go to the **File** window, then **Open** and select the project folder. After that, click on the configuration window
 <figure><img src=".gitbook/assets/immagineintellij1.png" alt=""></figure>
 
