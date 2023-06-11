@@ -16,7 +16,7 @@
 | Failed end condition   | If the operation fails a message is sent to the player                                                                                                                         |
 | Trigger                | Player interaction                                                                                                                                                             |
 | Main Success Scenario  | <p>1) The player chooses one of the predefined piece configurations<br>2) The chosen configuration is saved<br>3) The game starts with the chosen configuration</p>            |
-| Alternative Flow       | <p>Before step 1, if the player wants to select a previously saved game:<br>1- The player logs in, include use case 2<br>2- The saved game is selected<br>Resume at step 2</p> |
+| Alternative Flow       | <p>Before step 1, if the player wants to select a previously saved game:<br>1- The player logs in, **include** use case 2<br>2- The saved game is selected<br>Resume at step 2</p> |
 
 
 
@@ -77,7 +77,7 @@
 | Failed end condition  | If the operation fails a message is sent to the player                                                                               |
 | Trigger               | Player interaction                                                                                                                   |
 | Main Success Scenario | <p>1) The player enters a name for the game<br>2) The catalog checks if the name is valid<br>3) The game is saved in the catalog</p> |
-| Extensions            | <p>After the step 2 if the player isn't authenticated:<br>Log in, include use case 2<br>resume execution at step 3</p>               |
+| Extensions            | <p>After the step 2 if the player isn't authenticated:<br>Log in, **include** use case 2<br>resume execution at step 3</p>               |
 | Exception             | <p>At step 3 If the name is unusable:<br>1- an error box is shown<br>The use case is ended</p>                                       |
 
 | Use Case 7: Next Best Move |                                                                                                                                                                      |
@@ -123,7 +123,7 @@
 | Success end condition    | The player is deleted from the catalog and logged out from the system                               |
 | Failed end condition     | If the operation fails a message is sent to the player                                              |
 | Trigger                  | Player interaction                                                                                  |
-| Main Success Scenario    | <p>1) The player is logged out, include use case 9<br>2) The player is deleted from the catalog</p> |
+| Main Success Scenario    | <p>1) The player is logged out, **include** use case 9<br>2) The player is deleted from the catalog</p> |
 
 | Use Case 11: Delete game |                                                                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------ |
