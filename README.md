@@ -43,7 +43,7 @@ You will also need an internet connection.
 3) Go to the download directory and unzip the file
 
 <details>
-<summary> 4) a) Using Maven from cmd </summary>
+<summary> 4a. Using Maven from cmd </summary>
 Navigate to the project folder
 
 ```bash
@@ -59,7 +59,7 @@ java -jar Progetto_Kltotski-1.0-jar-with-dependencies.jar
 </details>
 
 <details>
-<summary> 4) b) Maven not installed </summary>
+<summary> 4b. Maven not installed </summary>
 If you don't have maven installed, but the JAVA_HOME system variable already set-up, you can achive the same results with 
   
 ```bash
@@ -69,7 +69,7 @@ If you don't have maven installed, but the JAVA_HOME system variable already set
 </details>
 
 <details>
-<summary> 4) c) Using Intellij Idea</summary>
+<summary> 4c. Using Intellij Idea</summary>
   
 Open **Intellij Idea**, go to the **File** window, then **Open** and select the project folder. After that, click on the configuration window
 <figure><img src=".gitbook/assets/immagineintellij1.png" alt=""></figure>
