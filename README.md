@@ -6,7 +6,7 @@ The source code is available on GitHub under the MIT License.
 
 ## Authors
 
-* [@umberto-bianchin](https://www.https/github.com/umberto-bianchin)
+* [@umberto-bianchin](https://www.github.com/umberto-bianchin)
 * [@ivanbrillo](https://www.github.com/ivanbrillo)
 * [@ricky0219](https://www.github.com/ricky0219)
 * [@AlessandroCoron](https://www.github.com/AlessandroCoron)
